@@ -1,3 +1,4 @@
+/*
 The MIT License (MIT)
 
 Copyright (c) 2013 devnewton <devnewton@bci.im>
@@ -19,3 +20,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+*/
+package im.bci.jnuit.widgets;
+
+import im.bci.jnuit.NuitToolkit;
+
+import com.esotericsoftware.tablelayout.BaseTableLayout;
+
+public class TableLayout extends BaseTableLayout<Widget, Table> {
+
+    public TableLayout(NuitToolkit toolkit) {
+        super(toolkit);
+    }
+
+    @Override
+    public void invalidateHierarchy() {
+    }
+}

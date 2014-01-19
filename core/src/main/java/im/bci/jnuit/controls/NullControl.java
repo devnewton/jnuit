@@ -1,3 +1,4 @@
+/*
 The MIT License (MIT)
 
 Copyright (c) 2013 devnewton <devnewton@bci.im>
@@ -19,3 +20,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+*/
+package im.bci.jnuit.controls;
+
+public class NullControl implements Control {
+    
+    public static NullControl INSTANCE = new NullControl();
+
+    @Override
+    public String getName() {
+        return "";
+    }
+
+    @Override
+    public float getDeadZone() {
+        return 0.1f;
+    }
+
+    @Override
+    public float getValue() {
+        return 0.0f;
+    }
+
+    @Override
+    public String getControllerName() {
+        return "";
+    }
+}

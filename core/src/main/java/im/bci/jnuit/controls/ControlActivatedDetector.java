@@ -1,3 +1,4 @@
+/*
 The MIT License (MIT)
 
 Copyright (c) 2013 devnewton <devnewton@bci.im>
@@ -19,3 +20,38 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+*/
+package im.bci.jnuit.controls;
+
+public class ControlActivatedDetector {
+    private final Control control;
+    private Float previousState;
+    private boolean activated;
+
+    public ControlActivatedDetector(Control control) {
+        this.control = control;
+    }
+
+    public Control getControl() {
+        return control;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void poll() {
+        float newState = control.getValue();
+        activated = false;
+        if (null != previousState) {
+            if (newState > control.getDeadZone() && previousState <= control.getDeadZone()) {
+                activated = true;
+            }
+        }
+        previousState = newState;
+    }
+
+    public void reset() {
+        previousState = null;
+    }
+}

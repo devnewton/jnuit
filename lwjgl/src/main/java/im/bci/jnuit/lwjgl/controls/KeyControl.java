@@ -1,3 +1,4 @@
+/*
 The MIT License (MIT)
 
 Copyright (c) 2013 devnewton <devnewton@bci.im>
@@ -19,3 +20,57 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+*/
+package im.bci.jnuit.lwjgl.controls;
+
+import im.bci.jnuit.controls.Control;
+import org.lwjgl.input.Keyboard;
+
+public class KeyControl implements Control {
+
+    private final int key;
+    
+    public KeyControl(int key) {
+        this.key = key;
+    }
+
+    @Override
+    public String getName() {
+        return Keyboard.getKeyName(key);
+    }
+
+    @Override
+    public float getDeadZone() {
+        return 0.1f;
+    }
+
+    @Override
+    public float getValue() {
+        return Keyboard.isKeyDown(key) ? 1.0f : 0.0f;
+    }
+
+    @Override
+    public String getControllerName() {
+        return "Keyboard";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.key;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final KeyControl other = (KeyControl) obj;
+        return this.key == other.key;
+    }
+
+}
