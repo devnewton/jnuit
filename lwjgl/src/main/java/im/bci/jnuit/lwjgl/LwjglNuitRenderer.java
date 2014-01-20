@@ -184,6 +184,10 @@ public abstract class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisi
 
     private void drawBackgroundAndBorder(Widget widget) {
         widget.getBackground().accept(widget, this);
+        drawBorders(widget);
+    }
+
+    private void drawBorders(Widget widget) {
         widget.getTopBorder().accept(widget, topBorderRenderer);
         widget.getBottomBorder().accept(widget, bottomBorderRenderer);
         widget.getLeftBorder().accept(widget, leftBorderRenderer);
@@ -256,7 +260,8 @@ public abstract class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisi
             if (focused == child && null != child.getFocusedBackground()) {
                 background = child.getFocusedBackground();
             }
-            drawBackgroundAndBorder(child);
+            background.accept(child, this);
+            drawBorders(child);
             child.accept(this);
         }
         if (null != focused) {
