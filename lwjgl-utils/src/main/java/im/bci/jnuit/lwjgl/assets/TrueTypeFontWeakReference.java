@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.assets;
 
-import im.bci.jnuit.lwjgl.TrueTypeFont;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
@@ -37,13 +37,13 @@ import org.lwjgl.opengl.GL11;
  *
  * @author devnewton
  */
-public class TrueTypeFontWeakReference extends WeakReference<TrueTypeFont> {
+public class TrueTypeFontWeakReference extends WeakReference<LwjglNuitFont> {
 
     Integer textureId;
     String name;
     private static final Logger logger = Logger.getLogger(TrueTypeFontWeakReference.class.getName());
 
-    TrueTypeFontWeakReference(String name, TrueTypeFont font, ReferenceQueue<TrueTypeFont> queue) {
+    TrueTypeFontWeakReference(String name, LwjglNuitFont font, ReferenceQueue<LwjglNuitFont> queue) {
         super(font, queue);
         textureId = font.getFontTextureID();
         this.name = name;

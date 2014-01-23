@@ -26,7 +26,7 @@ package im.bci.jnuit.lwjgl.assets;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import im.bci.jnuit.lwjgl.IconLoader;
 import im.bci.jnuit.lwjgl.LwjglHelper;
-import im.bci.jnuit.lwjgl.TrueTypeFont;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.lwjgl.animation.NanimationCollection;
 import im.bci.jnuit.lwjgl.animation.NanimParser.Nanim;
 import java.awt.Font;
@@ -140,7 +140,7 @@ public class AssetsLoader {
         }
     }
 
-    public TrueTypeFont loadFont(String name) {
+    public LwjglNuitFont loadFont(String name) {
         logger.log(Level.FINE, "Load font {0}", name);
         Font f;
         try (InputStream is = vfs.open(name)) {
@@ -149,7 +149,7 @@ public class AssetsLoader {
         } catch (IOException | FontFormatException e) {
             f = new Font("monospaced", Font.BOLD, 24);
         }
-        TrueTypeFont font = new FontAsset(f, true, new char[0], new HashMap<Character, BufferedImage>());
+        LwjglNuitFont font = new FontAsset(f, true, new char[0], new HashMap<Character, BufferedImage>());
         font.setCorrection(false);
         return font;
     }
@@ -162,7 +162,7 @@ public class AssetsLoader {
         }
     }
 
-    private static class FontAsset extends TrueTypeFont {
+    private static class FontAsset extends LwjglNuitFont {
 
         public FontAsset(Font font, boolean antiAlias, char[] additionalChars, Map<Character, BufferedImage> specialCharacters) {
             super(font, antiAlias, additionalChars, specialCharacters);

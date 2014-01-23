@@ -57,7 +57,7 @@ import org.lwjgl.opengl.GL11;
 public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, NuitRenderer {
 
     private final NuitTranslator translator;
-    private final TrueTypeFont font;
+    private final LwjglNuitFont font;
     private final TopBorderRenderer topBorderRenderer = new TopBorderRenderer();
     private final BottomBorderRenderer bottomBorderRenderer = new BottomBorderRenderer();
     private final LeftBorderRenderer leftBorderRenderer = new LeftBorderRenderer();
@@ -151,7 +151,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     }
 
-    public LwjglNuitRenderer(NuitTranslator translator, TrueTypeFont font) {
+    public LwjglNuitRenderer(NuitTranslator translator, LwjglNuitFont font) {
         this.translator = translator;
         this.font = font;
     }
@@ -203,7 +203,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         String translatedText = translator.getMessage(widget.getText());
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f /*- font.getWidth(translatedText)/2.0f*/, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        font.drawString(translatedText, TrueTypeFont.Align.CENTER);
+        font.drawString(translatedText, LwjglNuitFont.Align.CENTER);
         GL11.glPopAttrib();
         GL11.glPopMatrix();
     }

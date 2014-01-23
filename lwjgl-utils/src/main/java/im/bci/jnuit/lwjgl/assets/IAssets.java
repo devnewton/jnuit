@@ -24,8 +24,8 @@
 
 package im.bci.jnuit.lwjgl.assets;
 
-import im.bci.jnuit.NuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 
 /**
  *
@@ -41,7 +41,7 @@ public interface IAssets {
 
     IAnimationCollection getAnimations(String name);
 
-    NuitFont getFont(String name);
+    LwjglNuitFont getFont(String name);
 
     ITexture getTexture(String name);
 
