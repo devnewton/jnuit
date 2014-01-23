@@ -29,10 +29,10 @@ THE SOFTWARE. -->
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-lwjgl</artifactId>
+    <artifactId>jnuit-lwjgl-utils</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-lwjgl</name>
-    <description>jnuit lwjgl implementation</description>
+    <name>jnuit-lwjgl-utils</name>
+    <description>jnuit lwjgl utility classes</description>
     <url>http://git.bci.im/jnuit</url>
     <licenses>
         <license>
@@ -107,16 +107,20 @@ THE SOFTWARE. -->
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl</artifactId>
+            <groupId>im.bci</groupId>
+            <artifactId>jnuit-lwjgl</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl_util</artifactId>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
         </dependency>
         <dependency>
             <groupId>im.bci</groupId>
-            <artifactId>jnuit-core</artifactId>
+            <artifactId>libtiled-jpurexml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.l33tlabs.twl</groupId>
+            <artifactId>pngdecoder</artifactId>
         </dependency>
     </dependencies>
     <profiles>

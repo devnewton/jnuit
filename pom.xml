@@ -60,6 +60,7 @@ THE SOFTWARE. -->
     <modules>
         <module>core</module>
         <module>lwjgl</module>
+        <module>lwjgl-utils</module>
         <module>tablelayout</module>
     </modules>
     <dependencyManagement>
@@ -77,6 +78,11 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>jnuit-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
+                <artifactId>jnuit-lwjgl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
