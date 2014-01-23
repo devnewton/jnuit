@@ -26,6 +26,7 @@ package im.bci.jnuit.lwjgl.assets;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
@@ -41,9 +42,9 @@ public class VirtualFileSystem {
         directories = Arrays.copyOf(dirs, dirs.length);
     }
     
-    public InputStream open(String name) throws FileNotFoundException {
+    public InputStream open(String name) throws IOException {
         for(File dir : directories) {
-            File f = new File(dir, name);
+            File f = new File(dir, name).getCanonicalFile();
             if(f.exists()) {
                 return new FileInputStream(f);
             }            

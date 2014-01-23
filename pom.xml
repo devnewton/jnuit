@@ -29,7 +29,7 @@ THE SOFTWARE. -->
         <version>7</version>
     </parent>
     <artifactId>jnuit</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <name>jnuit</name>
     <packaging>pom</packaging>
     <description>Simple gui toolkit for lwjgl or playn videogames.</description>
@@ -92,7 +92,7 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>libtiled-jpurexml</artifactId>
-                <version>0.2</version>
+                <version>0.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.l33tlabs.twl</groupId>
