@@ -23,32 +23,41 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.assets;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Arrays;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.lwjgl.opengl.GL11;
 
 /**
  *
  * @author devnewton
  */
-public class VirtualFileSystem {
-    
-    private final File[] directories;
-    
-    public VirtualFileSystem(File... dirs) {
-        directories = Arrays.copyOf(dirs, dirs.length);
+public class TrueTypeFontWeakReference extends WeakReference<LwjglNuitFont> {
+
+    Integer textureId;
+    String name;
+    private static final Logger logger = Logger.getLogger(TrueTypeFontWeakReference.class.getName());
+
+    TrueTypeFontWeakReference(String name, LwjglNuitFont font, ReferenceQueue<LwjglNuitFont> queue) {
+        super(font, queue);
+        textureId = font.getFontTextureID();
+        this.name = name;
     }
-    
-    public InputStream open(String name) throws FileNotFoundException {
-        for(File dir : directories) {
-            File f = new File(dir, name);
-            if(f.exists()) {
-                return new FileInputStream(f);
-            }            
+
+    void delete() {
+        if (null != textureId) {
+            logger.log(Level.FINE, "Unload font {0}", name);
+            ByteBuffer temp = ByteBuffer.allocateDirect(4);
+            temp.order(ByteOrder.nativeOrder());
+            IntBuffer intBuffer = temp.asIntBuffer();
+            intBuffer.put(textureId);
+            GL11.glDeleteTextures(intBuffer);
+            textureId = null;
         }
-        throw new FileNotFoundException();
     }
-    
 }

@@ -55,7 +55,7 @@ import org.lwjgl.util.glu.GLU;
  *
  * @new version edited by David Aaron Muhar (bobjob)
  */
-public class TrueTypeFont implements NuitFont {
+public class LwjglNuitFont implements NuitFont {
 
     public enum Align {
 
@@ -161,7 +161,7 @@ public class TrueTypeFont implements NuitFont {
         public int storedY;
     }
 
-    public TrueTypeFont(Font font, boolean antiAlias, char[] additionalChars, Map<Character, BufferedImage> specialCharacters) {
+    public LwjglNuitFont(Font font, boolean antiAlias, char[] additionalChars, Map<Character, BufferedImage> specialCharacters) {
         this.font = font;
         this.fontSize = font.getSize() + 3;
         this.antiAlias = antiAlias;

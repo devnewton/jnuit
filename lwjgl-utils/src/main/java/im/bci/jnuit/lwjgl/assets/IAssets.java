@@ -24,8 +24,8 @@
 
 package im.bci.jnuit.lwjgl.assets;
 
-import im.bci.jnuit.lwjgl.TrueTypeFont;
 import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 
 /**
  *
@@ -41,15 +41,15 @@ public interface IAssets {
 
     IAnimationCollection getAnimations(String name);
 
-    TrueTypeFont getFont(String name);
+    LwjglNuitFont getFont(String name);
 
     ITexture getTexture(String name);
 
     TmxAsset getTmx(String name);
 
-    Texture grabScreenToTexture();
+    ITexture grabScreenToTexture();
 
-    void setIcon();
+    void setIcon(String name);
 
     String getText(String name);
     

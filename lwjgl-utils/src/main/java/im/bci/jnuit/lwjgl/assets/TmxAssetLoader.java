@@ -23,44 +23,50 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.tmxloader.TmxImage;
 import im.bci.tmxloader.TmxLoader;
 import im.bci.tmxloader.TmxMap;
+import im.bci.tmxloader.TmxTile;
 import im.bci.tmxloader.TmxTileset;
 
 /**
  *
  * @author devnewton
  */
-public class TmxAssetLoader extends TmxLoader {
+public class TmxAssetLoader {
 
     private final IAssets assets;
-    private String parentDir;
 
     public TmxAssetLoader(IAssets assets) {
         this.assets = assets;
     }
-
-    public TmxAsset loadTmx(String name) {
-        parentDir = name.substring(0, name.lastIndexOf('/') + 1);
-        TmxMap map = load(assets.getText(name));
-        adjustImagesSource(map);
-        return new TmxAsset(assets, map);
-    }
-
-    @Override
-    protected String openExternalTileset(String source) {
-        return assets.getText(parentDir + source);
-
-    }
-    /* public static void main(String[] args) throws Exception {
-     TmxFileLoader f = new TmxFileLoader();
-     TmxMap lol = f.load(new File("/home/tralala/dev/ned-et-les-maki/game/data/levels/test.tmx"));
-     System.out.print(lol);
-     }*/
-
-    private void adjustImagesSource(TmxMap map) {
+    
+    public TmxAsset loadTmx(String mapFile) {
+        final String mapParentDir = mapFile.substring(0, mapFile.lastIndexOf('/') + 1);
+        TmxLoader loader = new TmxLoader();
+        TmxMap map = new TmxMap();
+        loader.parseTmx(map, assets.getText(mapFile));
         for (TmxTileset tileset : map.getTilesets()) {
-            tileset.getImage().setSource(parentDir + tileset.getImage().getSource());
+            String tilesetParentDir;
+            if (null != tileset.getSource()) {
+                final String tilesetFile = mapParentDir + tileset.getSource();
+                tilesetParentDir = tilesetFile.substring(0, tilesetFile.lastIndexOf('/') + 1);
+                loader.parseTsx(map, tileset, assets.getText(tilesetFile));
+            } else {
+                tilesetParentDir = mapParentDir;
+            }
+            final TmxImage tilesetImage = tileset.getImage();
+            if (null != tilesetImage) {
+                tilesetImage.setSource(tilesetParentDir + tilesetImage.getSource());
+            }
+            for (TmxTile tile : tileset.getTiles()) {
+                final TmxImage tileImage = tile.getFrame().getImage();
+                if(tilesetImage != tileImage) {
+                    tileImage.setSource(tilesetParentDir + tileImage.getSource());
+                }
+            }
         }
+        loader.decode(map);
+        return new TmxAsset(assets, map);
     }
 }

@@ -23,7 +23,7 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
-import im.bci.jnuit.lwjgl.TrueTypeFont;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.lwjgl.animation.NanimationCollection;
 import java.lang.ref.ReferenceQueue;
@@ -44,7 +44,7 @@ public class GarbageCollectedAssets implements IAssets {
     private final HashMap<String/* name */, AnimationCollectionWeakReference> animations = new HashMap<>();
     private final ReferenceQueue<NanimationCollection> animationsReferenceQueue = new ReferenceQueue<>();
     private final HashMap<String/* name */, TrueTypeFontWeakReference> fonts = new HashMap<>();
-    private final ReferenceQueue<TrueTypeFont> fontsReferenceQueue = new ReferenceQueue<>();
+    private final ReferenceQueue<LwjglNuitFont> fontsReferenceQueue = new ReferenceQueue<>();
     private static final Logger logger = Logger.getLogger(GarbageCollectedAssets.class.getName());
 
     public GarbageCollectedAssets(AssetsLoader assets) {
@@ -104,17 +104,17 @@ public class GarbageCollectedAssets implements IAssets {
     }
 
     @Override
-    public TrueTypeFont getFont(String name) {
+    public LwjglNuitFont getFont(String name) {
         TrueTypeFontWeakReference fontRef = fonts.get(name);
         if (fontRef != null) {
-            TrueTypeFont font = fontRef.get();
+            LwjglNuitFont font = fontRef.get();
             if (font != null) {
                 return font;
             } else {
                 fonts.remove(name);
             }
         }
-        TrueTypeFont font = assets.loadFont(name);
+        LwjglNuitFont font = assets.loadFont(name);
         putFont(name, font);
         return font;
     }
@@ -151,8 +151,8 @@ public class GarbageCollectedAssets implements IAssets {
     }
 
     @Override
-    public void setIcon() {
-        assets.setIcon();
+    public void setIcon(String name) {
+        assets.setIcon(name);
     }
 
     private void putAnim(String name, NanimationCollection anim) {
@@ -163,7 +163,7 @@ public class GarbageCollectedAssets implements IAssets {
         textures.put(name, new TextureWeakReference(name, texture, texturesReferenceQueue));
     }
 
-    private void putFont(String name, TrueTypeFont font) {
+    private void putFont(String name, LwjglNuitFont font) {
         fonts.put(name, new TrueTypeFontWeakReference(name, font, fontsReferenceQueue));
     }
 

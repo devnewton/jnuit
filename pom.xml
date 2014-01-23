@@ -29,7 +29,7 @@ THE SOFTWARE. -->
         <version>7</version>
     </parent>
     <artifactId>jnuit</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <name>jnuit</name>
     <packaging>pom</packaging>
     <description>Simple gui toolkit for lwjgl or playn videogames.</description>
@@ -60,6 +60,7 @@ THE SOFTWARE. -->
     <modules>
         <module>core</module>
         <module>lwjgl</module>
+        <module>lwjgl-utils</module>
         <module>tablelayout</module>
     </modules>
     <dependencyManagement>
@@ -81,6 +82,11 @@ THE SOFTWARE. -->
             </dependency>
             <dependency>
                 <groupId>im.bci</groupId>
+                <artifactId>jnuit-lwjgl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
                 <artifactId>tablelayout</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -92,7 +98,7 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>libtiled-jpurexml</artifactId>
-                <version>0.2</version>
+                <version>0.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.l33tlabs.twl</groupId>
