@@ -151,8 +151,8 @@ public class GarbageCollectedAssets implements IAssets {
     }
 
     @Override
-    public void setIcon() {
-        assets.setIcon();
+    public void setIcon(String name) {
+        assets.setIcon(name);
     }
 
     private void putAnim(String name, NanimationCollection anim) {

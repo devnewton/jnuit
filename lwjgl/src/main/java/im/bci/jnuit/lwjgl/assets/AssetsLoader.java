@@ -154,8 +154,8 @@ public class AssetsLoader {
         return font;
     }
 
-    public void setIcon() {
-        try (InputStream is = vfs.open("icon.png")) {
+    public void setIcon(String name) {
+        try (InputStream is = vfs.open(name)) {
             IconLoader.setIcon(is);
         } catch (IOException ex) {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
