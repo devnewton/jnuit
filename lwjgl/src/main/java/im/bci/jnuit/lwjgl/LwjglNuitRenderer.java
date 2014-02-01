@@ -322,7 +322,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String translatedText = translator.getMessage(widget.getText());
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(translatedText) / 4.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(translatedText) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
         font.drawString(translatedText);
         GL11.glPopAttrib();
