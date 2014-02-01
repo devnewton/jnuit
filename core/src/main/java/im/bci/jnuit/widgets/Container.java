@@ -125,7 +125,7 @@ public class Container extends Widget {
         }
     }
 
-    protected void setFocusedChild(Widget focusedChild) {
+    public void setFocusedChild(Widget focusedChild) {
         this.focusedChild = focusedChild;
     }
 
