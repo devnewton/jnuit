@@ -29,22 +29,22 @@ THE SOFTWARE. -->
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-lwjgl-utils</artifactId>
+    <artifactId>jpegdecoder</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-lwjgl-utils</name>
-    <description>jnuit lwjgl utility classes</description>
+    <name>jpegdecoder</name>
+    <description>Java JPEG decoder</description>
     <url>http://git.bci.im/jnuit</url>
     <licenses>
         <license>
-            <name>MIT</name>
-            <url>http://git.bci.im/jnuit/blob/master/LICENSE</url>
+            <name>BSD</name>
+            <url>http://git.bci.im/jnuit/blob/master/jpegdecoder/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
     <developers>
         <developer>
-            <name>Dave Newton</name>
-            <url>http://devnewton.bci.im</url>
+            <name>Matthias Mann</name>
+            <url>http://www.matthiasmann.de/</url>
         </developer>
     </developers>
     <properties>
@@ -102,31 +102,9 @@ THE SOFTWARE. -->
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                 </configuration>
-            </plugin> 
+            </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>jnuit-lwjgl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>libtiled-jpurexml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>jpegdecoder</artifactId>
-        </dependency>   
-        <dependency>
-            <groupId>org.l33tlabs.twl</groupId>
-            <artifactId>pngdecoder</artifactId>
-        </dependency>
-    </dependencies>
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
