@@ -21,35 +21,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.lwjgl.smjpeg;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+package im.bci.smjpegdecoder;
+
+import java.util.Arrays;
 
 /**
  *
  * @author devnewton
  */
-public class SmjpegOutputBuffers {
-
-    private final ByteBuffer videoFrame;
-    private final int videoFrameStride;
-
-    public SmjpegOutputBuffers(ByteBuffer videoFrame, int videoFrameStride) {
-        this.videoFrame = videoFrame;
-        this.videoFrameStride = videoFrameStride;
+public enum SmjpegVideoEncoding {
+    JFIF(new byte[] {'J','F','I','F'});
+    
+    final private byte[] magic;
+    
+    SmjpegVideoEncoding(byte[] magic) {
+        this.magic = magic;
     }
-
-    public SmjpegOutputBuffers(SmjpegParser parser) {
-        this.videoFrameStride = parser.getVideoWidth() * 4;
-        this.videoFrame = ByteBuffer.allocateDirect(this.videoFrameStride * parser.getVideoHeight()).order(ByteOrder.nativeOrder());
-    }
-
-    public ByteBuffer getVideoFrame() {
-        return videoFrame;
-    }
-
-    public int getVideoFrameStride() {
-        return videoFrameStride;
+    
+    public static SmjpegVideoEncoding fromMagic(byte[] magic) throws SmjpegParsingException {
+        for(SmjpegVideoEncoding e : values()) {
+            if(Arrays.equals(e.magic, magic)) {
+                return e;
+            }
+        }
+        throw new SmjpegParsingException("Unknown video encoding: " + magic);
     }
 }

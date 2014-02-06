@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package im.bci.jnuit.lwjgl.smjpeg;
+package im.bci.smjpegdecoder;
 
 import java.io.IOException;
 

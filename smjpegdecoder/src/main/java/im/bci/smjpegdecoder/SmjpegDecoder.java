@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.lwjgl.smjpeg;
+package im.bci.smjpegdecoder;
 
 import de.matthiasmann.jpegdecoder.JPEGDecoder;
 import java.awt.Color;
@@ -40,7 +40,7 @@ import javax.imageio.ImageIO;
  *
  * @author devnewton
  */
-public class SmjpegParser {
+public class SmjpegDecoder {
 
     private final RandomAccessFile file;
     private int clipLengthInMilliseconds;
@@ -48,41 +48,47 @@ public class SmjpegParser {
     private int audioBitsPerSample;
     private int audioChannels;
     private SmjpegAudioEncoding audioEncoding;
+    private SmjpegVideoEncoding videoEncoding;
     private int videoWidth;
     private int videoHeight;
+    private final long dataFilePointer;
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        
-        String testDir = System.getProperty("user.home")+ "/tmp/smjpeg";
+
+        String testDir = System.getProperty("user.home") + "/tmp/smjpeg";
         try (RandomAccessFile file = new RandomAccessFile(testDir + "/test.smjpeg", "r")) {
-            SmjpegParser parser = new SmjpegParser(file);
-            final int timePerFrame = 1000 / 60;
-            int timeElapsed = 0;
+            SmjpegDecoder parser = new SmjpegDecoder(file);
             BufferedImage image = new BufferedImage(parser.getVideoWidth(), parser.getVideoHeight(), BufferedImage.TYPE_INT_RGB);
             int frame = 0;
             SmjpegOutputBuffers outputBuffers = new SmjpegOutputBuffers(parser);
-            while (parser.readSome(timeElapsed, outputBuffers)) {
-                int index = 0;
-                for (int y = 0; y < parser.getVideoHeight(); ++y) {
-                    for (int x = 0; x < parser.getVideoWidth(); ++x) {
-                        int r = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                        int g = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                        int b = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                        int a = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                        Color c = new Color(r, g, b, a);
-                        image.setRGB(x, y, c.getRGB());
+            final int timePerFrame = 1000 / 60;
+            int lastDecodedFrameTimeStamp = -1;
+            for (int timeElapsed = 0; timeElapsed < parser.getClipLengthInMilliseconds(); timeElapsed += timePerFrame) {
+                parser.getFrame(timeElapsed, outputBuffers);
+                if (lastDecodedFrameTimeStamp != outputBuffers.getVideoFrameTimestamp()) {
+                    int index = 0;
+                    for (int y = 0; y < parser.getVideoHeight(); ++y) {
+                        for (int x = 0; x < parser.getVideoWidth(); ++x) {
+                            int r = outputBuffers.getVideoFrame().get(index++) & 0xff;
+                            int g = outputBuffers.getVideoFrame().get(index++) & 0xff;
+                            int b = outputBuffers.getVideoFrame().get(index++) & 0xff;
+                            int a = outputBuffers.getVideoFrame().get(index++) & 0xff;
+                            Color c = new Color(r, g, b, a);
+                            image.setRGB(x, y, c.getRGB());
+                        }
                     }
+                    ImageIO.write(image, "png", new File(String.format("%s/frames/%06d.png", testDir, frame++)));
+                    lastDecodedFrameTimeStamp = outputBuffers.getVideoFrameTimestamp();
                 }
-                ImageIO.write(image, "png", new File(testDir + "/frames/" + (frame++) + ".png"));
-                timeElapsed += timePerFrame;
             }
         }
     }
 
-    private SmjpegParser(RandomAccessFile file) throws IOException {
+    private SmjpegDecoder(RandomAccessFile file) throws IOException {
         this.file = file;
         decodeMandatoryHeader();
         decodeOptionalHeaders();
+        dataFilePointer = file.getFilePointer();
     }
 
     public int getAudioRate() {
@@ -101,6 +107,10 @@ public class SmjpegParser {
         return audioEncoding;
     }
 
+    public SmjpegVideoEncoding getVideoEncoding() {
+        return videoEncoding;
+    }
+
     public int getVideoWidth() {
         return videoWidth;
     }
@@ -113,46 +123,36 @@ public class SmjpegParser {
         return clipLengthInMilliseconds;
     }
 
-    /*
-     Interleaved chunks of audio/video data:
-     4 bytes magic - "sndD" for sound data, "vidD" for video data
-     Uint32 millisecond timestamp
-     Uint32 chunk length 
-     */
-    public boolean readSome(int currentTimeInMilliseconds, SmjpegOutputBuffers outputBuffers) throws IOException {
-        for (;;) {
-            long fp = file.getFilePointer();
-            if (fp >= file.length()) {
-                return false;
-            }
+    public void getFrame(int timestamp, SmjpegOutputBuffers outputBuffers) throws IOException {
+        file.seek(dataFilePointer);
+        long lastVideoData = -1;
+        int lastVideoTimestamp = -1;
+        for (long fp = dataFilePointer; file.getFilePointer() < file.length(); fp = file.getFilePointer()) {
             byte[] magicBytes = new byte[4];
             file.readFully(magicBytes);
-            String magic = new String(magicBytes, "UTF-8");
-            if ("DONE".equals(magic)) {
+            if (Arrays.equals(SmjpegMagic.DONE_CHUNK, magicBytes)) {
                 file.seek(file.length());
-                return false;
+                break;
             }
-
-            int timestamp = file.readInt();
-            if (timestamp > currentTimeInMilliseconds) {
-                file.seek(fp);
-                return true;
+            int chunkTimestamp = file.readInt();
+            if (chunkTimestamp > timestamp) {
+                break;
             }
             int length = file.readInt();
-            fp = file.getFilePointer();
-            switch (magic) {
-                case "sndD":
-                    decodeAudioChunk();
-                    break;
-                case "vidD":
-                    decodeVideoChunk(outputBuffers);
-                    break;
+            if (Arrays.equals(SmjpegMagic.VIDEO_CHUNK, magicBytes)) {
+                lastVideoData = file.getFilePointer();
+                lastVideoTimestamp = chunkTimestamp;
             }
-            file.seek(fp + length);
+            file.skipBytes(length);
+        }
+        if (lastVideoData > 0) {
+            if (lastVideoTimestamp != outputBuffers.getVideoFrameTimestamp()) {
+                file.seek(lastVideoData);
+                decodeVideoChunk(outputBuffers);
+                outputBuffers.setVideoFrameTimestamp(lastVideoTimestamp);
+            }
         }
     }
-
-    private static final byte[] mandatoryHeaderMagic = new byte[]{0, '\n', 'S', 'M', 'J', 'P', 'E', 'G'};
 
     /*
      8 bytes magic - "^@\nSMJPEG"
@@ -162,7 +162,7 @@ public class SmjpegParser {
     private void decodeMandatoryHeader() throws IOException {
         byte[] magicBytes = new byte[8];
         file.readFully(magicBytes);
-        if (!Arrays.equals(mandatoryHeaderMagic, magicBytes)) {
+        if (!Arrays.equals(SmjpegMagic.MANDATORY_HEADER, magicBytes)) {
             throw new SmjpegParsingException("This is not a SMJPEG file");
         }
         int version = file.readInt();
@@ -176,21 +176,16 @@ public class SmjpegParser {
         while (file.getFilePointer() < file.length()) {
             byte[] magicBytes = new byte[4];
             file.readFully(magicBytes);
-            String magic = new String(magicBytes, "UTF-8");
-            switch (magic) {
-                case "_TXT":
-                    decodeCommentHeader();
-                    break;
-                case "_SND":
-                    decodeAudioHeader();
-                    break;
-                case "_VID":
-                    decodeVideoHeader();
-                    break;
-                case "HEND":
-                    return;
-                default:
-                    throw new SmjpegParsingException("Unknow SMJPEG header: " + magic);
+            if (Arrays.equals(SmjpegMagic.COMMENT_HEADER, magicBytes)) {
+                decodeCommentHeader();
+            } else if (Arrays.equals(SmjpegMagic.AUDIO_HEADER, magicBytes)) {
+                decodeAudioHeader();
+            } else if (Arrays.equals(SmjpegMagic.VIDEO_HEADER, magicBytes)) {
+                decodeVideoHeader();
+            } else if (Arrays.equals(SmjpegMagic.END_HEADER, magicBytes)) {
+                break;
+            } else {
+                throw new SmjpegParsingException("Unknow SMJPEG header: " + magicBytes);
             }
         }
     }
@@ -221,8 +216,7 @@ public class SmjpegParser {
 
         byte[] audioEncodingBytes = new byte[4];
         file.readFully(audioEncodingBytes);
-        String audioEncodingStr = new String(audioEncodingBytes, "UTF-8");
-        audioEncoding = SmjpegAudioEncoding.valueOf(audioEncodingStr);
+        audioEncoding = SmjpegAudioEncoding.fromMagic(audioEncodingBytes);
 
         file.skipBytes(Math.max(0, length - 2 - 1 - 1 - 4));
     }
@@ -238,21 +232,13 @@ public class SmjpegParser {
      */
     private void decodeVideoHeader() throws IOException {
         int length = file.readInt();
-        /*int videoFrameCount = always zero with ffmpeg encoded files...*/
-        file.readInt();
+        file.skipBytes(4);//video frame count is always zero with ffmpeg encoded files...
         videoWidth = file.readUnsignedShort();
         videoHeight = file.readUnsignedShort();
         byte[] videoEncodingBytes = new byte[4];
         file.readFully(videoEncodingBytes);
-        String videoEncodingStr = new String(videoEncodingBytes, "UTF-8");
-        if (!"JFIF".equals(videoEncodingStr)) {
-            throw new SmjpegParsingException("Unknow video encoding: " + videoEncodingStr);
-        }
+        videoEncoding = SmjpegVideoEncoding.fromMagic(videoEncodingBytes);
         file.skipBytes(Math.max(0, length - 4 - 4 - 2 - 2));
-    }
-
-    private void decodeAudioChunk() {
-//TODO
     }
 
     private void decodeVideoChunk(SmjpegOutputBuffers outputBuffers) throws IOException {

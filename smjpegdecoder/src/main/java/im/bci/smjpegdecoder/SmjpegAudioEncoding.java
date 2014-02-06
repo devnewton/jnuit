@@ -22,13 +22,30 @@
  THE SOFTWARE.
  */
 
-package im.bci.jnuit.lwjgl.smjpeg;
+package im.bci.smjpegdecoder;
+
+import java.util.Arrays;
 
 /**
  *
  * @author devnewton
  */
 public enum SmjpegAudioEncoding {
-    NONE,
-    APCM /*ADPCM compressed*/
+    NONE(new byte[] {'N','O','N','E'}),
+    APCM(new byte[] {'A','P','C','M'});
+    
+    final private byte[] magic;
+    
+    SmjpegAudioEncoding(byte[] magic) {
+        this.magic = magic;
+    }
+    
+    public static SmjpegAudioEncoding fromMagic(byte[] magic) throws SmjpegParsingException {
+        for(SmjpegAudioEncoding e : values()) {
+            if(Arrays.equals(e.magic, magic)) {
+                return e;
+            }
+        }
+        throw new SmjpegParsingException("Unknown audio encoding: " + magic);
+    }
 }
