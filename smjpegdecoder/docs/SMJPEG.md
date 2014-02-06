@@ -1,11 +1,7 @@
+#  SMJPEG Format specification
+
 This file documents the simple animation format used by SMJPEG
 This is for static animation files, not for audio/video streaming.
-
-# Encoding using avconv
-
-avconv -i movie.ogv -an -f smjpeg movie.smjpeg
-
-# Format specification
 
 All 32-bit and 16-bit values are stored in big-endian format.
 
