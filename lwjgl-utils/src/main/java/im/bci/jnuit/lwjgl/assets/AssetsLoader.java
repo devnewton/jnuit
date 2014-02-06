@@ -29,6 +29,7 @@ import im.bci.jnuit.lwjgl.LwjglHelper;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.lwjgl.animation.NanimationCollection;
 import im.bci.jnuit.lwjgl.animation.NanimParser.Nanim;
+import im.bci.smjpegdecoder.SmjpegDecoder;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
@@ -83,6 +84,14 @@ public class AssetsLoader {
             return anim;
         } catch (IOException e) {
             throw new RuntimeException("Cannot load animation " + name, e);
+        }
+    }
+    
+    public SmjpegDecoder loadVideo(String name) {
+        try {
+            return new SmjpegDecoder(vfs.openRandomAccess(name));
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load video" + name, e);
         }
     }
 

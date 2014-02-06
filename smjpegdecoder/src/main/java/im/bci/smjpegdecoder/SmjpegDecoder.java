@@ -84,7 +84,7 @@ public class SmjpegDecoder {
         }
     }
 
-    private SmjpegDecoder(RandomAccessFile file) throws IOException {
+    public SmjpegDecoder(RandomAccessFile file) throws IOException {
         this.file = file;
         decodeMandatoryHeader();
         decodeOptionalHeaders();

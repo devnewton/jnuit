@@ -87,6 +87,15 @@ public class GarbageCollectedAssets implements IAssets {
     public IAnimationCollection getAnimations(String name) {
         if (name.endsWith("png")) {
             return new TextureAnimationCollectionWrapper(this, name, 0, 0, 1, 1);
+        } else if (name.endsWith("smjpeg")) {
+            return new SmjpegAnimation(assets.loadVideo(name)) {
+                @Override
+                protected Texture createTexture() {
+                    Texture texture = super.createTexture();
+                    putTexture("!smjpeg_" + new Date().getTime(), texture);
+                    return texture;
+                }
+            };
         } else {
             AnimationCollectionWeakReference animRef = animations.get(name);
             if (null != animRef) {

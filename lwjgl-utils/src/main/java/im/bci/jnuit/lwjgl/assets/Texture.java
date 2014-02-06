@@ -23,9 +23,6 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.assets;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -34,16 +31,12 @@ import org.lwjgl.opengl.GL11;
  */
 public class Texture implements ITexture {
 
-    private int id;
-    private int width, height;
-    private boolean alpha;
+    private final int id;
+    private final int width, height;
+    private final boolean alpha;
 
     public Texture(int width, int height, boolean alpha) {
-        ByteBuffer temp = ByteBuffer.allocateDirect(4);
-        temp.order(ByteOrder.nativeOrder());
-        IntBuffer intBuffer = temp.asIntBuffer();
-        GL11.glGenTextures(intBuffer);
-        id = intBuffer.get(0);
+        id = GL11.glGenTextures();
         this.width = width;
         this.height = height;
         this.alpha = alpha;
