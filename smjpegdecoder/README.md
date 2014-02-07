@@ -8,9 +8,9 @@ Frames are individually compressed as jpeg images. Jpeg decompression is done wi
 
 # Documentation
 
-[SMJPEG file format specification](docs/SMJPEG.md)
-[Frequently asked questions](docs/FAQ.md)
+- [SMJPEG file format specification](docs/SMJPEG.md)
+- [Frequently asked questions](docs/FAQ.md)
 
 # Sample code
 
-```java:src/test/java/im/bci/smjpegdecoder/sample/SmjpegSample.java```
+[Extract smjpeg frames](src/test/java/im/bci/smjpegdecoder/sample/SmjpegSample.java)
