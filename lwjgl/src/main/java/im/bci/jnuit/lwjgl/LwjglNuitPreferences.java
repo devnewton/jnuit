@@ -136,7 +136,7 @@ public class LwjglNuitPreferences implements NuitPreferences {
     }
 
     private String getSystemOrStoreProperty(String name, String defaultValue) {
-        final String systemProperty = System.getProperty("nedetlesmaki."+name);
+        final String systemProperty = System.getProperty("jnuit-basic-game."+name);
         if (null != systemProperty) {
             return systemProperty;
         } else {

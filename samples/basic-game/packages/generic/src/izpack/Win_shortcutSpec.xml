@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+<skipIfNotSupported/>
+<programGroup defaultName="Jnuit basic game example" location="applications"/>
+<shortcut name="Jnuit basic game example"
+        target="$JAVA_HOME\bin\javaw.exe"
+	commandLine="-jar  &quot;$INSTALL_PATH\${jnuit-basic-game-example_build_final_name}.jar &quot;"
+        description="Launch Jnuit basic game example"
+        workingDirectory="$INSTALL_PATH"
+        iconFile="$INSTALL_PATH\icon.ico"
+        initialState="normal"
+        programGroup="yes"
+        desktop="yes"
+        applications="no"
+        startMenu="no"
+        startup="no">
+	<createForPack name="Core"/>
+</shortcut>
+
+<shortcut
+ 		name="Uninstall Jnuit basic game example"
+		target="$JAVA_HOME\bin\javaw.exe"
+		workingDirectory=""
+		commandLine="-jar &quot;$INSTALL_PATH\Uninstaller\uninstaller.jar&quot;"
+ 		description="Run me with administrator privilege to uninstall Jnuit basic game example"
+ 		initialState="normal"
+		programGroup="yes"
+		desktop="no"
+		applications="no"
+		startMenu="no"
+		startup="no" >
+	<createForPack name="Core"/>
+</shortcut>
+
+
+</shortcuts>

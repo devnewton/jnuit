@@ -64,6 +64,7 @@ THE SOFTWARE. -->
         <module>lwjgl-utils</module>
         <module>smjpegdecoder</module>
         <module>tablelayout</module>
+        <module>samples/basic-game</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -85,6 +86,11 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>jnuit-lwjgl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
+                <artifactId>jnuit-lwjgl-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

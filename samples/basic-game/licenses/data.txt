@@ -1,0 +1,4 @@
+* Unless specified otherwise, data (images, animations, levels, sounds, musics...) are under the following license and copyright attribution:
+
+License: CC-BY-SA 4.0
+Author: devnewton <devnewton@bci.im>
