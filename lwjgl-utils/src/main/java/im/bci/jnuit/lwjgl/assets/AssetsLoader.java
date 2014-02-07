@@ -23,6 +23,7 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import de.matthiasmann.jpegdecoder.JPEGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import im.bci.jnuit.lwjgl.IconLoader;
 import im.bci.jnuit.lwjgl.LwjglHelper;
@@ -65,17 +66,23 @@ public class AssetsLoader {
     public Texture loadTexture(String name) {
         try {
             logger.log(Level.FINE, "Load texture {0}", name);
-            return loadPngTexture(name);
+            if (name.endsWith("png")) {
+                return loadPngTexture(name);
+            } else if (name.endsWith("jpg")) {
+                return loadJpegTexture(name);
+            } else {
+                throw new RuntimeException("Unknown texture file format (must be png or jpg): " + name);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Cannot load texture " + name, e);
         }
     }
 
     public NanimationCollection loadAnimations(String name) {
-        try (InputStream vfsInputStream= vfs.open(name)) {
+        try (InputStream vfsInputStream = vfs.open(name)) {
             logger.log(Level.FINE, "Load animation {0}", name);
             InputStream is;
-            if(name.endsWith(".gz")) {
+            if (name.endsWith(".gz")) {
                 is = new GZIPInputStream(vfsInputStream);
             } else {
                 is = vfsInputStream;
@@ -86,7 +93,7 @@ public class AssetsLoader {
             throw new RuntimeException("Cannot load animation " + name, e);
         }
     }
-    
+
     public SmjpegDecoder loadVideo(String name) {
         try {
             return new SmjpegDecoder(vfs.openRandomAccess(name));
@@ -138,12 +145,12 @@ public class AssetsLoader {
     }
 
     public String loadText(String name) {
-        try(InputStream is = vfs.open(name); Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\Z")) {
+        try (InputStream is = vfs.open(name); Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\Z")) {
             return s.next();
         } catch (FileNotFoundException ex) {
             logger.log(Level.SEVERE, null, ex);
             throw new RuntimeException("Cannot find text file: " + name, ex);
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             logger.log(Level.SEVERE, null, ex);
             throw new RuntimeException("Cannot load text file: " + name, ex);
         }
@@ -168,6 +175,25 @@ public class AssetsLoader {
             IconLoader.setIcon(is);
         } catch (IOException ex) {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private Texture loadJpegTexture(String name) throws IOException {
+        try (InputStream is = vfs.open(name)) {
+            JPEGDecoder decoder = new JPEGDecoder(is);
+            decoder.startDecode();
+            int texWidth = decoder.getImageWidth();
+            int texHeight = decoder.getImageHeight();
+            int stride = 4 * texWidth;
+            ByteBuffer buffer = ByteBuffer.allocateDirect(stride * texHeight);
+            decoder.decodeRGB(buffer, stride, decoder.getNumMCURows());
+            buffer.flip();
+            Texture texture = new Texture(texWidth, texHeight, false);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());
+            GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+            LwjglHelper.setupGLTextureParams();
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, texWidth, texHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+            return texture;
         }
     }
 
