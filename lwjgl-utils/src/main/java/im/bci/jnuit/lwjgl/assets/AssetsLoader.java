@@ -184,15 +184,15 @@ public class AssetsLoader {
             decoder.startDecode();
             int texWidth = decoder.getImageWidth();
             int texHeight = decoder.getImageHeight();
-            int stride = 4 * texWidth;
+            int stride = 3 * texWidth;
             ByteBuffer buffer = ByteBuffer.allocateDirect(stride * texHeight);
-            decoder.decodeRGB(buffer, stride, decoder.getNumMCURows());
+            decoder.decodeAllToRGB(buffer, stride);
             buffer.flip();
             Texture texture = new Texture(texWidth, texHeight, false);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());
             GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
             LwjglHelper.setupGLTextureParams();
-            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, texWidth, texHeight, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, texWidth, texHeight, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
             return texture;
         }
     }

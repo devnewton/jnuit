@@ -210,7 +210,7 @@ public class SmjpegDecoder {
         jpeg.startDecode();
         final ByteBuffer videoFrame = outputBuffers.getVideoFrame();
         videoFrame.rewind();
-        jpeg.decodeRGB(videoFrame, outputBuffers.getVideoFrameStride(), jpeg.getNumMCURows());
+        jpeg.decodeAllToRGB(videoFrame, outputBuffers.getVideoFrameStride());
         videoFrame.rewind();
     }
 }

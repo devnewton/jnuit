@@ -35,8 +35,7 @@ public class SmjpegSample {
                             int r = outputBuffers.getVideoFrame().get(index++) & 0xff;
                             int g = outputBuffers.getVideoFrame().get(index++) & 0xff;
                             int b = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                            int a = outputBuffers.getVideoFrame().get(index++) & 0xff;
-                            Color c = new Color(r, g, b, a);
+                            Color c = new Color(r, g, b);
                             image.setRGB(x, y, c.getRGB());
                         }
                     }

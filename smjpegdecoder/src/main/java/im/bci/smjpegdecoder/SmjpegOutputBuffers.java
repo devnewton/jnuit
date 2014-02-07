@@ -36,13 +36,18 @@ public class SmjpegOutputBuffers {
     private final int videoFrameStride;
     private int videoFrameTimestamp = -1;
 
+    /**
+     * 
+     * @param videoFrame Buffer to store RGB888 pixel format
+     * @param videoFrameStride 
+     */
     public SmjpegOutputBuffers(ByteBuffer videoFrame, int videoFrameStride) {
         this.videoFrame = videoFrame;
         this.videoFrameStride = videoFrameStride;
     }
 
     public SmjpegOutputBuffers(SmjpegDecoder parser) {
-        this.videoFrameStride = parser.getVideoWidth() * 4;
+        this.videoFrameStride = parser.getVideoWidth() * 3;
         this.videoFrame = ByteBuffer.allocateDirect(this.videoFrameStride * parser.getVideoHeight()).order(ByteOrder.nativeOrder());
     }
 
