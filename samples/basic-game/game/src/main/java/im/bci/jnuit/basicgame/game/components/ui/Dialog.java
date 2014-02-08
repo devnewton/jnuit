@@ -31,8 +31,6 @@ import im.bci.jnuit.animation.IPlay;
 import java.util.ArrayList;
 import com.google.inject.Inject;
 import im.bci.jnuit.background.TexturedBackground;
-import im.bci.jnuit.animation.IAnimationCollection;
-import im.bci.jnuit.animation.PlayMode;
 import im.bci.jnuit.background.Background;
 import im.bci.jnuit.background.NullBackground;
 import im.bci.jnuit.lwjgl.assets.IAssets;
@@ -88,9 +86,9 @@ public class Dialog extends Container {
             }
 
         };
-        nextButton.setX(1280 - 64);
+        nextButton.setX(1280 - 166);
         nextButton.setY(800 - 64);
-        nextButton.setWidth(64);
+        nextButton.setWidth(166);
         nextButton.setHeight(64);
 
         Button previousButton = new Button(toolkit, "") {
@@ -115,13 +113,13 @@ public class Dialog extends Container {
         };
         previousButton.setX(0);
         previousButton.setY(800 - 64);
-        previousButton.setWidth(64);
+        previousButton.setWidth(166);
         previousButton.setHeight(64);
 
         this.textLabel = new Label(toolkit, "");
-        textLabel.setX(64);
+        textLabel.setX(166);
         textLabel.setY(800 - 64);
-        textLabel.setWidth(1280 - 64 * 2);
+        textLabel.setWidth(1280 - 166 * 2);
         textLabel.setHeight(64);
 
         view = new Label(toolkit, "");

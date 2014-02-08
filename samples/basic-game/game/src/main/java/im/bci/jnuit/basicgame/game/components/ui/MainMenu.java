@@ -39,9 +39,7 @@ import im.bci.jnuit.widgets.VideoConfigurator;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.NuitRenderer;
-import im.bci.jnuit.animation.PlayMode;
 import im.bci.jnuit.basicgame.game.Game;
 import im.bci.jnuit.basicgame.game.Group;
 import im.bci.jnuit.basicgame.game.MainLoop;
@@ -55,7 +53,7 @@ import im.bci.jnuit.basicgame.game.events.HideMenuTrigger;
 public class MainMenu extends Component {
 
     private final Root root;
-    private Container mainMenu;
+    private Table mainMenu;
     private VideoConfigurator videoConfigurator;
     private AudioConfigurator audioConfigurator;
     private Table optionsMenu;
@@ -118,6 +116,7 @@ public class MainMenu extends Component {
 
     private void initMain() {
         mainMenu = new Table(toolkit);
+        mainMenu.defaults().expand();
         final Button startButton = new Button(toolkit, "main.menu.button.start") {
             @Override
             public void onOK() {
@@ -128,7 +127,8 @@ public class MainMenu extends Component {
         startButton.setY(556);
         startButton.setWidth(1265 - 961);
         startButton.setHeight(620 - 556);
-        mainMenu.add(startButton);
+        mainMenu.cell(startButton);
+        mainMenu.row();
 
         final Button resumeButton = new Button(toolkit, "main.menu.button.resume") {
             @Override
@@ -142,7 +142,8 @@ public class MainMenu extends Component {
         resumeButton.setY(607);
         resumeButton.setWidth(866 - 559);
         resumeButton.setHeight(670 - 607);
-        mainMenu.add(resumeButton);
+        mainMenu.cell(resumeButton);
+        mainMenu.row();
 
         final Button optionsButton = new Button(toolkit, "main.menu.button.options") {
             @Override
@@ -154,20 +155,9 @@ public class MainMenu extends Component {
         optionsButton.setY(695);
         optionsButton.setWidth(907 - 668);
         optionsButton.setHeight(755 - 695);
-        mainMenu.add(optionsButton);
-
-        final Button quitButton = new Button(toolkit, "main.menu.button.quit") {
-            @Override
-            public void onOK() {
-                mainLoop.setCloseRequested(true);
-            }
-        };
-        quitButton.setX(887);
-        quitButton.setY(631);
-        quitButton.setWidth(1160 - 887);
-        quitButton.setHeight(691 - 631);
-        mainMenu.add(quitButton);
-
+        mainMenu.cell(optionsButton);
+        mainMenu.row();
+        
         final Button extrasButton = new Button(toolkit, "main.menu.button.extras") {
             @Override
             public void onOK() {
@@ -178,7 +168,22 @@ public class MainMenu extends Component {
         extrasButton.setY(720);
         extrasButton.setWidth(1238 - 1018);
         extrasButton.setHeight(766 - 720);
-        mainMenu.add(extrasButton);
+        mainMenu.cell(extrasButton);
+        mainMenu.row();
+        
+        final Button quitButton = new Button(toolkit, "main.menu.button.quit") {
+            @Override
+            public void onOK() {
+                mainLoop.setCloseRequested(true);
+            }
+        };
+        quitButton.setX(887);
+        quitButton.setY(631);
+        quitButton.setWidth(1160 - 887);
+        quitButton.setHeight(691 - 631);
+        mainMenu.cell(quitButton);
+        mainMenu.row();
+
         root.add(mainMenu);
     }
 

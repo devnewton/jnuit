@@ -57,7 +57,6 @@ public class CutScenesMenu extends Stack {
         creditsButton.setY(500);
         creditsButton.setWidth(400);
         creditsButton.setHeight(80);
-        creditsButton.setMustDrawFocus(false);
         menu.add(creditsButton);
 
         final Button backButton = new Button(toolkit, "cutscenes.menu.button.back") {
@@ -70,7 +69,6 @@ public class CutScenesMenu extends Stack {
         backButton.setY(700);
         backButton.setWidth(400);
         backButton.setHeight(80);
-        backButton.setMustDrawFocus(false);
         menu.add(backButton);
         show(menu);
     }

@@ -100,7 +100,7 @@ public class DrawSystem extends EntitySystem {
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
-        GL11.glClearColor(99f / 255f, 201f / 255f, 183f / 255f, 1f);
+        GL11.glClearColor(0, 0, 0, 1f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         List<Entity> entititesSortedByZ = new ArrayList<>(entities.size());
         for (int i = 0, n = entities.size(); i < n; ++i) {
@@ -197,18 +197,6 @@ public class DrawSystem extends EntitySystem {
         GL11.glVertex2f(x1, y1);
         GL11.glEnd();
         GL11.glPopMatrix();
-
-        /*GL11.glDisable(GL11.GL_TEXTURE_2D);
-         GL11.glBegin(GL11.GL_POINTS);
-
-         GL11.glColor3f(1f, 0f, 0f);
-         GL11.glVertex2f(100, 0);
-         GL11.glColor3f(0f, 1f, 0f);
-         GL11.glVertex2f(0, 100);
-         GL11.glColor3f(1f, 1f, 1f);
-         GL11.glVertex2f(0, 0);
-         GL11.glEnd();
-         GL11.glEnable(GL11.GL_TEXTURE_2D);*/
     }
 
     private void drawSprite(Sprite sprite) {

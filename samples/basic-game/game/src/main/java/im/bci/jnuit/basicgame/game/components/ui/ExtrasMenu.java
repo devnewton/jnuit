@@ -24,9 +24,6 @@
 package im.bci.jnuit.basicgame.game.components.ui;
 
 import im.bci.jnuit.NuitToolkit;
-import im.bci.jnuit.animation.IAnimation;
-import im.bci.jnuit.animation.PlayMode;
-import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Container;

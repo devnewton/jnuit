@@ -55,6 +55,7 @@ public class LevelSelector extends Table {
         for(int i=0; i<10; ++i) {
             LevelSelectorButton levelButton = new LevelSelectorButton(toolkit, String.format("Level %02d", i),  String.format("level%02d.tmx", i));
             this.cell(levelButton);
+            this.row();
         }
 
         Button backButton = new Button(toolkit, "options.menu.button.back") {
@@ -66,6 +67,7 @@ public class LevelSelector extends Table {
 
         };
         this.cell(backButton);
+        this.row();
     }
 
     private class LevelSelectorButton extends Button {
