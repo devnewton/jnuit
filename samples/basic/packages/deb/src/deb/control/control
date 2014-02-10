@@ -1,0 +1,9 @@
+Package: jnuit-basic
+Version: [[version]]
+Section: misc/games
+Priority: optional
+Architecture: all
+Depends: liblwjgl-java, libjorbis-java, libprotobuf-java, libguice-java, java7-runtime, jarwrapper, libopenal-dev
+Maintainer: devnewton <devnewton@bci.im>
+Description: Jnuit basic game example
+Homepage: http://devnewton.bci.im

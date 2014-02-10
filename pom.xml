@@ -64,7 +64,7 @@ THE SOFTWARE. -->
         <module>lwjgl-utils</module>
         <module>smjpegdecoder</module>
         <module>tablelayout</module>
-        <module>samples/basic-game</module>
+        <module>samples/basic</module>
     </modules>
     <dependencyManagement>
         <dependencies>

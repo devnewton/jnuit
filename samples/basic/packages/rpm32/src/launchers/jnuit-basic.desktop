@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=${project.version}
+Type=Application
+Terminal=false
+Categories=Game;
+Exec=java -jar /opt/jnuit-basic/jnuit-basic-game-${project.version}.jar
+Name=Jnuit basic game example
+Comment=Jnuit basic game example
+Icon=/opt/jnuit-basic/data/icon.png
