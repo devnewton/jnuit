@@ -27,55 +27,58 @@ import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Container;
-import im.bci.jnuit.widgets.Root;
-import im.bci.jnuit.widgets.Widget;
+import im.bci.jnuit.widgets.Stack;
 
 /**
  *
  * @author devnewton
  */
-public class ExtrasMenu extends Container {
+public class ExtrasMenu extends Stack {
     
-    public ExtrasMenu(NuitToolkit toolkit, final Root root, final Widget mainMenu, IAssets assets, CutScenes cutscenes) {
+        private final Container menu;
+    
+    public ExtrasMenu(NuitToolkit toolkit, IAssets assets, CutScenes cutscenes) {
         
-        final CutScenesMenu cutscenesMenu = new CutScenesMenu(toolkit, root, this, assets, cutscenes);
-        root.add(cutscenesMenu);
-
+        final CutScenesMenu cutscenesMenu = new CutScenesMenu(toolkit, assets, cutscenes);
+        
+        menu = new Container();
+        
         final Button cutscenesButton = new Button(toolkit, "extras.menu.button.cutscenes") {
             @Override
             public void onOK() {
-                root.show(cutscenesMenu);
+                ExtrasMenu.this.show(cutscenesMenu);
             }
         };
         cutscenesButton.setX(110);
         cutscenesButton.setY(400);
         cutscenesButton.setWidth(400);
         cutscenesButton.setHeight(80);
-        add(cutscenesButton);
+        menu.add(cutscenesButton);
 
         final Button artworkButton = new Button(toolkit, "extras.menu.button.artwork") {
             @Override
             public void onOK() {
-                root.show(mainMenu);
             }
         };
         artworkButton.setX(110);
         artworkButton.setY(500);
         artworkButton.setWidth(400);
         artworkButton.setHeight(80);
-        add(artworkButton);
+        menu.add(artworkButton);
 
         final Button backButton = new Button(toolkit, "extras.menu.button.back") {
             @Override
             public void onOK() {
-                root.show(mainMenu);
+                ExtrasMenu.this.close();
             }
         };
         backButton.setX(110);
         backButton.setY(600);
         backButton.setWidth(400);
         backButton.setHeight(80);
-        add(backButton);
+        menu.add(backButton);
+        
+        this.show(menu);
     }
 
 }

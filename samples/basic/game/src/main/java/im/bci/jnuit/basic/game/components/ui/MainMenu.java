@@ -44,10 +44,10 @@ import im.bci.jnuit.basic.game.Game;
 import im.bci.jnuit.basic.game.Group;
 import im.bci.jnuit.basic.game.MainLoop;
 import im.bci.jnuit.lwjgl.assets.IAssets;
-import im.bci.jnuit.widgets.Container;
 import im.bci.jnuit.basic.game.components.IngameControls;
 import im.bci.jnuit.basic.game.components.Triggerable;
 import im.bci.jnuit.basic.game.events.HideMenuTrigger;
+import im.bci.jnuit.widgets.Stack;
 
 @Singleton
 public class MainMenu extends Component {
@@ -57,7 +57,7 @@ public class MainMenu extends Component {
     private VideoConfigurator videoConfigurator;
     private AudioConfigurator audioConfigurator;
     private Table optionsMenu;
-    private Container extrasMenu;
+    private Stack extrasMenu;
     private ControlsConfigurator menuControls, gameControls;
     private final LevelSelector levelSelector;
     private final MainLoop mainLoop;
@@ -269,7 +269,7 @@ public class MainMenu extends Component {
     }
 
     private void initExtras(CutScenes cutscenes) {
-        extrasMenu = new ExtrasMenu(toolkit, root, mainMenu, assets, cutscenes);
+        extrasMenu = new ExtrasMenu(toolkit, assets, cutscenes);
         root.add(extrasMenu);
     }
 }

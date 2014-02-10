@@ -24,25 +24,22 @@
 package im.bci.jnuit.basic.game.components.ui;
 
 import im.bci.jnuit.NuitToolkit;
-import im.bci.jnuit.animation.PlayMode;
-import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Container;
-import im.bci.jnuit.widgets.Root;
 import im.bci.jnuit.widgets.Stack;
-import im.bci.jnuit.widgets.Widget;
 
 /**
  *
  * @author devnewton
  */
 public class CutScenesMenu extends Stack {
-    
-     final Container menu;
-    CutScenesMenu(final NuitToolkit toolkit, final Root root, final Widget extrasMenu, final IAssets assets, final CutScenes cutScenes) {
+
+    private final Container menu;
+
+    CutScenesMenu(final NuitToolkit toolkit, final IAssets assets, final CutScenes cutScenes) {
         menu = new Container();
-        
+
         final Button creditsButton = new Button(toolkit, "cutscenes.menu.button.credits") {
             @Override
             public void onOK() {
@@ -62,7 +59,7 @@ public class CutScenesMenu extends Stack {
         final Button backButton = new Button(toolkit, "cutscenes.menu.button.back") {
             @Override
             public void onOK() {
-                root.show(extrasMenu);
+                CutScenesMenu.this.close();
             }
         };
         backButton.setX(110);
@@ -72,7 +69,7 @@ public class CutScenesMenu extends Stack {
         menu.add(backButton);
         show(menu);
     }
-    
+
     class CutScenesMenuDialog extends Dialog {
 
         public CutScenesMenuDialog(NuitToolkit toolkit, IAssets assets) {
@@ -84,7 +81,7 @@ public class CutScenesMenu extends Stack {
             CutScenesMenu.this.remove(this);
             CutScenesMenu.this.show(menu);
         }
-        
+
     }
 
 }
