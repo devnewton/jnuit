@@ -100,7 +100,7 @@ public class DrawSystem extends EntitySystem {
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
-        GL11.glClearColor(0, 0, 0, 1f);
+        GL11.glClearColor(0.1f, 0, 0, 1f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         List<Entity> entititesSortedByZ = new ArrayList<>(entities.size());
         for (int i = 0, n = entities.size(); i < n; ++i) {

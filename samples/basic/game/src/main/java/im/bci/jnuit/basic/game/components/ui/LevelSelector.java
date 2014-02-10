@@ -52,7 +52,7 @@ public class LevelSelector extends Table {
         this.game = game;
         this.startGameTrigger = startGameTrigger;
         this.showMenuTrigger = showMenuTrigger;
-        for(int i=0; i<10; ++i) {
+        for(int i=1; i<=2; ++i) {
             LevelSelectorButton levelButton = new LevelSelectorButton(toolkit, String.format("Level %02d", i),  String.format("level%02d.tmx", i));
             this.cell(levelButton);
             this.row();

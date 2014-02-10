@@ -118,10 +118,11 @@ public class StartGameTrigger extends Trigger {
 
     private Entity createEntityFromTile(final TmxTileInstance tile, Game game, TmxAsset tmx, int x, int y, int l, TmxLayer layer) {
         switch (tile.getTile().getProperty("type", "decoration")) {
+            case "hero":
+                return createHero(tile, game, tmx, x, y, l, layer);
             default:
                 return createDecoration(tile, game, tmx, x, y, l, layer);
         }
-
     }
 
     private Entity createDecoration(final TmxTileInstance tile, Game game, TmxAsset tmx, int x, int y, int l, TmxLayer layer) {
@@ -129,6 +130,14 @@ public class StartGameTrigger extends Trigger {
         createSprite(tmx, x, y, l, tile, ApparitionEffect.FROM_BELOW, decoration);
         game.addEntity(decoration);
         return decoration;
+    }
+
+    private Entity createHero(TmxTileInstance tile, Game game, TmxAsset tmx, int x, int y, int l, TmxLayer layer) {
+        Entity hero = game.createEntity();
+        createSprite(tmx, x, y, l, tile, ApparitionEffect.FROM_ABOVE, hero);
+        game.addEntity(hero);
+        game.setHero(hero);
+        return hero;
     }
 
     private enum ApparitionEffect {
@@ -169,6 +178,15 @@ public class StartGameTrigger extends Trigger {
     private void createProjector(Game game, TmxAsset tmx) {
         final float tileWidth = tmx.getMap().getTilewidth();
         final float tileHeight = tmx.getMap().getTileheight();
+        switch(tmx.getMap().getOrientation()) {
+            case ISOMETRIC:
         game.getSystem(DrawSystem.class).setSpriteProjector(new IsometricSpriteProjector(tileWidth, tileHeight));
+                break;
+            case ORTHOGONAL:
+                game.getSystem(DrawSystem.class).setSpriteProjector(new OrthogonalSpriteProjector(tileWidth, tileHeight));
+                break;
+            default:
+                throw new RuntimeException("Unhandled map orientation:" + tmx.getMap().getOrientation()); 
+        }
     }
 }

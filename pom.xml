@@ -116,7 +116,7 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>libtiled-jpurexml</artifactId>
-                <version>0.3</version>
+                <version>0.3-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.l33tlabs.twl</groupId>

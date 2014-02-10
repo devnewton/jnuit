@@ -2,3 +2,13 @@
 
 License: CC-BY-SA 4.0
 Author: devnewton <devnewton@bci.im>
+
+* tiles_ground_iso.png tiles_objects_iso.png ( http://opengameart.org/content/simerion-tiles-and-images )
+
+License: CC-BY 3.0
+Author: Yoann Sculo <yoann.sculo@gmail.com> (http://www.yoannsculo.fr/)
+
+* level02.tmx tiles_ortho.png ( http://opengameart.org/content/cave-tile-map-image )
+
+License: CC0
+Author: mieki256 ( http://opengameart.org/users/mieki256 )

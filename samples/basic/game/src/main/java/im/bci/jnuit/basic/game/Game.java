@@ -67,8 +67,8 @@ public class Game extends World {
         initialize();
     }
 
-    public void setHero(Entity ned) {
-        this.hero = ned;
+    public void setHero(Entity hero) {
+        this.hero = hero;
     }
 
     public Entity getHero() {

@@ -41,6 +41,7 @@ import im.bci.jnuit.basic.game.Game;
 import im.bci.jnuit.basic.game.components.Triggerable;
 import im.bci.jnuit.basic.game.components.IngameControls;
 import im.bci.jnuit.basic.game.components.visual.Sprite;
+import im.bci.jnuit.basic.game.components.visual.SpritePuppetControls;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
@@ -72,7 +73,7 @@ public class IngameInputSystem extends EntityProcessingSystem {
             if (controls.getShowMenu().isActivated()) {
                 world.addEntity(world.createEntity().addComponent(new Triggerable(showMenuTrigger.get())));
             }
-            if (canMoveNed()) {
+            if (canMoveHero()) {
                 controls.getUp().poll();
                 controls.getDown().poll();
                 controls.getRight().poll();
@@ -82,47 +83,47 @@ public class IngameInputSystem extends EntityProcessingSystem {
                 boolean downPressed = controls.getDown().isPressed();
                 boolean leftPressed = controls.getLeft().isPressed();
                 boolean rightPressed = controls.getRight().isPressed();
-                Entity ned = game.getHero();
+                Entity hero = game.getHero();
                 if (mouseClick.isPressed()) {
                     Vector3f selectedPosition = game.getSystem(TintMouseSelectionSystem.class).getSelectedSprite().getPosition();
-                    Vector3f nedPosition = spriteMapper.get(ned).getPosition();
-                    int nedX = Math.round(nedPosition.x);
-                    int nedY = Math.round(nedPosition.y);
+                    Vector3f heroPosition = spriteMapper.get(hero).getPosition();
+                    int heroX = Math.round(heroPosition.x);
+                    int heroY = Math.round(heroPosition.y);
                     int selectedX = Math.round(selectedPosition.x);
                     int selectedY = Math.round(selectedPosition.y);
 
-                    if (nedX == selectedX) {
-                        if (nedY < selectedY) {
+                    if (heroX == selectedX) {
+                        if (heroY < selectedY) {
                             rightPressed = true;
-                        } else if (nedY > selectedY) {
+                        } else if (heroY > selectedY) {
                             leftPressed = true;
                         }
-                    } else if (nedY == selectedY) {
-                        if (nedX < selectedX) {
+                    } else if (heroY == selectedY) {
+                        if (heroX < selectedX) {
                             downPressed = true;
-                        } else if (nedX > selectedX) {
+                        } else if (heroX > selectedX) {
                             upPressed = true;
                         }
                     }
                 }
                 if (upPressed) {
-//TODO
-                    ned.changedInWorld();
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(-1f,0f, 0f), 0.5f));
+                    hero.changedInWorld();
                 } else if (downPressed) {
-                    //TODO
-                    ned.changedInWorld();
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(1f,0f, 0f), 0.5f));
+                    hero.changedInWorld();
                 } else if (leftPressed) {
-                    //TODO
-                    ned.changedInWorld();
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(0f, -1f, 0f), 0.5f));
+                    hero.changedInWorld();
                 } else if (rightPressed) {
-                    //TODO
-                    ned.changedInWorld();
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(0f, 1f, 0f), 0.5f));
+                    hero.changedInWorld();
                 }
             }
         }
     }
 
-    private boolean canMoveNed() {
+    private boolean canMoveHero() {
         return world.getSystem(SpritePuppetControlSystem.class).getActives().isEmpty();
     }
 }
