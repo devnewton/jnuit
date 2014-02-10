@@ -17,6 +17,7 @@ The lwjgl implementation also comes with a collection of utilities to make 2d ga
 
 - assets management.
 - [nanim](http://devnewton.bci.im/softwares/nanim) 2d animations loading.
+- smpjpeg video playback.
 
 ## Games made with jnuit
 

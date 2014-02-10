@@ -1,3 +1,3 @@
 # jnuit-basic
 
-A simple game created with jnuit.
+A simple game sample created with jnuit.
