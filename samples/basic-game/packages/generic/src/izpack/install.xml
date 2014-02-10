@@ -41,13 +41,13 @@
             <description>Core installation files</description>
             <file src="../../src/izpack/icon.ico" targetdir="$INSTALL_PATH" />
             <file src="../../target/README.txt" targetdir="$INSTALL_PATH" />
-            <file src="../../target/run_linux.sh" targetdir="$INSTALL_PATH" >
+            <file src="../../target/run-linux.sh" targetdir="$INSTALL_PATH" >
 		<os family="unix"/>
 	    </file>
-            <file src="../../target/run_macosx.sh" targetdir="$INSTALL_PATH" >
+            <file src="../../target/run-macosx.sh" targetdir="$INSTALL_PATH" >
 		<os family="mac"/>
 	    </file>
-            <file src="../../target/run_windows.bat" targetdir="$INSTALL_PATH" >
+            <file src="../../target/run-windows.bat" targetdir="$INSTALL_PATH" >
 		<os family="windows"/>
 	    </file>
             <file src="../../../../game/data/icon.png" targetdir="$INSTALL_PATH" />
@@ -68,10 +68,10 @@
 		<os family="windows"/>
 	    </fileset>
 	    <executable type="bin" stage="never" targetfile="$INSTALL_PATH/jnuit-basic-game-example-game-@{project.version}.jar"/>
-	    <executable type="bin" stage="never" targetfile="$INSTALL_PATH/run_linux.sh">
+	    <executable type="bin" stage="never" targetfile="$INSTALL_PATH/run-linux.sh">
 		<os family="unix"/>
 	    </executable>
-	    <executable type="bin" stage="never" targetfile="$INSTALL_PATH/run_macosx.sh" >
+	    <executable type="bin" stage="never" targetfile="$INSTALL_PATH/run-macosx.sh" >
 		<os family="mac"/>
 	    </executable>
         </pack>

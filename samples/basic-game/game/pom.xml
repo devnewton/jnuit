@@ -76,7 +76,7 @@ THE SOFTWARE. -->
                                 <resource>
                                     <directory>${basedir}</directory>
                                     <includes>
-                                        <include>**/run_*</include>
+                                        <include>**/run-*</include>
                                     </includes>
                                     <filtering>true</filtering>
                                 </resource>

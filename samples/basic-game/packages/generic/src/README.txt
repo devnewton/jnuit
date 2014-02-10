@@ -1,7 +1,7 @@
 Jnuit basic game example is a free and open source 2D platform game.
 
 The game can be run by double clicking on the jnuit-basic-game-example-game-${project.version}.jar
-file or using one of the run_* script.
+file or using one of the run-* script.
 
 It will run in fullscreen
 by default, but this can be configured with the options menu or in the 
@@ -19,4 +19,4 @@ like this:
 
 java -jar -Dorg.lwjgl.util.Debug=true jnuit-basic-game-example-game-${project.version}.jar
 
-Go to http://devnewton.bci.im/games for news and updates.
+Go to http://devnewton.bci.im for news and updates.

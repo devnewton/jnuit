@@ -197,7 +197,7 @@ THE SOFTWARE. -->
                                             <groupname>root</groupname>
                                             <sources>
                                                 <source>
-                                                    <location>${project.build.directory}/run_jnuit-basic-game-example.sh</location>
+                                                    <location>${project.build.directory}/run-jnuit-basic-game-example.sh</location>
                                                     <destination>jnuit-basic-game-example</destination>
                                                 </source>
                                             </sources>

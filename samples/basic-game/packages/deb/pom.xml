@@ -165,7 +165,7 @@ THE SOFTWARE. -->
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.build.directory}/run_jnuit-basic-game-example.sh</src>
+                                            <src>${project.build.directory}/run-jnuit-basic-game-example.sh</src>
                                             <type>file</type>
                                             <dst>jnuit-basic-game-example</dst>
                                             <mapper>
