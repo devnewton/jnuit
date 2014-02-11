@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Single flat color widget background
  * @author devnewton
  */
 public class ColoredBackground implements Background {

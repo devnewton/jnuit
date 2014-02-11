@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Transparent widget background.
  * @author devnewton
  */
 public class NullBackground implements Background {

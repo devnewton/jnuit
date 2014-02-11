@@ -33,6 +33,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Base class for all widget.
+ * @author devnewton
+ */
 public abstract class Widget {
     
     private float x, y, width, height;

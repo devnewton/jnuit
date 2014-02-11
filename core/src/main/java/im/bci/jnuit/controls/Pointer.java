@@ -25,7 +25,7 @@
 package im.bci.jnuit.controls;
 
 /**
- *
+ * State of a pointer (mouse or touchpad).
  * @author devnewton
  */
 public class Pointer {

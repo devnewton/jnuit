@@ -35,6 +35,10 @@ import im.bci.jnuit.visitors.WidgetVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controls settings widget allowing player to change input mapping for game actions.
+ * @author devnewton
+ */
 public class ControlsConfigurator extends Table {
 
     private List<ControlActivatedDetector> possibleControls;

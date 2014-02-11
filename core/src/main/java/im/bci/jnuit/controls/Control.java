@@ -23,6 +23,10 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.controls;
 
+/**
+ * Interface for controls (keyboard key, gamepad button or axis, mouse button...).
+ * @author bcolombi
+ */
 public interface Control {
     String getControllerName();
     String getName();

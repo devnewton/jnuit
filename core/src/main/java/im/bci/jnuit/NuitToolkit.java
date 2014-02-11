@@ -38,6 +38,10 @@ import im.bci.jnuit.controls.Pointer;
 import im.bci.jnuit.display.VideoResolution;
 import java.util.List;
 
+/**
+ * Main nuit class, store default and global parameters needed by widgets.
+ * @author devnewton
+ */
 public class NuitToolkit extends Toolkit<Widget, Table> {
 
     private final NuitFont font;

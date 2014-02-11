@@ -21,17 +21,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-
 package im.bci.jnuit;
 
 /**
+ * Platform specific font.
  *
  * @author devnewton
  */
 public interface NuitFont {
 
-    int getHeight(String HeightString);
+    /**
+     * Compute height needed to show specified string.
+     *
+     * @param str
+     * @return height in pixels
+     */
+    int getHeight(String str);
 
-    int getWidth(String whatchars);
-    
+    /**
+     * Compute width needed to show specified string.
+     *
+     * @param str
+     * @return height in pixels
+     */
+    int getWidth(String str);
+
 }

@@ -24,7 +24,7 @@ THE SOFTWARE.
 package im.bci.jnuit.timed;
 
 /**
- *
+ * A timed action that will linearly go from 0f to 1f then from 1f to 0f and so on.
  * @author devnewton
  */
 public strictfp class PingPongTimedAction extends TimedAction{

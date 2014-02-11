@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Pure java translation system.
  * @author devnewton
  */
 public class NuitTranslator {

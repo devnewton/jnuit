@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Interface for widget backgrounds
  * @author devnewton
  */
 public interface Background {

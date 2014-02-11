@@ -25,6 +25,10 @@ package im.bci.jnuit.widgets;
 
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Do nothing widget.
+ * @author devnewton
+ */
 public class NullWidget extends Widget {
 
     @Override

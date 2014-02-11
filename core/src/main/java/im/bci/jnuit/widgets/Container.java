@@ -25,6 +25,10 @@ package im.bci.jnuit.widgets;
 
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Widget container with free (fixed position) layout.
+ * @author devnewton
+ */
 public class Container extends Widget {
 
     private Widget focusedChild;

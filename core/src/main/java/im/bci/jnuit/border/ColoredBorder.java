@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Single flat color widget border.
  * @author devnewton
  */
 public class ColoredBorder implements Border {

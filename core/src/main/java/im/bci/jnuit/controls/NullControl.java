@@ -23,6 +23,10 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.controls;
 
+/**
+ * Do nothing control implementation.
+ * @author devnewton
+ */
 public class NullControl implements Control {
     
     public static NullControl INSTANCE = new NullControl();

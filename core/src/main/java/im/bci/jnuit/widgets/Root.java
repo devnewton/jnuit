@@ -26,6 +26,10 @@ package im.bci.jnuit.widgets;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Root widget of GUI.
+ * @author devnewton
+ */
 public class Root extends Stack {
 
     private final NuitToolkit toolkit;

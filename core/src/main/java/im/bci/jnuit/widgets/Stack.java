@@ -26,6 +26,10 @@ package im.bci.jnuit.widgets;
 import im.bci.jnuit.visitors.WidgetVisitor;
 import java.util.List;
 
+/**
+ * Stack layout widget container: only the top widget is show.
+ * @author devnewton
+ */
 public class Stack extends Widget {
 
     public void show(Widget w) {

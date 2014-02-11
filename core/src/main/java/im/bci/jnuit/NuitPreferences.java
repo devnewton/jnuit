@@ -27,7 +27,7 @@ package im.bci.jnuit;
 import im.bci.jnuit.controls.Control;
 
 /**
- *
+ * Platform specific preference storage.
  * @author devnewton
  */
 public interface NuitPreferences {

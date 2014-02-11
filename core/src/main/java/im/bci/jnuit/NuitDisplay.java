@@ -27,7 +27,7 @@ import im.bci.jnuit.display.VideoResolution;
 import java.util.List;
 
 /**
- *
+ * Platform specific display manipulations.
  * @author devnewton
  */
 public interface NuitDisplay {

@@ -28,7 +28,7 @@ import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Textured widget background.
  * @author devnewton
  */
 public class TexturedBackground implements Background {

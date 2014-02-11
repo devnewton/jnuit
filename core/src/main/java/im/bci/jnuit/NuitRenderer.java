@@ -27,7 +27,7 @@ package im.bci.jnuit;
 import im.bci.jnuit.widgets.Root;
 
 /**
- *
+ * Platform specific GUI renderer.
  * @author devnewton
  */
 public interface NuitRenderer {

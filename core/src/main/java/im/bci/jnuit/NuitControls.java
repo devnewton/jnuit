@@ -30,7 +30,7 @@ import im.bci.jnuit.widgets.Root;
 import java.util.List;
 
 /**
- *
+ * Platform specific possible and default controls 
  * @author devnewton
  */
 public interface NuitControls {

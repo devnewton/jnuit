@@ -24,7 +24,7 @@ THE SOFTWARE.
 package im.bci.jnuit.timed;
 
 /**
- *
+ * A timed action that will linearly go from 0f to 1f then restart at 0f.
  * @author devnewton
  */
 public strictfp class CyclicTimedAction extends TimedAction{

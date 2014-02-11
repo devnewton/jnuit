@@ -24,13 +24,21 @@ THE SOFTWARE.
 package im.bci.jnuit.timed;
 
 /**
- *
+ * Base class for "timed action". This can be used for animation smoothing.
  * @author devnewton
  */
 public abstract class TimedAction {
 
+    /**
+     * Get action progress.
+     * @return progress from 0f to 1f
+     */
     public abstract float getProgress();
 
+    /**
+     * Update action according to elapsed time since created.
+     * @param elapsedTime 
+     */
     public abstract void update(float elapsedTime);
     
 }

@@ -23,6 +23,11 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.controls;
 
+/**
+ * Helper to detect when an action is activated.
+ * An activation means that a control is triggered then released.
+ * @author devnewton
+ */
 public class ActionActivatedDetector {
     private final Action action;
     private Float[] previousStates;

@@ -23,6 +23,10 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.controls;
 
+/**
+ * Action that can be triggered by player using one or many controls.
+ * @author devnewton
+ */
 public class Action {
     private String name;
     private final Control[] controls;

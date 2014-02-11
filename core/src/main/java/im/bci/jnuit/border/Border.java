@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Interface for widget borders.
  * @author devnewton
  */
 public interface Border {

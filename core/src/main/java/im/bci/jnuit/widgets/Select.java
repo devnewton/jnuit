@@ -28,6 +28,11 @@ import java.util.List;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Widget to select of value from a possible list.
+ * @author devnewton
+ * @param <T> 
+ */
 public class Select<T> extends Widget {
 
     private final NuitToolkit toolkit;

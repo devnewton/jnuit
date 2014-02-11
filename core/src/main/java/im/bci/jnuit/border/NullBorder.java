@@ -27,7 +27,7 @@ import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.widgets.Widget;
 
 /**
- *
+ * Transparent widget border.
  * @author devnewton
  */
 public class NullBorder implements Border {

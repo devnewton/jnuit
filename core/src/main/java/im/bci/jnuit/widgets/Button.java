@@ -26,6 +26,10 @@ package im.bci.jnuit.widgets;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Simple push button.
+ * @author devnewton
+ */
 public class Button extends Widget {
 
     private final String text;

@@ -32,6 +32,10 @@ import com.esotericsoftware.tablelayout.Cell;
 import com.esotericsoftware.tablelayout.Value;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Table layout widget container.
+ * @author devnewton
+ */
 public class Table extends Container {
 
     private final TableLayout layout;

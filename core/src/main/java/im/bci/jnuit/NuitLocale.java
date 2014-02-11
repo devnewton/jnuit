@@ -24,12 +24,11 @@
 package im.bci.jnuit;
 
 /**
- *
+ * Locale list for translation.
  * @author devnewton
  */
 public enum NuitLocale {
 
     ENGLISH,
     FRENCH
-
 }

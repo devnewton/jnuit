@@ -27,6 +27,10 @@ package im.bci.jnuit.widgets;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Simple yes/no toggle widget.
+ * @author devnewton
+ */
 public class Toggle extends Widget {
 
     private final NuitToolkit toolkit;

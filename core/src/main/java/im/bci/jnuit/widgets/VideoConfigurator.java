@@ -28,6 +28,10 @@ import im.bci.jnuit.display.VideoResolution;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Video settings widget.
+ * @author devnewton
+ */
 public class VideoConfigurator extends Table {
 
     private final Select<VideoResolution> mode;

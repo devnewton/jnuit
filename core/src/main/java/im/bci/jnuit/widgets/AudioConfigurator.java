@@ -29,6 +29,10 @@ import java.util.List;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Audio settings widget.
+ * @author devnewton
+ */
 public class AudioConfigurator extends Table {
 
     public static class Volume {

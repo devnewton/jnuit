@@ -26,6 +26,10 @@ package im.bci.jnuit.widgets;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
+/**
+ * Simple label widget.
+ * @author devnewton
+ */
 public class Label extends Widget {
 
     private String text;
