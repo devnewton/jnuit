@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="stage1tile1" tilewidth="32" tileheight="32">
-  <image source="tiles_ortho.png" width="256" height="768"/>
+ <tileset firstgid="1" name="stage1tile1" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tiles_ortho.png" width="265" height="793"/>
   <tile id="4">
    <properties>
     <property name="type" value="hero"/>
