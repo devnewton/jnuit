@@ -34,7 +34,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 class SpriteMoveToRelative extends SpriteControl {
 
-    private Vector3f diff;
+    private final Vector3f diff;
     private Vector3f to;
     private final float duration;
     private final Sprite sprite;

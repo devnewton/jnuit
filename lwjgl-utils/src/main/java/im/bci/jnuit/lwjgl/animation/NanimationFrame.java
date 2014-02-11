@@ -31,8 +31,8 @@ import im.bci.jnuit.animation.IAnimationFrame;
  */
 public class NanimationFrame implements IAnimationFrame {
 
-    private NanimationImage image;
-    private long duration;//milliseconds
+    private final NanimationImage image;
+    private final long duration;//milliseconds
     long endTime;//milliseconds
     float u1 = 0;
     float v1 = 0;

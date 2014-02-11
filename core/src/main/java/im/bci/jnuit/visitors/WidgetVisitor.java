@@ -30,7 +30,6 @@ import im.bci.jnuit.widgets.ControlsConfigurator;
 import im.bci.jnuit.widgets.ControlsConfigurator.ControlConfigurator;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.NullWidget;
-import im.bci.jnuit.widgets.Root;
 import im.bci.jnuit.widgets.Select;
 import im.bci.jnuit.widgets.Stack;
 import im.bci.jnuit.widgets.Table;

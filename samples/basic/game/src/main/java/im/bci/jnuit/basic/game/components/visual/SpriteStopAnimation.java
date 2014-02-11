@@ -30,7 +30,7 @@ package im.bci.jnuit.basic.game.components.visual;
  */
 public class SpriteStopAnimation extends SpriteControl {
 
-	private Sprite sprite;
+	private final Sprite sprite;
 
 	SpriteStopAnimation(Sprite sprite) {
 		this.sprite = sprite;

@@ -32,7 +32,7 @@ import im.bci.jnuit.timed.OneShotTimedAction;
  */
 public class SpriteWait extends SpriteControl {
 
-    private float duration;
+    private final float duration;
     private OneShotTimedAction action;
 
     public SpriteWait(float duration) {

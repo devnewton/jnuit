@@ -70,10 +70,7 @@ public class MouseButtonControl implements Control {
             return false;
         }
         final MouseButtonControl other = (MouseButtonControl) obj;
-        if (this.button != other.button) {
-            return false;
-        }
-        return true;
+        return this.button == other.button;
     }
 
 }

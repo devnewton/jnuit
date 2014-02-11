@@ -63,10 +63,7 @@ public class LauncherDisplayMode {
             return false;
         }
         final LauncherDisplayMode other = (LauncherDisplayMode) obj;
-        if (!Objects.equals(this.displayMode, other.displayMode)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.displayMode, other.displayMode);
     }
 
 }

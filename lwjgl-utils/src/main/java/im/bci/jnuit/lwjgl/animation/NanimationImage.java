@@ -34,8 +34,8 @@ import org.lwjgl.opengl.GL11;
  * @author devnewton
  */
 public class NanimationImage implements IAnimationImage {
-    private int id;
-    private boolean alpha;
+    private final int id;
+    private final boolean alpha;
 
     public NanimationImage(boolean alpha) {
         ByteBuffer temp = ByteBuffer.allocateDirect(4);

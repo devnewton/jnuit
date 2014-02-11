@@ -48,9 +48,9 @@ public class ControlsConfigurator extends Table {
     private Label alternativeLabel;
     private Label controlLabel;
     private Label actionLabel;
-    private List<Label> actionNameLabels;
-    private List<ControlConfigurator> mainActionControls;
-    private List<ControlConfigurator> alternativeActionControls;
+    private final List<Label> actionNameLabels;
+    private final List<ControlConfigurator> mainActionControls;
+    private final List<ControlConfigurator> alternativeActionControls;
 
     public ControlsConfigurator(NuitToolkit toolkit, List<Action> actions, List<Action> defaults) {
         super(toolkit);

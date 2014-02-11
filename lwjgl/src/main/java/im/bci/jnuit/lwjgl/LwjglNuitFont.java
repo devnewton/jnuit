@@ -65,15 +65,15 @@ public class LwjglNuitFont implements NuitFont {
     /**
      * Array that holds necessary information about the font characters
      */
-    private IntObject[] charArray = new IntObject[256];
+    private final IntObject[] charArray = new IntObject[256];
     /**
      * Map of user defined font characters (Character <-> IntObject)
      */
-    private Map<Character, IntObject> customChars = new HashMap<Character, IntObject>();
+    private final Map<Character, IntObject> customChars = new HashMap<Character, IntObject>();
     /**
      * Boolean flag on whether AntiAliasing is enabled or not
      */
-    private boolean antiAlias;
+    private final boolean antiAlias;
     /**
      * Font's size
      */
@@ -86,7 +86,6 @@ public class LwjglNuitFont implements NuitFont {
      * ITexture used to cache the font 0-255 characters
      */
     private int fontTextureID;
-    private boolean deleteTextureOnClose = true;
     /**
      * Default font texture width
      */
@@ -98,7 +97,7 @@ public class LwjglNuitFont implements NuitFont {
     /**
      * A reference to Java's AWT Font that we create our font texture from
      */
-    private Font font;
+    private final Font font;
     /**
      * The font metrics for our Java AWT font
      */

@@ -32,7 +32,7 @@ import im.bci.jnuit.basic.game.events.Trigger;
  */
 public class Triggerable extends Component {
 
-    private Trigger trigger;
+    private final Trigger trigger;
 
     public Triggerable(Trigger trigger) {
         this.trigger = trigger;
