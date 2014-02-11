@@ -308,7 +308,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
             GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glPushMatrix();
-            GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 4.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+            GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
             GL11.glScalef(1, -1, 1);
             font.drawString(text);
             GL11.glPopAttrib();
@@ -343,7 +343,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String text = String.valueOf(widget.getSelected());
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 4.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
         font.drawString(text);
         GL11.glPopAttrib();
@@ -369,7 +369,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String text = widget.getText();
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 4.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
         font.drawString(text);
         GL11.glPopAttrib();
