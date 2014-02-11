@@ -85,7 +85,7 @@ public class GarbageCollectedAssets implements IAssets {
 
     @Override
     public IAnimationCollection getAnimations(String name) {
-        if (name.endsWith("png")) {
+        if (name.endsWith("png") || name.endsWith("jpg")) {
             return new TextureAnimationCollectionWrapper(this, name, 0, 0, 1, 1);
         } else if (name.endsWith("smjpeg")) {
             return new SmjpegAnimation(assets.loadVideo(name)) {

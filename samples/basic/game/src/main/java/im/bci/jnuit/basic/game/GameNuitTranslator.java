@@ -77,6 +77,9 @@ public class GameNuitTranslator extends NuitTranslator {
         addTranslation(NuitLocale.ENGLISH, "action.menu", "Menu");
 
         addTranslation(NuitLocale.ENGLISH, "dialog.credits.devnewton", "http://devnewton.bci.im");
+        
+        addTranslation(NuitLocale.FRENCH, "dialog.artworks.01", "Sketch 01");
+        addTranslation(NuitLocale.FRENCH, "dialog.artworks.02", "Sketch 02");
 
     }
 
@@ -110,5 +113,8 @@ public class GameNuitTranslator extends NuitTranslator {
         addTranslation(NuitLocale.FRENCH, "action.menu", "Menu");
 
         addTranslation(NuitLocale.FRENCH, "dialog.credits.devnewton", "http://devnewton.bci.im");
+        
+        addTranslation(NuitLocale.FRENCH, "dialog.artworks.01", "Croquis 01");
+        addTranslation(NuitLocale.FRENCH, "dialog.artworks.02", "Croquis 02");
     }
 }

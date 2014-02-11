@@ -50,4 +50,11 @@ public class CutScenes {
         dialog.setBackground(new ColoredBackground(0, 0, 0, 1));
         dialog.addTirade(animations.getAnimationByName("devnewton").start(PlayMode.ONCE), (1280 - 512) / 2, (800 - 128) / 2, 512, 128, "dialog.credits.devnewton");
     }
+    
+    public void createArtworks(Dialog dialog) {
+        assets.clearUseless();
+        dialog.setBackground(new ColoredBackground(0, 0, 0, 1));
+        dialog.addTirade(assets.getAnimations("artwork01.jpg").getFirst().start(PlayMode.ONCE), "dialog.artworks.01");
+        dialog.addTirade(assets.getAnimations("artwork02.jpg").getFirst().start(PlayMode.ONCE), "dialog.artworks.02");
+    }
 }

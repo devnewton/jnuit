@@ -12,3 +12,13 @@ Author: Yoann Sculo <yoann.sculo@gmail.com> (http://www.yoannsculo.fr/)
 
 License: CC0
 Author: mieki256 ( http://opengameart.org/users/mieki256 )
+
+* artwork01.jpg ( http://opengameart.org/content/mixed-post-apocalyptic-character-concepts )
+
+License: CC-BY-SA 3.0
+Author: Zeli ( http://elliotbocxtaele.deviantart.com/ )
+
+* artwork02.jpg ( http://opengameart.org/content/soviet-pa-concepts )
+
+License: CC-BY-SA 3.0
+Author: Border ( http://deadalus.cgsociety.org/portfolio/about/ )

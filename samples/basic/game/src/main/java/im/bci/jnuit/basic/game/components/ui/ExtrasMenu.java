@@ -37,7 +37,7 @@ public class ExtrasMenu extends Stack {
     
         private final Container menu;
     
-    public ExtrasMenu(NuitToolkit toolkit, IAssets assets, CutScenes cutscenes) {
+    public ExtrasMenu(final NuitToolkit toolkit, final IAssets assets, final CutScenes cutscenes) {
         
         final CutScenesMenu cutscenesMenu = new CutScenesMenu(toolkit, assets, cutscenes);
         
@@ -58,6 +58,11 @@ public class ExtrasMenu extends Stack {
         final Button artworkButton = new Button(toolkit, "extras.menu.button.artwork") {
             @Override
             public void onOK() {
+                Dialog artwork = new Dialog(toolkit, assets);
+                cutscenes.createArtworks(artwork);
+                artwork.setWidth(ExtrasMenu.this.getWidth());
+                artwork.setHeight(ExtrasMenu.this.getHeight());
+                ExtrasMenu.this.show(artwork);
             }
         };
         artworkButton.setX(110);

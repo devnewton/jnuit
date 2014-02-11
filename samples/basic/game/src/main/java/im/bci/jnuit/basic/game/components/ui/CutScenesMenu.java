@@ -43,11 +43,11 @@ public class CutScenesMenu extends Stack {
         final Button creditsButton = new Button(toolkit, "cutscenes.menu.button.credits") {
             @Override
             public void onOK() {
-                CutScenesMenuDialog intro = new CutScenesMenuDialog(toolkit, assets);
-                cutScenes.createCredits(intro);
-                intro.setWidth(CutScenesMenu.this.getWidth());
-                intro.setHeight(CutScenesMenu.this.getHeight());
-                CutScenesMenu.this.show(intro);
+                Dialog credits = new Dialog(toolkit, assets);
+                cutScenes.createCredits(credits);
+                credits.setWidth(CutScenesMenu.this.getWidth());
+                credits.setHeight(CutScenesMenu.this.getHeight());
+                CutScenesMenu.this.show(credits);
             }
         };
         creditsButton.setX(110);
@@ -69,19 +69,4 @@ public class CutScenesMenu extends Stack {
         menu.add(backButton);
         show(menu);
     }
-
-    class CutScenesMenuDialog extends Dialog {
-
-        public CutScenesMenuDialog(NuitToolkit toolkit, IAssets assets) {
-            super(toolkit, assets);
-        }
-
-        @Override
-        protected void onFinished() {
-            CutScenesMenu.this.remove(this);
-            CutScenesMenu.this.show(menu);
-        }
-
-    }
-
 }

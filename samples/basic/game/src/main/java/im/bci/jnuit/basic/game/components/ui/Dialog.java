@@ -188,5 +188,6 @@ public class Dialog extends Container {
 
     protected void onFinished() {
         this.finished = true;
+        this.close();
     }
 }
