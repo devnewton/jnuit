@@ -4,6 +4,8 @@ Java Newton User Interface Toolkit is a simple lib to create UI for games.
 
 It use [lwjgl](http://lwjgl.org) rendering and a [playn](https://code.google.com/p/playn/) implementation is in development.
 
+[![demo](http://devnewton.bci.im/media/jnuit/jnuit_demo.png)](http://devnewton.bci.im/media/jnuit/jnuit_demo.webm)
+
 ## Features
 
 - simple components: button, select, toggle.
