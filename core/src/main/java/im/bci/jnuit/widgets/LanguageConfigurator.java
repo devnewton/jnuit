@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2014 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,83 +23,82 @@
  */
 package im.bci.jnuit.widgets;
 
-import java.util.ArrayList;
-import java.util.List;
+import im.bci.jnuit.NuitLocale;
 
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.visitors.WidgetVisitor;
+import java.util.Arrays;
 
 /**
  * Audio settings widget.
  *
  * @author devnewton
  */
-public class AudioConfigurator extends Table {
+public class LanguageConfigurator extends Table {
 
-    public static class Volume {
+    private final NuitToolkit toolkit;
+    protected final Select<NuitLocale> textsLanguage;
+    protected final Select<NuitLocale> voicesLanguage;
 
-        int level;
-
-        Volume(int level) {
-            this.level = level;
-        }
-
-        @Override
-        public String toString() {
-            return level + "%";
-        }
-    }
-
-    public AudioConfigurator(NuitToolkit toolkit) {
+    public LanguageConfigurator(final NuitToolkit toolkit) {
         super(toolkit);
-        List<Volume> possibleVolumes = new ArrayList<>();
-        for (int l = 0; l <= 100; l += 10) {
-            possibleVolumes.add(new Volume(l));
-        }
-
+        this.toolkit = toolkit;
         defaults().expand();
-        cell(new Label(toolkit, "nuit.audio.configurator.music.volume"));
-        cell(new Select<Volume>(toolkit, possibleVolumes) {
+        cell(new Label(toolkit, "nuit.language.configurator.texts"));
+        textsLanguage = new Select<NuitLocale>(toolkit, Arrays.asList(NuitLocale.values())) {
+
             @Override
             public void onLeft() {
                 super.onLeft();
-                changeMusicVolume(getSelected().level / 100.0f);
+                changeTextsLocale(getSelected());
             }
 
             @Override
             public void onRight() {
                 super.onRight();
-                changeMusicVolume(getSelected().level / 100.0f);
+                changeTextsLocale(getSelected());
             }
-        });
+        };
+        textsLanguage.setSelected(toolkit.getCurrentLocale());
+        cell(textsLanguage);
         row();
-        cell(new Label(toolkit, "nuit.audio.configurator.effects.volume"));
-        cell(new Select<Volume>(toolkit, possibleVolumes) {
+        cell(new Label(toolkit, "nuit.language.configurator.voices"));
+        voicesLanguage = new Select<NuitLocale>(toolkit, Arrays.asList(NuitLocale.values())) {
+
             @Override
             public void onLeft() {
                 super.onLeft();
-                changeEffectVolume(getSelected().level / 100.0f);
+                changeVoicesLocale(getSelected());
             }
 
             @Override
             public void onRight() {
                 super.onRight();
-                changeEffectVolume(getSelected().level / 100.0f);
+                changeVoicesLocale(getSelected());
             }
-        });
+
+        };
+        voicesLanguage.setSelected(toolkit.getCurrentLocale());
+        cell(voicesLanguage);
         row();
-        cell(new Button(toolkit, "nuit.audio.configurator.back") {
+        cell(new Button(toolkit, "nuit.language.configurator.back") {
             @Override
             public void onOK() {
-                AudioConfigurator.this.close();
+                LanguageConfigurator.this.close();
             }
         }).colspan(2);
     }
 
-    protected void changeEffectVolume(float f) {
+    @Override
+    public void onShow() {
+        textsLanguage.setSelected(toolkit.getCurrentLocale());
     }
 
-    protected void changeMusicVolume(float f) {
+    protected void changeTextsLocale(NuitLocale locale) {
+        toolkit.changeLocale(locale);
+    }
+
+    protected void changeVoicesLocale(NuitLocale locale) {
     }
 
     @Override

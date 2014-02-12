@@ -47,6 +47,7 @@ import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.basic.game.components.IngameControls;
 import im.bci.jnuit.basic.game.components.Triggerable;
 import im.bci.jnuit.basic.game.events.HideMenuTrigger;
+import im.bci.jnuit.widgets.LanguageConfigurator;
 import im.bci.jnuit.widgets.Stack;
 
 @Singleton
@@ -66,6 +67,7 @@ public class MainMenu extends Component {
     private final IAssets assets;
     private final Game game;
     private final Provider<HideMenuTrigger> hideMenuTrigger;
+    private LanguageConfigurator languageConfigurator;
 
     @Inject
     public MainMenu(MainLoop mainLoop, Game g, NuitToolkit toolkit, NuitRenderer nuitRenderer, IAssets assets, LevelSelector levelSelector, Provider<HideMenuTrigger> hideMenuTrigger, IngameControls ingameControls, CutScenes cutscenes) throws LWJGLException {
@@ -80,6 +82,7 @@ public class MainMenu extends Component {
         root.add(levelSelector);
         initVideo();
         initAudio();
+        initLanguage();
         initMenuControls();
         initGameControls(ingameControls);
         initOptions();
@@ -96,22 +99,16 @@ public class MainMenu extends Component {
                 super.changeVideoSettings();
                 assets.setIcon("icon.png");
             }
-
-            @Override
-            protected void closeVideoSettings() {
-                root.show(optionsMenu);
-            }
         };
         root.add(videoConfigurator);
     }
 
     private void initAudio() {
-        audioConfigurator = new AudioConfigurator(toolkit) {
-            @Override
-            protected void closeAudioSettings() {
-                root.show(optionsMenu);
-            }
-        };
+        audioConfigurator = new AudioConfigurator(toolkit);
+    }
+
+    private void initLanguage() {
+        languageConfigurator = new LanguageConfigurator(toolkit);
     }
 
     private void initMain() {
@@ -157,7 +154,7 @@ public class MainMenu extends Component {
         optionsButton.setHeight(755 - 695);
         mainMenu.cell(optionsButton);
         mainMenu.row();
-        
+
         final Button extrasButton = new Button(toolkit, "main.menu.button.extras") {
             @Override
             public void onOK() {
@@ -170,7 +167,7 @@ public class MainMenu extends Component {
         extrasButton.setHeight(766 - 720);
         mainMenu.cell(extrasButton);
         mainMenu.row();
-        
+
         final Button quitButton = new Button(toolkit, "main.menu.button.quit") {
             @Override
             public void onOK() {
@@ -201,6 +198,13 @@ public class MainMenu extends Component {
             @Override
             public void onOK() {
                 root.show(audioConfigurator);
+            }
+        });
+        optionsMenu.row();
+        optionsMenu.cell(new Button(toolkit, "options.menu.button.menu.language") {
+            @Override
+            public void onOK() {
+                root.show(languageConfigurator);
             }
         });
         optionsMenu.row();

@@ -55,6 +55,7 @@ public class GameNuitTranslator extends NuitTranslator {
 
         addTranslation(NuitLocale.ENGLISH, "options.menu.button.video", "VIDEO");
         addTranslation(NuitLocale.ENGLISH, "options.menu.button.audio", "AUDIO");
+        addTranslation(NuitLocale.ENGLISH, "options.menu.button.menu.language", "LANGUAGE");
         addTranslation(NuitLocale.ENGLISH, "options.menu.button.game.controls", "GAME CONTROLS");
         addTranslation(NuitLocale.ENGLISH, "options.menu.button.menu.controls", "MENU CONTROLS");
         addTranslation(NuitLocale.ENGLISH, "options.menu.button.back", "BACK");
@@ -92,6 +93,7 @@ public class GameNuitTranslator extends NuitTranslator {
 
         addTranslation(NuitLocale.FRENCH, "options.menu.button.video", "VIDEO");
         addTranslation(NuitLocale.FRENCH, "options.menu.button.audio", "AUDIO");
+        addTranslation(NuitLocale.FRENCH, "options.menu.button.menu.language", "LANGUE");
         addTranslation(NuitLocale.FRENCH, "options.menu.button.game.controls", "CONTROLES DU JEU");
         addTranslation(NuitLocale.FRENCH, "options.menu.button.menu.controls", "CONTROLES DES MENUS");
         addTranslation(NuitLocale.FRENCH, "options.menu.button.back", "RETOUR");

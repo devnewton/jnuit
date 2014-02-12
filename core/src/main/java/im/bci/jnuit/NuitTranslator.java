@@ -29,6 +29,7 @@ import java.util.Map;
 
 /**
  * Pure java translation system.
+ *
  * @author devnewton
  */
 public class NuitTranslator {
@@ -79,13 +80,20 @@ public class NuitTranslator {
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.right", "Right");
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.ok", "OK");
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.cancel", "Cancel");
+
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.mode", "Mode");
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.fullscreen", "Fullscreen");
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.apply", "Apply");
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.back", "Back");
+
         addTranslation(NuitLocale.ENGLISH, "nuit.audio.configurator.music.volume", "Music volume");
         addTranslation(NuitLocale.ENGLISH, "nuit.audio.configurator.effects.volume", "Effects volume");
         addTranslation(NuitLocale.ENGLISH, "nuit.audio.configurator.back", "Back");
+
+        addTranslation(NuitLocale.ENGLISH, "nuit.language.configurator.texts", "Texts");
+        addTranslation(NuitLocale.ENGLISH, "nuit.language.configurator.voices", "Voices");
+        addTranslation(NuitLocale.ENGLISH, "nuit.language.configurator.back", "Back");
+
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.action", "Action");
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.control", "Control");
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.alternative", "Alternative");
@@ -94,6 +102,7 @@ public class NuitTranslator {
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.defaults", "Defaults");
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.press.key", "Press a key...");
         addTranslation(NuitLocale.ENGLISH, "nuit.controls.configurator.press.key.again", "Press again...");
+
         addTranslation(NuitLocale.ENGLISH, "nuit.toggle.yes", "Yes");
         addTranslation(NuitLocale.ENGLISH, "nuit.toggle.no", "No");
     }
@@ -105,13 +114,20 @@ public class NuitTranslator {
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.right", "Droite");
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.ok", "OK");
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.cancel", "Annuler");
+
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.mode", "Mode");
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.fullscreen", "Plein écran");
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.apply", "Appliquer");
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.back", "Retour");
+
         addTranslation(NuitLocale.FRENCH, "nuit.audio.configurator.music.volume", "Volume de la musique");
         addTranslation(NuitLocale.FRENCH, "nuit.audio.configurator.effects.volume", "Volume des effets");
         addTranslation(NuitLocale.FRENCH, "nuit.audio.configurator.back", "Retour");
+
+        addTranslation(NuitLocale.FRENCH, "nuit.language.configurator.texts", "Textes");
+        addTranslation(NuitLocale.FRENCH, "nuit.language.configurator.voices", "Voix");
+        addTranslation(NuitLocale.FRENCH, "nuit.language.configurator.back", "Retour");
+
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.action", "Action");
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.control", "Contrôle");
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.alternative", "Alternative");
@@ -120,6 +136,7 @@ public class NuitTranslator {
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.defaults", "Défauts");
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.press.key", "Appuyez...");
         addTranslation(NuitLocale.FRENCH, "nuit.controls.configurator.press.key.again", "Réappuyez...");
+
         addTranslation(NuitLocale.FRENCH, "nuit.toggle.yes", "Oui");
         addTranslation(NuitLocale.FRENCH, "nuit.toggle.no", "Non");
     }

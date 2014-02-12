@@ -9,7 +9,7 @@ It use [lwjgl](http://lwjgl.org) rendering and a [playn](https://code.google.com
 ## Features
 
 - simple components: button, select, toggle.
-- specialized components for games: control settings, video mode selector, audio volume configurator.
+- specialized components for games: control settings, video mode selector, audio volume configurator, texts and voices language selector.
 - navigable with only one input device: mouse, keyboard or gamepad.
 - free or table based layout.
 

@@ -40,6 +40,7 @@ import java.util.List;
 
 /**
  * Main nuit class, store default and global parameters needed by widgets.
+ *
  * @author devnewton
  */
 public class NuitToolkit extends Toolkit<Widget, Table> {
@@ -75,6 +76,10 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public String getMessage(String key) {
         return translator.getMessage(key);
+    }
+
+    public void changeLocale(NuitLocale locale) {
+        translator.setCurrentLocale(locale);
     }
 
     public NuitRenderer getRenderer() {
@@ -243,6 +248,10 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public boolean isFullscreen() {
         return display.isFullscreen();
+    }
+
+    public NuitLocale getCurrentLocale() {
+        return translator.getCurrentLocale();
     }
 
 }

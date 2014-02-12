@@ -54,23 +54,20 @@ public class VideoConfigurator extends Table {
             @Override
             public void onOK() {
                 changeVideoSettings();
-                closeVideoSettings();
+                VideoConfigurator.this.close();
             }
         }).colspan(2);
         row();
         cell(new Button(toolkit, "nuit.video.configurator.back") {
             @Override
             public void onOK() {
-                closeVideoSettings();
+                VideoConfigurator.this.close();
             }
         }).colspan(2);
     }
 
     protected void changeVideoSettings() {
         toolkit.changeResolution(mode.getSelected(), fullscreen.isEnabled());
-    }
-
-    protected void closeVideoSettings() {
     }
 
     @Override
