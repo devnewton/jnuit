@@ -2,13 +2,13 @@
 
 <shortcuts>
 <skipIfNotSupported/>
-<programGroup defaultName="Jnuit basic game example"
+<programGroup defaultName="jnuit-basic"
             location="applications"/>
 <shortcut
-	name="Jnuit basic game example"
+	name="jnuit-basic"
 	target="/usr/bin/java"
 	commandLine="-jar &quot;$INSTALL_PATH/${jnuit-basic_build_final_name}.jar&quot;"
-	description="Launch Jnuit basic game example"
+	description="Launch jnuit-basic"
 	iconFile="$INSTALL_PATH/icon.png"
 	workingDirectory="$INSTALL_PATH"
 	initialState="normal"
@@ -25,10 +25,10 @@
 </shortcut>
 
 <shortcut
-	name="Jnuit basic game example safe launcher"
+	name="jnuit-basic safe launcher"
 	target="/usr/bin/java"
 	commandLine="-jar &quot;$INSTALL_PATH/${jnuit-basic_build_final_name}.jar&quot; -- safe"
-	description="Launch Jnuit basic game example  safe launcher"
+	description="Launch jnuit-basic in safe mode"
 	iconFile="$INSTALL_PATH/icon.png"
 	workingDirectory="$INSTALL_PATH"
 	initialState="normal"
@@ -45,10 +45,10 @@
 </shortcut>
 
 <shortcut
-	name="Uninstall Jnuit basic game example"
+	name="Uninstall jnuit-basic"
 	target="/usr/bin/java"
 	commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
-	description="Uninstall Jnuit basic game example"
+	description="Uninstall jnuit-basic"
 	workingDirectory="$INSTALL_PATH/Uninstaller"
 	initialState="normal"
 	programGroup="yes"

@@ -5,5 +5,5 @@ Priority: optional
 Architecture: all
 Depends: liblwjgl-java, libjorbis-java, libprotobuf-java, libguice-java, java7-runtime, jarwrapper, libopenal-dev
 Maintainer: devnewton <devnewton@bci.im>
-Description: Jnuit basic game example
+Description: jnuit-basic
 Homepage: http://devnewton.bci.im

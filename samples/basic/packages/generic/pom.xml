@@ -25,13 +25,13 @@ THE SOFTWARE. -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>im.bci</groupId>
-        <artifactId>jnuit-basic</artifactId>
+        <artifactId>${game.name}</artifactId>
         <version>0.5-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>jnuit-basic-installer</artifactId>
+    <artifactId>${game.name}-installer</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-basic-installer</name>
+    <name>${game.name}-installer</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -112,7 +112,7 @@ THE SOFTWARE. -->
                         </goals>
                         <configuration>
                             <attach>true</attach>
-                            <installerFile>${project.build.directory}/jnuit-basic-installer-${project.version}.jar</installerFile>
+                            <installerFile>${project.build.directory}/${game.name}-installer-${project.version}.jar</installerFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -129,7 +129,7 @@ THE SOFTWARE. -->
     <dependencies>
         <dependency>
             <groupId>im.bci</groupId>
-            <artifactId>jnuit-basic-game</artifactId>
+            <artifactId>${game.name}-game</artifactId>
         </dependency>
     </dependencies>
 </project>

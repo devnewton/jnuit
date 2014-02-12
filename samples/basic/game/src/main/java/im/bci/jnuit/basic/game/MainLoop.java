@@ -118,7 +118,7 @@ public class MainLoop {
                 Display.setDisplayMode(mode);
             }
             LwjglHelper.setResizable(true);
-            Display.setTitle("Jnuit basic game example");
+            Display.setTitle("jnuit-basic");
             if (!Display.isCreated()) {
                 Display.create();
             }

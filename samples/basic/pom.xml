@@ -2,11 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-basic</artifactId>
+    <artifactId>${game.name}</artifactId>
     <version>0.5-SNAPSHOT</version>
-    <name>jnuit-basic</name>
+    <name>${game.name}</name>
     <packaging>pom</packaging>
     <properties>
+        <game.name>jnuit-basic</game.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jnuit.version>0.5-SNAPSHOT</jnuit.version>
@@ -25,7 +26,7 @@
         <dependencies>
             <dependency>
                 <groupId>im.bci</groupId>
-                <artifactId>jnuit-basic-installer</artifactId>
+                <artifactId>${game.name}-installer</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -60,7 +61,7 @@
             </dependency>
             <dependency>
                 <groupId>im.bci</groupId>
-                <artifactId>jnuit-basic-game</artifactId>
+                <artifactId>${game.name}-game</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

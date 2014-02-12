@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-basic-win</artifactId>
+    <artifactId>${game.name}-win</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-basic-win</name>
+    <name>${game.name}-win</name>
     <url>http://devnewton.bci.im</url>
     <parent>
         <groupId>im.bci</groupId>
-        <artifactId>jnuit-basic</artifactId>
+        <artifactId>${game.name}</artifactId>
         <version>0.5-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -33,7 +33,7 @@
                                     <goal>copy-dependencies</goal>
                                 </goals>
                                 <configuration>
-                                    <includes>jnuit-basic-installer*</includes>
+                                    <includes>${game.name}-installer*</includes>
                                     <excludeTransitive>true</excludeTransitive>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
                                 </configuration>
@@ -54,22 +54,22 @@
                                 <configuration>
                                     <headerType>gui</headerType>
                                     <dontWrapJar>false</dontWrapJar>
-                                    <outfile>${project.build.directory}/jnuit-basic-installer-${project.version}.exe</outfile>
-                                    <jar>${project.build.directory}/jnuit-basic-installer-${project.version}.jar</jar>
-                                    <errTitle>Jnuit basic game example installer</errTitle>
+                                    <outfile>${project.build.directory}/${game.name}-installer-${project.version}.exe</outfile>
+                                    <jar>${project.build.directory}/${game.name}-installer-${project.version}.jar</jar>
+                                    <errTitle>${game.name} installer</errTitle>
                                     <jre>
                                         <minVersion>1.7.0</minVersion>
                                     </jre>
                                     <versionInfo>
                                         <fileVersion>1.0.0.0</fileVersion>
                                         <txtFileVersion>${project.version}</txtFileVersion>
-                                        <fileDescription>Jnuit basic game example</fileDescription>
-                                        <copyright>MIT, Art Libre</copyright>
+                                        <fileDescription>${game.name}</fileDescription>
+                                        <copyright>MIT, CC-BY-SA</copyright>
                                         <productVersion>1.0.0.0</productVersion>
                                         <txtProductVersion>${project.version}</txtProductVersion>
-                                        <productName>Jnuit basic game example installer</productName>
-                                        <internalName>jnuit-basic-installer</internalName>
-                                        <originalFilename>jnuit-basic-installer-${project.version}.exe</originalFilename>
+                                        <productName>${game.name} installer</productName>
+                                        <internalName>${game.name}-installer</internalName>
+                                        <originalFilename>${game.name}-installer-${project.version}.exe</originalFilename>
                                     </versionInfo>
                                 </configuration>
                             </execution>
@@ -80,7 +80,7 @@
             <dependencies>
                 <dependency>
                     <groupId>im.bci</groupId>
-                    <artifactId>jnuit-basic-installer</artifactId>
+                    <artifactId>${game.name}-installer</artifactId>
                 </dependency>
             </dependencies>
         </profile>

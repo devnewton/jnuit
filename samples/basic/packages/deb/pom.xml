@@ -25,13 +25,13 @@ THE SOFTWARE. -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>im.bci</groupId>
-        <artifactId>jnuit-basic</artifactId>
+        <artifactId>${game.name}</artifactId>
         <version>0.5-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>jnuit-basic-deb</artifactId>
+    <artifactId>${game.name}-deb</artifactId>
     <packaging>pom</packaging>
-    <name>jnuit-basic-deb</name>
+    <name>${game.name}-deb</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -99,15 +99,15 @@ THE SOFTWARE. -->
                                     <goal>jdeb</goal>
                                 </goals>
                                 <configuration>
-                                    <deb>${project.build.directory}/jnuit-basic_${project.version}.deb</deb>
+                                    <deb>${project.build.directory}/${game.name}_${project.version}.deb</deb>
                                     <dataSet>
                                         <data>
-                                            <src>${project.build.directory}/lib/jnuit-basic-game-${project.version}.jar</src>
+                                            <src>${project.build.directory}/lib/${game.name}-game-${project.version}.jar</src>
                                             <type>file</type>
-                                            <dst>jnuit-basic-game-${project.version}.jar</dst>
+                                            <dst>${game.name}-game-${project.version}.jar</dst>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/jnuit-basic</prefix>
+                                                <prefix>/opt/${game.name}</prefix>
                                                 <filemode>755</filemode>
                                             </mapper>
                                         </data>
@@ -116,28 +116,28 @@ THE SOFTWARE. -->
                                             <type>directory</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/jnuit-basic/data</prefix>
+                                                <prefix>/opt/${game.name}/data</prefix>
                                             </mapper>
                                         </data>
                                         <data>
                                             <src>${basedir}/target/lib</src>
                                             <type>directory</type>
-                                            <excludes>jnuit-basic-game-${project.version}.jar,jinput*,lwjgl*</excludes>
+                                            <excludes>${game.name}-game-${project.version}.jar,jinput*,lwjgl*</excludes>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/jnuit-basic</prefix>
+                                                <prefix>/opt/${game.name}</prefix>
                                             </mapper>
                                         </data>
                                         <data>
                                             <type>link</type>
                                             <linkTarget>/usr/share/java/lwjgl.jar</linkTarget>
-                                            <linkName>/opt/jnuit-basic/lwjgl-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
+                                            <linkName>/opt/${game.name}/lwjgl-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
                                             <symlink>true</symlink>
                                         </data>
                                         <data>
                                             <type>link</type>
                                             <linkTarget>/usr/share/java/lwjgl_util.jar</linkTarget>
-                                            <linkName>/opt/jnuit-basic/lwjgl_util-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
+                                            <linkName>/opt/${game.name}/lwjgl_util-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
                                             <symlink>true</symlink>
                                         </data>
                                         <data>
@@ -145,7 +145,7 @@ THE SOFTWARE. -->
                                             <type>directory</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/jnuit-basic/licenses</prefix>
+                                                <prefix>/opt/${game.name}/licenses</prefix>
                                             </mapper>
                                         </data>
                                         <data>
@@ -153,11 +153,11 @@ THE SOFTWARE. -->
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/jnuit-basic</prefix>
+                                                <prefix>/opt/${game.name}</prefix>
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.build.directory}/jnuit-basic.desktop</src>
+                                            <src>${project.build.directory}/${game.name}.desktop</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
@@ -165,7 +165,7 @@ THE SOFTWARE. -->
                                             </mapper>
                                         </data>
                                        <data>
-                                            <src>${project.build.directory}/jnuit-basic-safe.desktop</src>
+                                            <src>${project.build.directory}/${game.name}-safe.desktop</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
@@ -173,9 +173,9 @@ THE SOFTWARE. -->
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.build.directory}/run-jnuit-basic.sh</src>
+                                            <src>${project.build.directory}/run-${game.name}.sh</src>
                                             <type>file</type>
-                                            <dst>jnuit-basic</dst>
+                                            <dst>${game.name}</dst>
                                             <mapper>
                                                 <type>perm</type>
                                                 <prefix>/usr/bin</prefix>
@@ -192,7 +192,7 @@ THE SOFTWARE. -->
             <dependencies>
                 <dependency>
                     <groupId>im.bci</groupId>
-                    <artifactId>jnuit-basic-game</artifactId>
+                    <artifactId>${game.name}-game</artifactId>
                 </dependency>
             </dependencies>
         </profile>

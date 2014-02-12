@@ -22,9 +22,8 @@
  THE SOFTWARE.
  */
 
-package im.bci.jnuit.basicgame.game;
+package im.bci.jnuit.basic.game;
 
-import im.bci.jnuit.basic.game.GameModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.grapher.GrapherModule;

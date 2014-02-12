@@ -25,13 +25,13 @@ THE SOFTWARE. -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>im.bci</groupId>
-        <artifactId>jnuit-basic</artifactId>
+        <artifactId>${game.name}</artifactId>
         <version>0.5-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>jnuit-basic-rpm64</artifactId>
+    <artifactId>${game.name}-rpm64</artifactId>
     <packaging>pom</packaging>
-    <name>jnuit-basic-rpm64</name>
+    <name>${game.name}-rpm64</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -117,7 +117,7 @@ THE SOFTWARE. -->
                                 <configuration>
                                     <copyright>2013 devnewton</copyright>
                                     <group>Application/Games</group>
-                                    <name>jnuit-basic</name>
+                                    <name>${game.name}</name>
                                     <packager>devnewton</packager>
                                     <needarch>x86_64</needarch>
                                     <requires>
@@ -125,7 +125,7 @@ THE SOFTWARE. -->
                                     </requires>
                                     <mappings>
                                         <mapping>
-                                            <directory>/opt/jnuit-basic</directory>
+                                            <directory>/opt/${game.name}</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
@@ -135,7 +135,7 @@ THE SOFTWARE. -->
                                             </sources>
                                         </mapping>
                                         <mapping>
-                                            <directory>/opt/jnuit-basic/data</directory>
+                                            <directory>/opt/${game.name}/data</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
@@ -145,7 +145,7 @@ THE SOFTWARE. -->
                                             </sources>
                                         </mapping>
                                         <mapping>
-                                            <directory>/opt/jnuit-basic</directory>
+                                            <directory>/opt/${game.name}</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
@@ -155,7 +155,7 @@ THE SOFTWARE. -->
                                             </sources>
                                         </mapping>
                                         <mapping>
-                                            <directory>/opt/jnuit-basic/natives</directory>
+                                            <directory>/opt/${game.name}/natives</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
@@ -169,7 +169,7 @@ THE SOFTWARE. -->
                                             </sources>
                                         </mapping>
                                         <mapping>
-                                            <directory>/opt/jnuit-basic/licenses</directory>
+                                            <directory>/opt/${game.name}/licenses</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
@@ -185,7 +185,7 @@ THE SOFTWARE. -->
                                             <groupname>root</groupname>
                                             <sources>
                                                 <source>
-                                                    <location>${project.build.directory}/jnuit-basic.desktop</location>
+                                                    <location>${project.build.directory}/${game.name}.desktop</location>
                                                 </source>
                                             </sources>
                                         </mapping>
@@ -196,7 +196,7 @@ THE SOFTWARE. -->
                                             <groupname>root</groupname>
                                             <sources>
                                                 <source>
-                                                    <location>${project.build.directory}/jnuit-basic-safe.desktop</location>
+                                                    <location>${project.build.directory}/${game.name}-safe.desktop</location>
                                                 </source>
                                             </sources>
                                         </mapping>
@@ -208,8 +208,8 @@ THE SOFTWARE. -->
                                             <groupname>root</groupname>
                                             <sources>
                                                 <source>
-                                                    <location>${project.build.directory}/run-jnuit-basic.sh</location>
-                                                    <destination>jnuit-basic</destination>
+                                                    <location>${project.build.directory}/run-${game.name}.sh</location>
+                                                    <destination>${game.name}</destination>
                                                 </source>
                                             </sources>
                                         </mapping>
@@ -223,7 +223,7 @@ THE SOFTWARE. -->
             <dependencies>
                 <dependency>
                     <groupId>im.bci</groupId>
-                    <artifactId>jnuit-basic-game</artifactId>
+                    <artifactId>${game.name}-game</artifactId>
                 </dependency>
             </dependencies>
         </profile>

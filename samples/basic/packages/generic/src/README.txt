@@ -1,4 +1,4 @@
-Jnuit basic game example is a free and open source 2D platform game.
+jnuit-basic game example is a free and open source game.
 
 The game can be run by double clicking on the jnuit-basic-game-${project.version}.jar
 file or using one of the run-* script.

@@ -2,12 +2,12 @@
 
 <shortcuts>
 <skipIfNotSupported/>
-<programGroup defaultName="Jnuit basic game example" location="applications"/>
+<programGroup defaultName="jnuit-basic" location="applications"/>
 
-<shortcut name="Jnuit basic game example"
+<shortcut name="jnuit-basic"
         target="$JAVA_HOME\bin\javaw.exe"
 	commandLine="-jar  &quot;$INSTALL_PATH\${jnuit-basic_build_final_name}.jar&quot;"
-        description="Launch Jnuit basic game example"
+        description="Launch jnuit-basic"
         workingDirectory="$INSTALL_PATH"
         iconFile="$INSTALL_PATH\icon.ico"
         initialState="normal"
@@ -19,10 +19,10 @@
 	<createForPack name="Core"/>
 </shortcut>
 
-<shortcut name="Jnuit basic game example safe launcher"
+<shortcut name="jnuit-basic"
         target="$JAVA_HOME\bin\javaw.exe"
 	commandLine="-jar  &quot;$INSTALL_PATH\${jnuit-basic_build_final_name}.jar&quot; --safe"
-        description="Launch Jnuit basic game example safe launcher"
+        description="Launch jnuit-basic in safe mode"
         workingDirectory="$INSTALL_PATH"
         iconFile="$INSTALL_PATH\icon.ico"
         initialState="normal"
@@ -35,11 +35,11 @@
 </shortcut>
 
 <shortcut
- 		name="Uninstall Jnuit basic game example"
+ 		name="Uninstall jnuit-basic"
 		target="$JAVA_HOME\bin\javaw.exe"
 		workingDirectory=""
 		commandLine="-jar &quot;$INSTALL_PATH\Uninstaller\uninstaller.jar&quot;"
- 		description="Run me with administrator privilege to uninstall Jnuit basic game example"
+ 		description="Run me with administrator privilege to uninstall jnuit-basic"
  		initialState="normal"
 		programGroup="yes"
 		desktop="no"

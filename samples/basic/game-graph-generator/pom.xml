@@ -25,13 +25,13 @@ THE SOFTWARE. -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>im.bci</groupId>
-        <artifactId>jnuit-basic</artifactId>
+        <artifactId>${game.name}</artifactId>
         <version>0.5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>jnuit-basic-game-graph-generator</artifactId>
+    <artifactId>${game.name}-game-graph-generator</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-basic-game-graph-generator</name>
+    <name>${game.name}-game-graph-generator</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -58,7 +58,7 @@ THE SOFTWARE. -->
     <dependencies>
         <dependency>
             <groupId>im.bci</groupId>
-            <artifactId>jnuit-basic-game</artifactId>
+            <artifactId>${game.name}-game</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
