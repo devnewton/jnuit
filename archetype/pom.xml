@@ -28,4 +28,11 @@
             </plugins>
         </pluginManagement>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>im.bci</groupId>
+            <artifactId>jnuit-lwjgl-utils</artifactId>
+            <scope>test</scope>
+        </dependency>   
+    </dependencies>
 </project>
