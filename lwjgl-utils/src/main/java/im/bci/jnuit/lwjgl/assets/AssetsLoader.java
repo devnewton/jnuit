@@ -24,6 +24,7 @@
 package im.bci.jnuit.lwjgl.assets;
 
 import de.matthiasmann.jpegdecoder.JPEGDecoder;
+import de.matthiasmann.jpegdecoder.YUVtoRGB;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import im.bci.jnuit.lwjgl.IconLoader;
 import im.bci.jnuit.lwjgl.LwjglHelper;
@@ -186,7 +187,7 @@ public class AssetsLoader {
             int texHeight = decoder.getImageHeight();
             int stride = 3 * texWidth;
             ByteBuffer buffer = ByteBuffer.allocateDirect(stride * texHeight);
-            decoder.decodeAllToRGB(buffer, stride);
+            decoder.decode(buffer, stride, decoder.getNumMCURows(), YUVtoRGB.instance);
             buffer.flip();
             Texture texture = new Texture(texWidth, texHeight, false);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());

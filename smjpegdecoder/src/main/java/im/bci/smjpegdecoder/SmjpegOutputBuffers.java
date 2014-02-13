@@ -23,6 +23,8 @@
  */
 package im.bci.smjpegdecoder;
 
+import de.matthiasmann.jpegdecoder.YUVDecoder;
+import de.matthiasmann.jpegdecoder.YUVtoRGB;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -35,11 +37,12 @@ public class SmjpegOutputBuffers {
     private final ByteBuffer videoFrame;
     private final int videoFrameStride;
     private int videoFrameTimestamp = -1;
+    private YUVDecoder yuvDecoder = YUVtoRGB.instance;
 
     /**
-     * 
+     *
      * @param videoFrame Buffer to store RGB888 pixel format
-     * @param videoFrameStride 
+     * @param videoFrameStride
      */
     public SmjpegOutputBuffers(ByteBuffer videoFrame, int videoFrameStride) {
         this.videoFrame = videoFrame;
@@ -65,5 +68,13 @@ public class SmjpegOutputBuffers {
 
     public void setVideoFrameTimestamp(int videoFrameTimestamp) {
         this.videoFrameTimestamp = videoFrameTimestamp;
+    }
+
+    YUVDecoder getYUVDecoder() {
+        return yuvDecoder;
+    }
+
+    public void setYUVDecoder(YUVDecoder yuvDecoder) {
+        this.yuvDecoder = yuvDecoder;
     }
 }
