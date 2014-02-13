@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="jnuit-archetype"
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <requiredProperties>
+    <requiredProperty key="game-package">
+      <defaultValue>im.bci.mygame</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="game-name">
+      <defaultValue>mygame</defaultValue>
+    </requiredProperty>
+  </requiredProperties>
+  <fileSets>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>licenses</directory>
+      <includes>
+        <include>**/*.txt</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>build.sh</include>
+        <include>INSTALL.md</include>
+        <include>README.md</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <modules>
+    <module id="${game-name}-game" dir="game" name="${game-name}-game">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.form</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.properties</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.MF</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>data</directory>
+          <includes>
+            <include>**/*.jpg</include>
+            <include>**/*.tmx</include>
+            <include>**/*.gz</include>
+            <include>**/*.png</include>
+            <include>**/*.gif</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>run-macosx.sh</include>
+            <include>run-linux.sh</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>run-windows.bat</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${game-name}-game-graph-generator" dir="game-graph-generator" name="${game-name}-game-graph-generator">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${game-name}-deb" dir="packages/deb" name="${game-name}-deb">
+      <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/launchers</directory>
+          <includes>
+            <include>**/*.desktop</include>
+            <include>**/*.sh</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/deb</directory>
+          <includes>
+            <include>**/control</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${game-name}-installer" dir="packages/generic" name="${game-name}-installer">
+      <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/izpack</directory>
+          <includes>
+            <include>**/*.xml</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src</directory>
+          <includes>
+            <include>**/*.txt</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/launchers</directory>
+          <includes>
+            <include>**/*.sh</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>src/izpack</directory>
+          <includes>
+            <include>**/*.png</include>
+            <include>**/*.ico</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/launchers</directory>
+          <includes>
+            <include>**/*.bat</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${game-name}-win" dir="packages/win" name="${game-name}-win" />
+    <module id="${game-name}-rpm32" dir="packages/rpm32" name="${game-name}-rpm32">
+      <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/launchers</directory>
+          <includes>
+            <include>**/*.desktop</include>
+            <include>**/*.sh</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+    <module id="${game-name}-rpm64" dir="packages/rpm64" name="${game-name}-rpm64">
+      <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/launchers</directory>
+          <includes>
+            <include>**/*.desktop</include>
+            <include>**/*.sh</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+  </modules>
+</archetype-descriptor>

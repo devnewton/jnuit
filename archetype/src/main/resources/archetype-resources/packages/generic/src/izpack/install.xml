@@ -1,0 +1,87 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<installation version="1.0">
+    <info>
+        <appname>${game-name}</appname>
+        <appversion>@{project.version}</appversion>
+        <authors>
+            <author name="devnewton" email="devnewton@bci.im" />
+        </authors>
+        <url>http://devnewton.bci.im</url>
+        <javaversion>1.7</javaversion>
+        <requiresjdk>no</requiresjdk>
+    </info>
+ 
+    <guiprefs width="800" height="480" resizable="yes" />
+ 
+    <locale>
+        <langpack iso3="eng" />
+    </locale>
+
+    <variables>
+        <variable name="${game-name}_build_final_name" value="${game-name}-game-@{project.version}"/>
+	<variable name="ShowCreateDirectoryMessage" value="false"/>
+    </variables>
+
+    <resources>
+	<res id="Installer.image" src="../../src/izpack/cover.png" />
+        <res src="../../src/izpack/Win_shortcutSpec.xml" id="Win_shortcutSpec.xml" parse="yes"/>
+        <res src="../../src/izpack/Unix_shortcutSpec.xml" id="Unix_shortcutSpec.xml" parse="yes"/>
+    </resources>
+ 
+    <panels>
+        <panel classname="HelloPanel" />
+        <panel classname="TargetPanel"/>       
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>     
+        <panel classname="SimpleFinishPanel" />
+    </panels>
+ 
+    <packs>
+        <pack name="Core" required="yes">
+            <description>Core installation files</description>
+            <file src="../../src/izpack/icon.ico" targetdir="${symbol_dollar}INSTALL_PATH" />
+            <file src="../../target/README.txt" targetdir="${symbol_dollar}INSTALL_PATH" />
+            <file src="../../target/run-linux.sh" targetdir="${symbol_dollar}INSTALL_PATH" >
+		<os family="unix"/>
+	    </file>
+            <file src="../../target/run-macosx.sh" targetdir="${symbol_dollar}INSTALL_PATH" >
+		<os family="mac"/>
+	    </file>
+            <file src="../../target/run-windows.bat" targetdir="${symbol_dollar}INSTALL_PATH" >
+		<os family="windows"/>
+	    </file>
+            <file src="../../../../game/data/icon.png" targetdir="${symbol_dollar}INSTALL_PATH" />
+            <fileset dir="../../../../licenses" targetdir="${symbol_dollar}INSTALL_PATH/licenses" override="true"/>
+	    <fileset dir="../../../../game/data" targetdir="${symbol_dollar}INSTALL_PATH/data" override="true" />
+            <fileset dir="../../target/lib" targetdir="${symbol_dollar}INSTALL_PATH" override="true" />
+            <fileset dir="../../target/natives" targetdir="${symbol_dollar}INSTALL_PATH/natives" override="true">
+		<include name="*.so"/>
+		<os family="unix"/>
+	    </fileset>
+            <fileset dir="../../target/natives" targetdir="${symbol_dollar}INSTALL_PATH/natives" override="true">
+		<include name="*.jnilib"/>
+		<include name="*.dylib"/>
+		<os family="mac"/>
+	    </fileset>
+	    <fileset dir="../../target/natives" targetdir="${symbol_dollar}INSTALL_PATH/natives" override="true">
+		<include name="*.dll"/>
+		<os family="windows"/>
+	    </fileset>
+	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/${game-name}-game-@{project.version}.jar"/>
+	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/run-linux.sh">
+		<os family="unix"/>
+	    </executable>
+	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/run-macosx.sh" >
+		<os family="mac"/>
+	    </executable>
+        </pack>
+    </packs>
+
+    <native type="izpack" name="ShellLink.dll"/>
+    <native type="izpack" name="ShellLink_x64.dll"/>
+ 
+</installation>
+

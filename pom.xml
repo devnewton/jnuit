@@ -58,13 +58,13 @@ THE SOFTWARE. -->
         <lwjgl.version>2.9.0</lwjgl.version>
     </properties>
     <modules>
+        <module>archetype</module>
         <module>core</module>
         <module>jpegdecoder</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
         <module>smjpegdecoder</module>
         <module>tablelayout</module>
-        <module>samples/basic</module>
     </modules>
     <dependencyManagement>
         <dependencies>

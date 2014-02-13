@@ -1,0 +1,56 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+<skipIfNotSupported/>
+<programGroup defaultName="${game-name}" location="applications"/>
+
+<shortcut name="${game-name}"
+        target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
+	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${game-name}_build_final_name}.jar&quot;"
+        description="Launch ${game-name}"
+        workingDirectory="${symbol_dollar}INSTALL_PATH"
+        iconFile="${symbol_dollar}INSTALL_PATH${symbol_escape}icon.ico"
+        initialState="normal"
+        programGroup="yes"
+        desktop="yes"
+        applications="no"
+        startMenu="no"
+        startup="no">
+	<createForPack name="Core"/>
+</shortcut>
+
+<shortcut name="${game-name}"
+        target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
+	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${game-name}_build_final_name}.jar&quot; --safe"
+        description="Launch ${game-name} in safe mode"
+        workingDirectory="${symbol_dollar}INSTALL_PATH"
+        iconFile="${symbol_dollar}INSTALL_PATH${symbol_escape}icon.ico"
+        initialState="normal"
+        programGroup="yes"
+        desktop="yes"
+        applications="no"
+        startMenu="no"
+        startup="no">
+	<createForPack name="Core"/>
+</shortcut>
+
+<shortcut
+ 		name="Uninstall ${game-name}"
+		target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
+		workingDirectory=""
+		commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}Uninstaller${symbol_escape}uninstaller.jar&quot;"
+ 		description="Run me with administrator privilege to uninstall ${game-name}"
+ 		initialState="normal"
+		programGroup="yes"
+		desktop="no"
+		applications="no"
+		startMenu="no"
+		startup="no" >
+	<createForPack name="Core"/>
+</shortcut>
+
+
+</shortcuts>
