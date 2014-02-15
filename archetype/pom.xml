@@ -11,6 +11,21 @@
     <artifactId>jnuit-archetype</artifactId>
     <packaging>maven-archetype</packaging>
     <name>jnuit-archetype</name>
+    <description>Create a full featured game project: lwjgl for rendering, jnuit for GUI, artemis for Entity System, guice for dependency injection, maven plugins for installer/package generators for Windows, Debian, Fedora and other OS, support of Keyboard/Mouse/Gamepad inputs settings...</description>
+    <url>http://git.bci.im/jnuit</url>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>http://git.bci.im/jnuit/blob/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Dave Newton</name>
+            <url>http://devnewton.bci.im</url>
+        </developer>
+    </developers>
     <build>
         <extensions>
             <extension>
@@ -35,4 +50,33 @@
             <scope>test</scope>
         </dependency>   
     </dependencies>
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

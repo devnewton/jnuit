@@ -22,7 +22,7 @@
 	<createForPack name="Core"/>
 </shortcut>
 
-<shortcut name="${game-name}"
+<shortcut name="${game-name} safe launcher"
         target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
 	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${game-name}_build_final_name}.jar&quot; --safe"
         description="Launch ${game-name} in safe mode"
