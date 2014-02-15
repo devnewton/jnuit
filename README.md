@@ -26,9 +26,11 @@ The lwjgl implementation also comes with a collection of utilities to make 2d ga
 - [Newton Adventure](http://devnewton.bci.im/games/newton_adventure)
 - [Ned et les maki](http://devnewton.bci.im/games/nedetlesmaki)
 
-## Getting started
+# Getting started
 
-Use [maven](https://maven.apache.org/) to create a game project using jnuit:
+## Use jnuit for a new game project
+
+Use [maven](https://maven.apache.org/) archetype plugin to create a project using jnuit:
 
 ```bash
 mvn archetype:generate -DarchetypeGroupId=im.bci -DarchetypeArtifactId=jnuit-archetype -DarchetypeVersion=LATEST -DgroupId=comycompagny.superbaryo2 -DartifactId=superbaryo2 -Dgame-name=superbaryo2 -Dgame-package=com.mycompagny.superbaryo2 -Dversion=1.0-SNAPSHOT
@@ -41,3 +43,15 @@ This project archetype contains everything you need to do a nice game:
 - entity system with [artemis](http://gamadu.com/artemis/).
 - [tiled](http://www.mapeditor.org/) level loading.
 - basic rendering and main character moving in isometric and orthogonal levels.
+
+## Use jnuit with an existing lwjgl based project
+
+Add jnuit to your maven dependency list:
+
+```xml
+<dependency>
+    <groupdId>im.bci</groupId>
+    <artifactId>jnuit-lwjgl</artifactId>
+    <version>${jnuit.version}</version>
+</dependency>
+```
