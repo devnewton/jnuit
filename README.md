@@ -28,7 +28,9 @@ The lwjgl implementation also comes with a collection of utilities to make 2d ga
 
 # Getting started
 
-## Use jnuit for a new game project
+## Use jnuit
+
+### For a new game project
 
 Use [maven](https://maven.apache.org/) archetype plugin to create a project using jnuit:
 
@@ -44,7 +46,7 @@ This project archetype contains everything you need to do a nice game:
 - [tiled](http://www.mapeditor.org/) level loading.
 - basic rendering and main character moving in isometric and orthogonal levels.
 
-## Use jnuit with an existing lwjgl based project
+### With an existing lwjgl based project
 
 Add jnuit to your maven dependency list:
 
@@ -55,3 +57,20 @@ Add jnuit to your maven dependency list:
     <version>${jnuit.version}</version>
 </dependency>
 ```
+
+## Learn API
+
+jnuit is classic GUI API with a simple widget and layout hierarchy. There is only a few concepts:
+
+- widget: basic GUI element. Every widget has a background, borders and can react to input events.
+- layout: widget made to contains other widget.
+- cursor: a cursor focus the current selected widget. Cursor can be moved using keyboard, mouse or gamepad.
+- input events: moving cursor, ok and cancel.
+
+The best way to learn jnuit API is to look at samples:
+
+- [How to init jnuit and integrate with an lwjgl event loop](samples/src/main/java/im/bci/jnuit/samples/AbstractSample.java): all sample are based on this one.
+- [Mandatory Hello world sample](samples/src/main/java/im/bci/jnuit/samples/HelloWorld.java).
+- [How to layout widgets freely](samples/src/main/java/im/bci/jnuit/samples/ContainerLayoutSample.java).
+- [How to layout widgets in table](samples/src/main/java/im/bci/jnuit/samples/TableLayoutSample.java).
+- [How to create a simple form](samples/src/main/java/im/bci/jnuit/samples/FormSample.java).
