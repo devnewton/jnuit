@@ -29,7 +29,7 @@ THE SOFTWARE. -->
         <version>7</version>
     </parent>
     <artifactId>jnuit</artifactId>
-    <version>0.5</version>
+    <version>0.6-SNAPSHOT</version>
     <name>jnuit</name>
     <packaging>pom</packaging>
     <description>Simple gui toolkit for lwjgl or playn videogames.</description>
@@ -64,6 +64,7 @@ THE SOFTWARE. -->
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
         <module>smjpegdecoder</module>
+        <module>samples</module>
         <module>tablelayout</module>
     </modules>
     <dependencyManagement>

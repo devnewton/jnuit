@@ -328,7 +328,9 @@ public abstract class Widget {
     }
     
     protected Widget getTopLeftFocusableChild() {
-        return Collections.min(getFocusableChildren(), new Comparator<Widget>() {
+        final List<Widget> focusableChildren = getFocusableChildren();
+        if(!focusableChildren.isEmpty()) {
+        return Collections.min(focusableChildren, new Comparator<Widget>() {
             @Override
             public int compare(Widget w1, Widget w2) {
                 int result = Float.compare(w1.getCenterY(), w2.getCenterY());
@@ -338,6 +340,9 @@ public abstract class Widget {
                 return result;
             }
         });
+        } else {
+            return null;
+        }
     }
     
     private List<Widget> getFocusableChildren() {
