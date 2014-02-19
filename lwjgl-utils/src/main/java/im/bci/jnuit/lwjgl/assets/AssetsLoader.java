@@ -157,14 +157,30 @@ public class AssetsLoader {
         }
     }
 
-    public LwjglNuitFont loadFont(String name) {
-        logger.log(Level.FINE, "Load font {0}", name);
+    public LwjglNuitFont loadFont(String params) {
+        logger.log(Level.FINE, "Load font {0}", params);
+        String fontName = "";
+        int fontSize = 24;
+        int fontStyle = Font.PLAIN;
+        for (String param : params.split(",")) {
+            if ("bold".equalsIgnoreCase(param)) {
+                fontStyle |= Font.BOLD;
+            } else if ("italic".equalsIgnoreCase(param)) {
+                fontStyle |= Font.ITALIC;
+            } else {
+                try {
+                    fontSize = Integer.parseInt(param);
+                } catch (NumberFormatException ex) {
+                    fontName = param;
+                }
+            }
+        }
         Font f;
-        try (InputStream is = vfs.open(name)) {
+        try (InputStream is = vfs.open(fontName)) {
             f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(Font.PLAIN, 48);
+            f = f.deriveFont(fontStyle, fontSize);
         } catch (IOException | FontFormatException e) {
-            f = new Font("monospaced", Font.BOLD, 24);
+            f = new Font("monospaced", fontStyle, fontSize);
         }
         LwjglNuitFont font = new FontAsset(f, true, new char[0], new HashMap<Character, BufferedImage>());
         font.setCorrection(false);
