@@ -89,8 +89,8 @@ public class Dialog extends Container {
             }
 
         };
-        nextButton.setX(1280 - 166);
-        nextButton.setY(800 - 64);
+        nextButton.setX(1920 - 166);
+        nextButton.setY(1080 - 64);
         nextButton.setWidth(166);
         nextButton.setHeight(64);
 
@@ -122,12 +122,12 @@ public class Dialog extends Container {
         this.textLabel = new Label(toolkit, "");
         textLabel.setX(166);
         textLabel.setY(800 - 64);
-        textLabel.setWidth(1280 - 166 * 2);
+        textLabel.setWidth(1920 - 166 * 2);
         textLabel.setHeight(64);
 
         view = new Label(toolkit, "");
-        view.setWidth(1280);
-        view.setHeight(800);
+        view.setWidth(1920);
+        view.setHeight(1080);
 
         add(view);
         add(textLabel);
@@ -145,7 +145,7 @@ public class Dialog extends Container {
 
     public void addTirade(IPlay play, String... sentences) {
         for (String sentence : sentences) {
-            this.sentences.add(new Sentence(play, 0, 0, 1280, 800, sentence));
+            this.sentences.add(new Sentence(play, 0, 0, 1920, 1080, sentence));
         }
         onChangeSentence();
     }

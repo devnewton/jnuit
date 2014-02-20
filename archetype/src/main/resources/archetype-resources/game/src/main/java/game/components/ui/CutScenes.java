@@ -51,7 +51,7 @@ public class CutScenes {
         assets.clearUseless();
         IAnimationCollection animations = assets.getAnimations("devnewton.nanim.gz");
         dialog.setBackground(new ColoredBackground(0, 0, 0, 1));
-        dialog.addTirade(animations.getAnimationByName("devnewton").start(PlayMode.ONCE), (1280 - 512) / 2, (800 - 128) / 2, 512, 128, "dialog.credits.devnewton");
+        dialog.addTirade(animations.getAnimationByName("devnewton").start(PlayMode.ONCE), (1920 - 512) / 2, (1080 - 128) / 2, 512, 128, "dialog.credits.devnewton");
     }
     
     public void createArtworks(Dialog dialog) {
