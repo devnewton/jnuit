@@ -162,11 +162,14 @@ public class AssetsLoader {
         String fontName = "";
         int fontSize = 24;
         int fontStyle = Font.PLAIN;
+        boolean antialising = false;
         for (String param : params.split(",")) {
             if ("bold".equalsIgnoreCase(param)) {
                 fontStyle |= Font.BOLD;
             } else if ("italic".equalsIgnoreCase(param)) {
                 fontStyle |= Font.ITALIC;
+            } else if ("antialiasing".equalsIgnoreCase(param)) {
+                antialising = true;
             } else {
                 try {
                     fontSize = Integer.parseInt(param);
@@ -182,7 +185,7 @@ public class AssetsLoader {
         } catch (IOException | FontFormatException e) {
             f = new Font("monospaced", fontStyle, fontSize);
         }
-        LwjglNuitFont font = new FontAsset(f, true, new char[0], new HashMap<Character, BufferedImage>());
+        LwjglNuitFont font = new FontAsset(f, antialising, new char[0], new HashMap<Character, BufferedImage>());
         font.setCorrection(false);
         return font;
     }
