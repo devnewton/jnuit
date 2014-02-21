@@ -32,7 +32,7 @@ import im.bci.jnuit.visitors.WidgetVisitor;
  */
 public class Button extends Widget {
 
-    private final String text;
+    private String text;
     private final NuitToolkit toolkit;
 
     public Button(NuitToolkit toolkit, String text) {
@@ -42,6 +42,10 @@ public class Button extends Widget {
 
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override

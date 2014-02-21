@@ -40,10 +40,11 @@ public class Dialogue extends Container {
     private int currentSentenceIndex;
     private IPlay currentPlay;
     private boolean finished;
-    protected final Label textLabel;
-    protected final Label view;
-    protected final Button nextButton;
+    protected Label textLabel;
+    protected Label view;
+    protected Button nextButton;
     protected NuitToolkit toolkit;
+    protected Button previousButton;
 
     private Sentence getCurrentSentence() {
         if (!sentences.isEmpty()) {
@@ -116,7 +117,7 @@ public class Dialogue extends Container {
         nextButton.setWidth(BUTTON_SIZE);
         nextButton.setHeight(BUTTON_SIZE);
 
-        Button previousButton = new Button(toolkit, "<") {
+        previousButton = new Button(toolkit, "<") {
             @Override
             public void onOK() {
                 onPrevious();
