@@ -66,7 +66,7 @@ public class Dialogue extends Container {
             newSubsentence += words[i];
             if (toolkit.getFont().getWidth(newSubsentence) > textLabel.getWidth()) {
                 result.add(currentSubsentence);
-                currentSubsentence = i != words.length-1 ? "" : words[i];
+                currentSubsentence = words[i];
             } else {
                 currentSubsentence = newSubsentence;
             }
