@@ -171,13 +171,8 @@ public class SimpleSoundEngine {
         buffer.playingAt.clear();
         buffers.remove(path);
     }
-    
-    public void playSound(String path){
-        playSoundE(path, 1.0f, 1.0f);
-    }
-    
-    
-    public void playSoundE(String path, float gain, float pitch){
+
+    public void playSound(String path, float gain, float pitch){
         SoundSourceEntry entry = findFreeSource();
         if (entry == null){
             logger.log(Level.WARNING,"No free sources available");
@@ -246,5 +241,9 @@ public class SimpleSoundEngine {
     
     public void pauseMusic(boolean pause){
         musicStreamer.setPause(pause);
-    }    
+    }
+    
+    public void setMusicGain(float g) {
+        this.musicStreamer.setGain(g);
+    }
 }

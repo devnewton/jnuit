@@ -31,13 +31,13 @@ import im.bci.jnuit.audio.Sound;
  */
 public interface NuitAudio {
 
-    public boolean isSoundEnabled();
+    float getEffectsVolume();
 
-    public boolean isMusicEnabled();
+    float getMusicVolume();
 
-    public void setSoundEnabled(boolean active);
+    void setEffectsVolume(float v);
 
-    public void setMusicEnabled(boolean active);
+    void setMusicVolume(float v);
 
     Sound getSound(String name);
 

@@ -42,12 +42,39 @@ import java.util.logging.Logger;
 public class OpenALNuitAudio implements NuitAudio {
 
     private static final Logger logger = Logger.getLogger(OpenALNuitAudio.class.getName());
-    private boolean soundEnabled = true;
-    private boolean musicEnabled = true;
+    private float effectsVolume = 1.0f;
+    private float musicVolume = 1.0f;
     private final VirtualFileSystem vfs;
     private SimpleSoundEngine engine;
     private final ExecutorService executor;
     private Runnable poll;
+
+    @Override
+    public float getEffectsVolume() {
+        return effectsVolume;
+    }
+
+    @Override
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    @Override
+    public void setEffectsVolume(float v) {
+        this.effectsVolume = v;
+    }
+
+    @Override
+    public void setMusicVolume(float v) {
+        this.musicVolume = v;
+        executor.submit(new AbstractOpenALTask() {
+
+            @Override
+            public void doRun() {
+                engine.setMusicGain(musicVolume);
+            }
+        });
+    }
 
     private abstract class AbstractOpenALTask implements Runnable {
 
@@ -65,7 +92,7 @@ public class OpenALNuitAudio implements NuitAudio {
 
     public OpenALNuitAudio(VirtualFileSystem virtualFileSystem) {
         this.poll = new AbstractOpenALTask() {
-            
+
             @Override
             public void doRun() {
                 engine.poll();
@@ -133,12 +160,12 @@ public class OpenALNuitAudio implements NuitAudio {
 
             @Override
             public void play() {
-                if (soundEnabled) {
+                if (effectsVolume>0.0f) {
                     executor.submit(new AbstractOpenALTask() {
 
                         @Override
                         public void doRun() {
-                            engine.playSound(name);
+                            engine.playSound(name, effectsVolume, 1.0f);
                         }
                     });
                 }
@@ -152,7 +179,7 @@ public class OpenALNuitAudio implements NuitAudio {
 
     @Override
     public void playMusicIfEnabled(final String name) {
-        if (musicEnabled) {
+        if (musicVolume>0.0f) {
             executor.submit(new AbstractOpenALTask() {
 
                 @Override
@@ -177,29 +204,5 @@ public class OpenALNuitAudio implements NuitAudio {
             }
         });
 
-    }
-
-    @Override
-    public boolean isSoundEnabled() {
-        return soundEnabled;
-    }
-
-    @Override
-    public boolean isMusicEnabled() {
-        return musicEnabled;
-    }
-
-    @Override
-    public void setSoundEnabled(boolean e) {
-        this.soundEnabled = e;
-    }
-
-
-    @Override
-    public void setMusicEnabled(boolean e) {
-        this.musicEnabled = e;
-        if (!e) {
-            stopMusic();
-        }
     }
 }

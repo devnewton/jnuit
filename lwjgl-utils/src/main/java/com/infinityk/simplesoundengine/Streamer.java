@@ -231,5 +231,12 @@ class Streamer {
         }
     }
 
+    public float getGain() {
+        return AL10.alGetSourcef(source, AL10.AL_GAIN);
+    }
+    
+    public void setGain(float gain) {
+        AL10.alSourcef(source, AL10.AL_GAIN, gain);
+    }
     
 }
