@@ -29,6 +29,7 @@ package ${game-package}.game.components.ui;
 import com.artemis.Component;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.widgets.Root;
+import im.bci.jnuit.widgets.Dialogue;
 import com.google.inject.Inject;
 import im.bci.jnuit.NuitRenderer;
 import im.bci.jnuit.lwjgl.assets.IAssets;
@@ -39,20 +40,20 @@ import org.lwjgl.LWJGLException;
  *
  * @author devnewton
  */
-public class DialogComponent extends Component {
+public class DialogueComponent extends Component {
 
     private final Root root;
     private final Game game;
     private final NuitRenderer nuitRenderer;
-    private final Dialog dialog;
+    private final Dialogue dialog;
 
     @Inject
-    public DialogComponent(NuitToolkit toolkit, NuitRenderer nuitRenderer, Game game, IAssets assets, Dialog dialog) throws LWJGLException {
+    public DialogueComponent(NuitToolkit toolkit, NuitRenderer nuitRenderer, Game game, IAssets assets) throws LWJGLException {
         this.game = game;
         root = new Root(toolkit);
         this.nuitRenderer = nuitRenderer;
+        this.dialog = new Dialogue(toolkit);
         root.add(dialog);
-        this.dialog = dialog;
     }
 
     public void update() {

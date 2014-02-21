@@ -31,6 +31,8 @@ import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Container;
 import im.bci.jnuit.widgets.Stack;
+import im.bci.jnuit.widgets.Dialogue;
+
 
 /**
  *
@@ -38,7 +40,7 @@ import im.bci.jnuit.widgets.Stack;
  */
 public class ExtrasMenu extends Stack {
     
-        private final Container menu;
+    private final Container menu;
     
     public ExtrasMenu(final NuitToolkit toolkit, final IAssets assets, final CutScenes cutscenes) {
         
@@ -61,7 +63,7 @@ public class ExtrasMenu extends Stack {
         final Button artworkButton = new Button(toolkit, "extras.menu.button.artwork") {
             @Override
             public void onOK() {
-                Dialog artwork = new Dialog(toolkit, assets);
+                Dialogue artwork = new Dialogue(toolkit);
                 cutscenes.createArtworks(artwork);
                 artwork.setWidth(ExtrasMenu.this.getWidth());
                 artwork.setHeight(ExtrasMenu.this.getHeight());

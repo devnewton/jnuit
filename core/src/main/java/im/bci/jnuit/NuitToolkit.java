@@ -55,6 +55,8 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
     private float oldPointerX, oldPointerY;
     private Boolean oldIsMouseButtonDown;
     private final NuitDisplay display;
+    private int virtualResolutionWidth = 1920;
+    private int virtualResolutionHeight = 1080;
 
     public NuitToolkit(NuitDisplay display, NuitControls controls, NuitTranslator translator, NuitFont font, NuitRenderer renderer) {
         this.font = font;
@@ -252,6 +254,22 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public NuitLocale getCurrentLocale() {
         return translator.getCurrentLocale();
+    }
+
+    public int getVirtualResolutionWidth() {
+        return virtualResolutionWidth;
+    }
+
+    public void setVirtualResolutionWidth(int virtualResolutionWidth) {
+        this.virtualResolutionWidth = virtualResolutionWidth;
+    }
+
+    public int getVirtualResolutionHeight() {
+        return virtualResolutionHeight;
+    }
+
+    public void setVirtualResolutionHeight(int virtualResolutionHeight) {
+        this.virtualResolutionHeight = virtualResolutionHeight;
     }
 
 }

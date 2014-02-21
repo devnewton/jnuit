@@ -31,6 +31,7 @@ import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Container;
 import im.bci.jnuit.widgets.Stack;
+import im.bci.jnuit.widgets.Dialogue;
 
 /**
  *
@@ -46,7 +47,7 @@ public class CutScenesMenu extends Stack {
         final Button creditsButton = new Button(toolkit, "cutscenes.menu.button.credits") {
             @Override
             public void onOK() {
-                Dialog credits = new Dialog(toolkit, assets);
+                Dialogue credits = new Dialogue(toolkit);
                 cutScenes.createCredits(credits);
                 credits.setWidth(CutScenesMenu.this.getWidth());
                 credits.setHeight(CutScenesMenu.this.getHeight());

@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,33 +21,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.ui;
+package im.bci.jnuit.widgets;
 
 import im.bci.jnuit.NuitToolkit;
-import im.bci.jnuit.widgets.Button;
-import im.bci.jnuit.widgets.Container;
-import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.animation.IPlay;
 import java.util.ArrayList;
-import com.google.inject.Inject;
 import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.background.Background;
 import im.bci.jnuit.background.NullBackground;
-import im.bci.jnuit.lwjgl.assets.IAssets;
 
 /**
- *
+ * Widget to presents cinematics with subtitles
  * @author devnewton
  */
-public class Dialog extends Container {
+public class Dialogue extends Container {
 
     private final ArrayList<Sentence> sentences = new ArrayList<>();
     private int currentSentenceIndex;
     private IPlay currentPlay;
     private boolean finished;
-    private final Label textLabel;
-    private final Label view;
-    private final Button nextButton;
+    protected final Label textLabel;
+    protected final Label view;
+    protected final Button nextButton;
+    protected NuitToolkit toolkit;
 
     private Sentence getCurrentSentence() {
         if (!sentences.isEmpty()) {
@@ -60,16 +53,42 @@ public class Dialog extends Container {
         }
     }
 
+    private Iterable<String> splitSentence(String sentence) {
+        ArrayList<String> result = new ArrayList<>();
+        String currentSubsentence = "";
+        String[] words = sentence.split(" ");
+        for (int i =0;i<words.length ; ++i) {
+            String newSubsentence = currentSubsentence;
+            if(!newSubsentence.isEmpty()) {
+                newSubsentence+= " ";
+            }
+            newSubsentence += words[i];
+            if (toolkit.getFont().getWidth(newSubsentence) > textLabel.getWidth()) {
+                result.add(currentSubsentence);
+                currentSubsentence = i != words.length-1 ? "" : words[i];
+            } else {
+                currentSubsentence = newSubsentence;
+            }
+        }
+        if(!currentSubsentence.isEmpty()) {
+            result.add(currentSubsentence);
+        }
+        if(result.isEmpty()) {
+            result.add("");
+        }
+        return result;
+    }
+
     private static class Sentence {
 
         IPlay play;
         String text;
-        int x;
-        int y;
-        int w;
-        int h;
+        float x;
+        float y;
+        float w;
+        float h;
 
-        private Sentence(IPlay play, int x, int y, int w, int h, String text) {
+        private Sentence(IPlay play, float x, float y, float w, float h, String text) {
             this.play = play;
             this.text = text;
             this.x = x;
@@ -79,9 +98,12 @@ public class Dialog extends Container {
         }
     }
 
-    @Inject
-    public Dialog(NuitToolkit toolkit, IAssets assets) {
-        nextButton = new Button(toolkit, "dialog.button.next") {
+    public Dialogue(NuitToolkit toolkit) {
+        this.toolkit = toolkit;
+
+        final int BUTTON_SIZE = 64;
+
+        nextButton = new Button(toolkit, ">") {
 
             @Override
             public void onOK() {
@@ -89,12 +111,12 @@ public class Dialog extends Container {
             }
 
         };
-        nextButton.setX(1920 - 166);
-        nextButton.setY(1080 - 64);
-        nextButton.setWidth(166);
-        nextButton.setHeight(64);
+        nextButton.setX(toolkit.getVirtualResolutionWidth() - BUTTON_SIZE);
+        nextButton.setY(toolkit.getVirtualResolutionHeight() - BUTTON_SIZE);
+        nextButton.setWidth(BUTTON_SIZE);
+        nextButton.setHeight(BUTTON_SIZE);
 
-        Button previousButton = new Button(toolkit, "") {
+        Button previousButton = new Button(toolkit, "<") {
             @Override
             public void onOK() {
                 onPrevious();
@@ -115,19 +137,19 @@ public class Dialog extends Container {
             }
         };
         previousButton.setX(0);
-        previousButton.setY(800 - 64);
-        previousButton.setWidth(166);
-        previousButton.setHeight(64);
+        previousButton.setY(toolkit.getVirtualResolutionHeight() - BUTTON_SIZE);
+        previousButton.setWidth(BUTTON_SIZE);
+        previousButton.setHeight(BUTTON_SIZE);
 
         this.textLabel = new Label(toolkit, "");
-        textLabel.setX(166);
-        textLabel.setY(800 - 64);
-        textLabel.setWidth(1920 - 166 * 2);
-        textLabel.setHeight(64);
+        textLabel.setX(BUTTON_SIZE);
+        textLabel.setY(toolkit.getVirtualResolutionHeight() - BUTTON_SIZE);
+        textLabel.setWidth(toolkit.getVirtualResolutionWidth()- BUTTON_SIZE * 2);
+        textLabel.setHeight(BUTTON_SIZE);
 
         view = new Label(toolkit, "");
-        view.setWidth(1920);
-        view.setHeight(1080);
+        view.setWidth(toolkit.getVirtualResolutionWidth());
+        view.setHeight(toolkit.getVirtualResolutionHeight());
 
         add(view);
         add(textLabel);
@@ -136,18 +158,18 @@ public class Dialog extends Container {
         setFocusedChild(nextButton);
     }
 
-    public void addTirade(IPlay play, int x, int y, int w, int h, String... sentences) {
+    public void addTirade(IPlay play, float x, float y, float w, float h, String... sentences) {
         for (String sentence : sentences) {
-            this.sentences.add(new Sentence(play, x, y, w, h, sentence));
+            sentence = toolkit.getMessage(sentence);
+            for (String splittedSentence : splitSentence(sentence)) {
+                this.sentences.add(new Sentence(play, x, y, w, h, splittedSentence));
+            }
         }
         onChangeSentence();
     }
 
     public void addTirade(IPlay play, String... sentences) {
-        for (String sentence : sentences) {
-            this.sentences.add(new Sentence(play, 0, 0, 1920, 1080, sentence));
-        }
-        onChangeSentence();
+        addTirade(play, 0, 0, view.getWidth(), view.getHeight(), sentences);
     }
 
     protected void onNext() {
@@ -173,7 +195,7 @@ public class Dialog extends Container {
                 view.setBackground(new TexturedBackground(currentSentence.play));
             }
         }
-        if(currentSentenceIndex == 0) {
+        if (currentSentenceIndex == 0) {
             setFocusedChild(nextButton);
         }
     }

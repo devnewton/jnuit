@@ -53,7 +53,7 @@ import im.bci.jnuit.lwjgl.assets.VirtualFileSystem;
 import ${game-package}.game.components.IngameControls;
 import ${game-package}.game.components.ZOrder;
 import ${game-package}.game.components.ui.CutScenes;
-import ${game-package}.game.components.ui.DialogComponent;
+import ${game-package}.game.components.ui.DialogueComponent;
 import ${game-package}.game.components.ui.LevelSelector;
 import ${game-package}.game.components.ui.MainMenu;
 import ${game-package}.game.constants.ZOrders;
@@ -79,7 +79,7 @@ public class GameModule extends AbstractModule {
         bind(LevelSelector.class);
         bind(IngameInputSystem.class);
         bind(MainLoop.class);
-        bind(DialogComponent.class);
+        bind(DialogueComponent.class);
         bind(DrawSystem.class);
         bind(ShowMenuTrigger.class);
         bind(HideMenuTrigger.class);

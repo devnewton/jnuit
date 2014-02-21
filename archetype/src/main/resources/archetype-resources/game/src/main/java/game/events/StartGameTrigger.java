@@ -42,6 +42,7 @@ import ${game-package}.game.Group;
 import ${game-package}.game.NamedEntities;
 import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.lwjgl.assets.TmxAsset;
+import im.bci.jnuit.NuitToolkit;
 import ${game-package}.game.components.Level;
 import ${game-package}.game.components.ZOrder;
 import ${game-package}.game.components.visual.Sprite;
@@ -61,13 +62,15 @@ public class StartGameTrigger extends Trigger {
     private final Entity ingameControls;
     private String levelName;
     private final Random random;
+    private final NuitToolkit toolkit;
 
     @Inject
-    public StartGameTrigger(IAssets assets, @NamedEntities.MainMenu Entity mainMenu, @NamedEntities.IngameControls Entity ingameControls, Random random) {
+    public StartGameTrigger(IAssets assets, NuitToolkit toolkit, @NamedEntities.MainMenu Entity mainMenu, @NamedEntities.IngameControls Entity ingameControls, Random random) {
         this.assets = assets;
         this.mainMenu = mainMenu;
         this.ingameControls = ingameControls;
         this.random = random;
+        this.toolkit=toolkit;
     }
 
     public StartGameTrigger withLevelName(String levelName) {
@@ -156,10 +159,10 @@ public class StartGameTrigger extends Trigger {
         Vector3f apparitionPos = new Vector3f(pos);
         switch (apparitionEffect) {
             case FROM_ABOVE:
-                apparitionPos.translate(0, 0, (1.0f + random.nextFloat()) * DrawSystem.SCREEN_HEIGHT);
+                apparitionPos.translate(0, 0, (1.0f + random.nextFloat()) * toolkit.getVirtualResolutionHeight());
                 break;
             case FROM_BELOW:
-                apparitionPos.translate((2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (1.0f + random.nextFloat() * 2.0f) * -DrawSystem.SCREEN_HEIGHT);
+                apparitionPos.translate((2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (1.0f + random.nextFloat() * 2.0f) * -toolkit.getVirtualResolutionHeight());
                 break;
             case NONE:
             default:

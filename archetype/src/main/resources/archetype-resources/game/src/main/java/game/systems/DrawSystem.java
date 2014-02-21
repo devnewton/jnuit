@@ -37,6 +37,7 @@ import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.animation.IAnimationFrame;
 import im.bci.jnuit.animation.IAnimationImage;
 import im.bci.jnuit.animation.IPlay;
+import im.bci.jnuit.NuitToolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,7 +49,7 @@ import ${game-package}.game.components.visual.Sprite;
 import ${game-package}.game.components.Level;
 import ${game-package}.game.components.ui.MainMenu;
 import ${game-package}.game.components.ZOrder;
-import ${game-package}.game.components.ui.DialogComponent;
+import ${game-package}.game.components.ui.DialogueComponent;
 import ${game-package}.game.utils.Viewport;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -63,9 +64,6 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class DrawSystem extends EntitySystem {
 
-    public static final int SCREEN_WIDTH = 1920;
-    public static final int SCREEN_HEIGHT = 1080;
-
     @Mapper
     ComponentMapper<ZOrder> zOrderMapper;
     @Mapper
@@ -73,7 +71,7 @@ public class DrawSystem extends EntitySystem {
     @Mapper
     ComponentMapper<MainMenu> mainMenuMapper;
     @Mapper
-    ComponentMapper<DialogComponent> dialogMapper;
+    ComponentMapper<DialogueComponent> dialogMapper;
     @Mapper
     ComponentMapper<Level> levelMapper;
     private final Comparator<Entity> zComparator = new Comparator<Entity>() {
@@ -94,11 +92,13 @@ public class DrawSystem extends EntitySystem {
     private SpriteProjector spriteProjector;
     private final IAssets assets;
     private final Viewport viewPort = new Viewport();
+    private final NuitToolkit toolkit;
 
     @Inject
-    public DrawSystem(IAssets assets) {
-        super(Aspect.getAspectForAll(ZOrder.class).one(Level.class, MainMenu.class, DialogComponent.class, Sprite.class));
+    public DrawSystem(IAssets assets, NuitToolkit toolkit) {
+        super(Aspect.getAspectForAll(ZOrder.class).one(Level.class, MainMenu.class, DialogueComponent.class, Sprite.class));
         this.assets = assets;
+        this.toolkit = toolkit;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class DrawSystem extends EntitySystem {
 
         updateViewPort();
         GL11.glViewport(viewPort.x, viewPort.y, viewPort.width, viewPort.height);
-        GLU.gluOrtho2D(-SCREEN_WIDTH / 2.0f, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, -SCREEN_HEIGHT / 2.0f);
+        GLU.gluOrtho2D(-toolkit.getVirtualResolutionWidth() / 2.0f, toolkit.getVirtualResolutionWidth() / 2.0f, toolkit.getVirtualResolutionHeight() / 2.0f, -toolkit.getVirtualResolutionHeight() / 2.0f);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
@@ -147,7 +147,7 @@ public class DrawSystem extends EntitySystem {
             if (null != mainMenu) {
                 mainMenu.draw();
             }
-            DialogComponent dialog = dialogMapper.getSafe(e);
+            DialogueComponent dialog = dialogMapper.getSafe(e);
             if (null != dialog) {
                 dialog.draw();
             }
@@ -180,10 +180,10 @@ public class DrawSystem extends EntitySystem {
         backgroundAnimationPlay.update((long) (world.getDelta() * 1000L));
         final IAnimationFrame currentFrame = backgroundAnimationPlay.getCurrentFrame();
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, currentFrame.getImage().getId());
-        float x1 = -SCREEN_WIDTH / 2.0f;
-        float x2 = SCREEN_WIDTH / 2.0f;
-        float y1 = SCREEN_HEIGHT / 2.0f;
-        float y2 = -SCREEN_HEIGHT / 2.0f;
+        float x1 = -toolkit.getVirtualResolutionWidth() / 2.0f;
+        float x2 = toolkit.getVirtualResolutionWidth() / 2.0f;
+        float y1 = toolkit.getVirtualResolutionHeight() / 2.0f;
+        float y2 = -toolkit.getVirtualResolutionHeight() / 2.0f;
         float u1 = currentFrame.getU1();
         float u2 = currentFrame.getU2();
 
@@ -278,8 +278,8 @@ public class DrawSystem extends EntitySystem {
 
     public Vector3f getMouseSpritePos(int yAdjust) {
         if (null != spriteProjector) {
-            float mouseX = (Mouse.getX() - viewPort.x) * SCREEN_WIDTH / viewPort.width - SCREEN_WIDTH / 2.0f;
-            float mouseY = SCREEN_HEIGHT - ((Mouse.getY() + yAdjust - viewPort.y) * SCREEN_HEIGHT / viewPort.height) - SCREEN_HEIGHT / 2.0f;
+            float mouseX = (Mouse.getX() - viewPort.x) * toolkit.getVirtualResolutionWidth() / viewPort.width - toolkit.getVirtualResolutionWidth() / 2.0f;
+            float mouseY = toolkit.getVirtualResolutionHeight() - ((Mouse.getY() + yAdjust - viewPort.y) * toolkit.getVirtualResolutionHeight() / viewPort.height) - toolkit.getVirtualResolutionHeight() / 2.0f;
             Entity ned = ((Game) world).getHero();
             if (null != ned) {
                 Sprite nedSprite = spriteMapper.get(ned);
@@ -294,7 +294,7 @@ public class DrawSystem extends EntitySystem {
     }
 
     private void updateViewPort() {
-        final float aspect = (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT;
+        final float aspect = (float) toolkit.getVirtualResolutionWidth() / (float) toolkit.getVirtualResolutionHeight();
         int screenWidth = LwjglHelper.getWidth();
         int screenHeight = LwjglHelper.getHeight();
         viewPort.width = screenWidth;

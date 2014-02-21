@@ -36,8 +36,8 @@ public class Root extends Stack {
 
     public Root(NuitToolkit tk) {
         this.toolkit = tk;
-        setWidth(1920);
-        setHeight(1080);
+        setWidth(tk.getVirtualResolutionWidth());
+        setHeight(tk.getVirtualResolutionHeight());
     }
 
     @Override

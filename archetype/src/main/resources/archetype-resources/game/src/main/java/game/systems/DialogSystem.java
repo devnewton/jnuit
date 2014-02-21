@@ -31,7 +31,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import ${game-package}.game.components.ui.DialogComponent;
+import ${game-package}.game.components.ui.DialogueComponent;
 
 /**
  *
@@ -40,15 +40,15 @@ import ${game-package}.game.components.ui.DialogComponent;
 public class DialogSystem extends EntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<DialogComponent> dialogMapper;
+    ComponentMapper<DialogueComponent> dialogMapper;
 
     public DialogSystem() {
-        super(Aspect.getAspectForOne(DialogComponent.class));
+        super(Aspect.getAspectForOne(DialogueComponent.class));
     }
 
     @Override
     protected void process(Entity e) {
-        final DialogComponent dialog = dialogMapper.get(e);
+        final DialogueComponent dialog = dialogMapper.get(e);
         dialog.update();
         if (dialog.isFinished()) {
             e.deleteFromWorld();

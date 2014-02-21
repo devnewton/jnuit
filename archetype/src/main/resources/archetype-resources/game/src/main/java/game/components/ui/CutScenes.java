@@ -32,6 +32,7 @@ import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.animation.PlayMode;
 import im.bci.jnuit.background.ColoredBackground;
 import im.bci.jnuit.lwjgl.assets.IAssets;
+import im.bci.jnuit.widgets.Dialogue;
 
 /**
  *
@@ -47,14 +48,14 @@ public class CutScenes {
         this.assets = assets;
     }
 
-    public void createCredits(Dialog dialog) {
+    public void createCredits(Dialogue dialog) {
         assets.clearUseless();
         IAnimationCollection animations = assets.getAnimations("devnewton.nanim.gz");
         dialog.setBackground(new ColoredBackground(0, 0, 0, 1));
         dialog.addTirade(animations.getAnimationByName("devnewton").start(PlayMode.ONCE), (1920 - 512) / 2, (1080 - 128) / 2, 512, 128, "dialog.credits.devnewton");
     }
     
-    public void createArtworks(Dialog dialog) {
+    public void createArtworks(Dialogue dialog) {
         assets.clearUseless();
         dialog.setBackground(new ColoredBackground(0, 0, 0, 1));
         dialog.addTirade(assets.getAnimations("artwork01.jpg").getFirst().start(PlayMode.ONCE), "dialog.artworks.01");
