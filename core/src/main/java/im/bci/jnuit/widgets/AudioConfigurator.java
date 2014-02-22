@@ -36,6 +36,10 @@ import im.bci.jnuit.visitors.WidgetVisitor;
  */
 public class AudioConfigurator extends Table {
 
+    protected NuitToolkit toolkit;
+    protected Select<Volume> musicSelect;
+    protected Select<Volume> effectsSelect;
+
     public static class Volume {
 
         int level;
@@ -48,10 +52,31 @@ public class AudioConfigurator extends Table {
         public String toString() {
             return level + "%";
         }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 59 * hash + this.level;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final Volume other = (Volume) obj;
+            return this.level == other.level;
+        }
+
     }
 
     public AudioConfigurator(NuitToolkit toolkit) {
         super(toolkit);
+        this.toolkit = toolkit;
         List<Volume> possibleVolumes = new ArrayList<>();
         for (int l = 0; l <= 100; l += 10) {
             possibleVolumes.add(new Volume(l));
@@ -59,7 +84,7 @@ public class AudioConfigurator extends Table {
 
         defaults().expand();
         cell(new Label(toolkit, "nuit.audio.configurator.music.volume"));
-        cell(new Select<Volume>(toolkit, possibleVolumes) {
+        musicSelect = new Select<Volume>(toolkit, possibleVolumes) {
             @Override
             public void onLeft() {
                 super.onLeft();
@@ -71,22 +96,26 @@ public class AudioConfigurator extends Table {
                 super.onRight();
                 changeMusicVolume(getSelected().level / 100.0f);
             }
-        });
+        };
+        musicSelect.setSelected(new Volume(Math.round(toolkit.getAudio().getMusicVolume() * 10f) * 10));
+        cell(musicSelect);
         row();
         cell(new Label(toolkit, "nuit.audio.configurator.effects.volume"));
-        cell(new Select<Volume>(toolkit, possibleVolumes) {
+        effectsSelect = new Select<Volume>(toolkit, possibleVolumes) {
             @Override
             public void onLeft() {
                 super.onLeft();
-                changeEffectVolume(getSelected().level / 100.0f);
+                changeEffectsVolume(getSelected().level / 100.0f);
             }
 
             @Override
             public void onRight() {
                 super.onRight();
-                changeEffectVolume(getSelected().level / 100.0f);
+                changeEffectsVolume(getSelected().level / 100.0f);
             }
-        });
+        };
+        effectsSelect.setSelected(new Volume(Math.round(toolkit.getAudio().getEffectsVolume() * 10f) * 10));
+        cell(effectsSelect);
         row();
         cell(new Button(toolkit, "nuit.audio.configurator.back") {
             @Override
@@ -96,10 +125,12 @@ public class AudioConfigurator extends Table {
         }).colspan(2);
     }
 
-    protected void changeEffectVolume(float f) {
+    protected void changeEffectsVolume(float f) {
+        toolkit.getAudio().setEffectsVolume(f);
     }
 
     protected void changeMusicVolume(float f) {
+        toolkit.getAudio().setMusicVolume(f);
     }
 
     @Override

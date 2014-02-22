@@ -29,6 +29,8 @@ import im.bci.jnuit.lwjgl.LwjglNuitControls;
 import im.bci.jnuit.lwjgl.LwjglNuitDisplay;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.lwjgl.LwjglNuitRenderer;
+import im.bci.jnuit.lwjgl.assets.VirtualFileSystem;
+import im.bci.jnuit.lwjgl.audio.OpenALNuitAudio;
 import im.bci.jnuit.widgets.Root;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -45,6 +47,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 /**
  *
@@ -96,14 +99,15 @@ public abstract class AbstractSample {
             Display.setDisplayMode(mode);
             Display.create();
             Display.setTitle(getClass().getSimpleName());
-            LwjglNuitFont font = new LwjglNuitFont(new Font("Arial", Font.BOLD, 24), true, new char[0], new HashMap<Character, BufferedImage>());
+            LwjglNuitFont font = new LwjglNuitFont(new Font("Arial", Font.BOLD, 32), true, new char[0], new HashMap<Character, BufferedImage>());
             NuitTranslator translator = new NuitTranslator();
             final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font);
-            NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(), new LwjglNuitControls(), translator, font, renderer);
+            NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(), new LwjglNuitControls(), translator, font, renderer, new OpenALNuitAudio(createVFS()));
             Root root = new Root(toolkit);
             setup(toolkit, root);
             while (!Display.isCloseRequested()) {
                 toolkit.update(root);
+                GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                 renderer.render(root);
                 Display.update(false);
                 Display.sync(60);
@@ -123,5 +127,16 @@ public abstract class AbstractSample {
     }
 
     protected abstract void setup(NuitToolkit toolkit, Root root);
+
+    private VirtualFileSystem createVFS() throws URISyntaxException {
+        for (File file = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI()); null != file; file = file.getParentFile()) {
+            File dataDir = new File(file, "data");
+            if (dataDir.exists()) {
+                return new VirtualFileSystem(dataDir);
+            }
+        }
+        throw new RuntimeException("Cannot find data dir");
+
+    }
 
 }
