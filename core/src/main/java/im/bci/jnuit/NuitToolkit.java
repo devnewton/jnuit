@@ -57,13 +57,15 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
     private final NuitDisplay display;
     private int virtualResolutionWidth = 1920;
     private int virtualResolutionHeight = 1080;
+    private final NuitAudio audio;
 
-    public NuitToolkit(NuitDisplay display, NuitControls controls, NuitTranslator translator, NuitFont font, NuitRenderer renderer) {
+    public NuitToolkit(NuitDisplay display, NuitControls controls, NuitTranslator translator, NuitFont font, NuitRenderer renderer, NuitAudio audio) {
         this.font = font;
         this.translator = translator;
         this.renderer = renderer;
         this.controls = controls;
         this.display = display;
+        this.audio = audio;
         menuUp = new ActionActivatedDetector(new Action("nuit.action.menu.up", controls.getDefaultMenuUpControls()));
         menuDown = new ActionActivatedDetector(new Action("nuit.action.menu.down", controls.getDefaultMenuDownControls()));
         menuLeft = new ActionActivatedDetector(new Action("nuit.action.menu.left", controls.getDefaultMenuLeftControls()));
@@ -270,6 +272,10 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public void setVirtualResolutionHeight(int virtualResolutionHeight) {
         this.virtualResolutionHeight = virtualResolutionHeight;
+    }
+
+    public NuitAudio getAudio() {
+        return audio;
     }
 
 }
