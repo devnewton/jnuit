@@ -44,7 +44,7 @@ import im.bci.jnuit.NuitRenderer;
 import im.bci.jnuit.NuitTranslator;
 import im.bci.jnuit.lwjgl.LwjglNuitControls;
 import im.bci.jnuit.lwjgl.LwjglNuitDisplay;
-import im.bci.jnuit.lwjgl.LwjglNuitFont;
+import im.bci.jnuit.NuitFont;
 import im.bci.jnuit.lwjgl.assets.AssetsLoader;
 
 import im.bci.jnuit.lwjgl.assets.GarbageCollectedAssets;
@@ -115,7 +115,7 @@ public class GameModule extends AbstractModule {
 
     @Provides
     @NamedEntities.DefaultFont
-    public LwjglNuitFont createDefaultFont(IAssets assets) {
+    public NuitFont createDefaultFont(IAssets assets) {
         return assets.getFont("");
     }
 

@@ -62,6 +62,7 @@ THE SOFTWARE. -->
         <module>jpegdecoder</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
+        <module>playn</module>
         <module>smjpegdecoder</module>
         <module>samples</module>
         <module>tablelayout</module>
@@ -128,6 +129,11 @@ THE SOFTWARE. -->
                 <groupId>org.jcraft</groupId>
                 <artifactId>jorbis</artifactId>
                 <version>0.0.17</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.playn</groupId>
+                <artifactId>playn-core</artifactId>
+                <version>1.8.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

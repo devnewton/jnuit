@@ -21,36 +21,48 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn.animation;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
 
-/**
- *
- * @author devnewton
- */
-public interface IAssets {
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-    void clearAll();
+public class PlaynAnimationCollection implements IAnimationCollection {
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    final LinkedHashMap<String/*animation name*/, PlaynAnimation> animations = new LinkedHashMap<>();
+    private final Map<String, PlaynAnimationImage> images = new HashMap<>();
+    private boolean ready;
 
-    IAnimationCollection getAnimations(String name);
+    public boolean isReady() {
+        return ready;
+    }
 
-    NuitFont getFont(String name);
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
 
-    ITexture getTexture(String name);
+    public void addAnimation(PlaynAnimation animation) {
+        animations.put(animation.getName(), animation);
+    }
 
-    TmxAsset getTmx(String name);
+    @Override
+    public PlaynAnimation getFirst() {
+        return animations.values().iterator().next();
+    }
 
-    ITexture grabScreenToTexture();
+    @Override
+    public PlaynAnimation getAnimationByName(String name) {
+        PlaynAnimation nanimation = animations.get(name);
+        if (null != nanimation) {
+            return nanimation;
+        } else {
+            throw new RuntimeException("Unknown animation " + name);
+        }
+    }
 
-    void setIcon(String name);
-
-    String getText(String name);
-    
+    public Map<String, PlaynAnimationImage> getImages() {
+        return images;
+    }
 }

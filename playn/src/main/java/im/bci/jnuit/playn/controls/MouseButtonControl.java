@@ -21,36 +21,52 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn.controls;
 
-package im.bci.jnuit.lwjgl.assets;
+import im.bci.jnuit.controls.Control;
 
-import im.bci.jnuit.NuitFont;
-import im.bci.jnuit.animation.IAnimationCollection;
+public abstract class MouseButtonControl implements Control {
 
-/**
- *
- * @author devnewton
- */
-public interface IAssets {
+    private final int button;
+    private final String name;
 
-    void clearAll();
+    public MouseButtonControl(String name, int button) {
+        this.button = button;
+        this.name = name;
+    }
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    @Override
+    public String getName() {
+        return name;
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public float getDeadZone() {
+        return 0.1f;
+    }
 
-    NuitFont getFont(String name);
+    @Override
+    public String getControllerName() {
+        return "Mouse";
+    }
 
-    ITexture getTexture(String name);
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.button;
+        return hash;
+    }
 
-    TmxAsset getTmx(String name);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MouseButtonControl other = (MouseButtonControl) obj;
+        return this.button == other.button;
+    }
 
-    ITexture grabScreenToTexture();
-
-    void setIcon(String name);
-
-    String getText(String name);
-    
 }

@@ -178,7 +178,7 @@ public class OpenALNuitAudio implements NuitAudio {
     }
 
     @Override
-    public void playMusicIfEnabled(final String name) {
+    public void playMusic(final String name) {
         if (musicVolume>0.0f) {
             executor.submit(new AbstractOpenALTask() {
 

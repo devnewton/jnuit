@@ -21,36 +21,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn.animation;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
+import im.bci.jnuit.animation.IAnimation;
 import im.bci.jnuit.animation.IAnimationCollection;
 
 /**
  *
  * @author devnewton
  */
-public interface IAssets {
+public class NotReadyPlaynAnimationCollection implements IAnimationCollection {
 
-    void clearAll();
+    final PlaynAnimationCollection animationCollection;
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    public NotReadyPlaynAnimationCollection(PlaynAnimationCollection animationCollection) {
+        this.animationCollection = animationCollection;
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public IAnimation getAnimationByName(String name) {
+        return new NotReadyPlaynAnimation(animationCollection, name);
+    }
 
-    NuitFont getFont(String name);
+    @Override
+    public IAnimation getFirst() {
+        return new NotReadyPlaynAnimation(animationCollection, null);
+    }
 
-    ITexture getTexture(String name);
-
-    TmxAsset getTmx(String name);
-
-    ITexture grabScreenToTexture();
-
-    void setIcon(String name);
-
-    String getText(String name);
-    
 }

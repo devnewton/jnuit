@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2014 devnewton <devnewton@bci.im>
+ Copyright (c) 2013 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,60 +21,58 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.lwjgl.audio;
+package im.bci.jnuit.playn.controls;
 
-import im.bci.jnuit.NuitAudio;
-import im.bci.jnuit.audio.Sound;
+import im.bci.jnuit.controls.Control;
+import playn.core.Key;
 
-/**
- *
- * @author devnewton
- */
-public class NullNuitAudio implements NuitAudio {
+public class KeyControl implements Control {
 
-    private float effectsVolume = 1.0f;
-    private float musicVolume = 1.0f;
+    private final Key key;
+    private final PlaynNuitControls controls;
 
-    @Override
-    public float getEffectsVolume() {
-        return effectsVolume;
+    public KeyControl(PlaynNuitControls controls, Key key) {
+        this.key = key;
+        this.controls = controls;
     }
 
     @Override
-    public float getMusicVolume() {
-        return musicVolume;
+    public String getName() {
+        return key.toString();
     }
 
     @Override
-    public void setEffectsVolume(float v) {
-        effectsVolume = v;
+    public float getDeadZone() {
+        return 0.1f;
     }
 
     @Override
-    public void setMusicVolume(float v) {
-        musicVolume = v;
+    public float getValue() {
+        return controls.keysDown[key.ordinal()] ? 1.0f : 0.0f;
     }
 
     @Override
-    public Sound getSound(String name) {
-        return new Sound() {
-
-            @Override
-            public void play() {
-            }
-
-            @Override
-            public void stop() {
-            }
-        };
+    public String getControllerName() {
+        return "Keyboard";
     }
 
     @Override
-    public void playMusicIfEnabled(String name) {
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.key.hashCode();
+        return hash;
     }
 
     @Override
-    public void stopMusic() {
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final KeyControl other = (KeyControl) obj;
+        return this.key == other.key;
     }
 
 }

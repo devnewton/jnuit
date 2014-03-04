@@ -21,36 +21,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn.animation;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
-import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.animation.IAnimation;
+import im.bci.jnuit.animation.IPlay;
+import im.bci.jnuit.animation.PlayMode;
 
 /**
  *
  * @author devnewton
  */
-public interface IAssets {
+public class NotReadyPlaynAnimation implements IAnimation {
 
-    void clearAll();
+    final PlaynAnimationCollection animationCollection;
+    private final String name;
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    public NotReadyPlaynAnimation(PlaynAnimationCollection animationCollection, String name) {
+        this.animationCollection = animationCollection;
+        this.name = name;
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public String getName() {
+        return name;
+    }
 
-    NuitFont getFont(String name);
+    @Override
+    public IPlay start(PlayMode mode) {
+        return new NotReadyPlay(animationCollection, name, mode);
+    }
 
-    ITexture getTexture(String name);
-
-    TmxAsset getTmx(String name);
-
-    ITexture grabScreenToTexture();
-
-    void setIcon(String name);
-
-    String getText(String name);
-    
+    @Override
+    public void stop(IPlay play) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

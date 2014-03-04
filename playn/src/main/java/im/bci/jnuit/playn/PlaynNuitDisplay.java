@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2014 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,36 +21,36 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
-import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.NuitDisplay;
+import im.bci.jnuit.display.VideoResolution;
+import java.util.Arrays;
+import java.util.List;
+import playn.core.PlayN;
 
 /**
  *
  * @author devnewton
  */
-public interface IAssets {
+public class PlaynNuitDisplay implements NuitDisplay {
 
-    void clearAll();
+    @Override
+    public List<VideoResolution> listResolutions() {
+        return Arrays.asList(getResolution());
+    }
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    @Override
+    public void changeResolution(VideoResolution chosenResolution, boolean fullscreen) {
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public VideoResolution getResolution() {
+        return new VideoResolution(PlayN.graphics().width(), PlayN.graphics().height());
+    }
 
-    NuitFont getFont(String name);
-
-    ITexture getTexture(String name);
-
-    TmxAsset getTmx(String name);
-
-    ITexture grabScreenToTexture();
-
-    void setIcon(String name);
-
-    String getText(String name);
-    
+    @Override
+    public boolean isFullscreen() {
+        return false;
+    }
 }

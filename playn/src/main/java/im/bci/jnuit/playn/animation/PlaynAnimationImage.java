@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2014 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,36 +21,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.playn.animation;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
-import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.animation.IAnimationImage;
+import playn.core.Image;
 
 /**
  *
  * @author devnewton
  */
-public interface IAssets {
+public class PlaynAnimationImage implements IAnimationImage {
 
-    void clearAll();
+    private final Image image;
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    public PlaynAnimationImage(Image image) {
+        this.image = image;
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public int getId() {
+        return image.hashCode();
+    }
 
-    NuitFont getFont(String name);
+    @Override
+    public boolean hasAlpha() {
+        return true;
+    }
 
-    ITexture getTexture(String name);
-
-    TmxAsset getTmx(String name);
-
-    ITexture grabScreenToTexture();
-
-    void setIcon(String name);
-
-    String getText(String name);
-    
+    public Image getImage() {
+        return image;
+    }
 }

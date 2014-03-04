@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2014 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,36 +21,60 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
+package im.bci.jnuit.noop;
 
-package im.bci.jnuit.lwjgl.assets;
-
-import im.bci.jnuit.NuitFont;
-import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.NuitAudio;
+import im.bci.jnuit.audio.Sound;
 
 /**
  *
  * @author devnewton
  */
-public interface IAssets {
+public class NoopNuitAudio implements NuitAudio {
 
-    void clearAll();
+    private float effectsVolume = 1.0f;
+    private float musicVolume = 1.0f;
 
-    void clearUseless();
-    
-    void forceAnimationUnload(String name);
+    @Override
+    public float getEffectsVolume() {
+        return effectsVolume;
+    }
 
-    IAnimationCollection getAnimations(String name);
+    @Override
+    public float getMusicVolume() {
+        return musicVolume;
+    }
 
-    NuitFont getFont(String name);
+    @Override
+    public void setEffectsVolume(float v) {
+        effectsVolume = v;
+    }
 
-    ITexture getTexture(String name);
+    @Override
+    public void setMusicVolume(float v) {
+        musicVolume = v;
+    }
 
-    TmxAsset getTmx(String name);
+    @Override
+    public Sound getSound(String name) {
+        return new Sound() {
 
-    ITexture grabScreenToTexture();
+            @Override
+            public void play() {
+            }
 
-    void setIcon(String name);
+            @Override
+            public void stop() {
+            }
+        };
+    }
 
-    String getText(String name);
-    
+    @Override
+    public void playMusic(String name) {
+    }
+
+    @Override
+    public void stopMusic() {
+    }
+
 }
