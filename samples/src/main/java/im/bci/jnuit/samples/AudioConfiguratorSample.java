@@ -35,7 +35,7 @@ public class AudioConfiguratorSample extends AbstractSample {
 
     @Override
     protected void setup(NuitToolkit toolkit, Root root) {
-        toolkit.getAudio().playMusicIfEnabled("Rest_Outro.ogg");
+        toolkit.getAudio().playMusic("Rest_Outro.ogg");
         AudioConfigurator audioConf = new AudioConfigurator(toolkit) {
 
             @Override
