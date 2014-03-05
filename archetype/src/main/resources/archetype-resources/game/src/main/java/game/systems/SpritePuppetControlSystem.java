@@ -34,8 +34,8 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 
-import ${game-package}.game.components.visual.SpritePuppetControls;
-import ${game-package}.game.components.visual.SpriteControl;
+import im.bci.jnuit.artemis.sprite.SpritePuppetControls;
+import im.bci.jnuit.artemis.sprite.SpriteControl;
 
 /**
  *

@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,29 +21,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
 import im.bci.jnuit.timed.OneShotTimedAction;
-
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector3;
 
 /**
  *
  * @author devnewton
  *
  */
-class SpriteMoveToRelative extends SpriteControl {
+class SpriteMoveTo extends SpriteControl {
 
-    private final Vector3f diff;
-    private Vector3f to;
+    private final Vector3 to;
     private final float duration;
     private final Sprite sprite;
-    private Vector3f from;
+    private Vector3 from;
     private OneShotTimedAction action;
 
-    SpriteMoveToRelative(Sprite sprite, Vector3f diff, float duration) {
+    SpriteMoveTo(Sprite sprite, Vector3 to, float duration) {
         this.sprite = sprite;
-        this.diff = diff;
+        this.to = to;
         this.duration = duration;
     }
 
@@ -54,14 +49,13 @@ class SpriteMoveToRelative extends SpriteControl {
     public void update(float elapsedTime) {
         final OneShotTimedAction a = getAction();
         a.update(elapsedTime);
-        Vector3f newPos;
+        Vector3 newPos;
         final float progress = a.getProgress();
         if (progress >= 1.0f) {
             newPos = to;
         } else {
-            newPos = new Vector3f();
-            Vector3f.sub(to, from, newPos);
-            newPos.scale(progress);
+            newPos = to.subtract(from);
+            newPos.multLocal(progress);
             newPos.x += from.x;
             newPos.y += from.y;
             newPos.z += from.z;
@@ -73,8 +67,7 @@ class SpriteMoveToRelative extends SpriteControl {
 
     private OneShotTimedAction getAction() {
         if (null == action) {
-            this.from = new Vector3f(sprite.getPosition());
-            this.to = new Vector3f(this.from.x + diff.x, this.from.y +diff.y, this.from.z + diff.z);
+            this.from = new Vector3(sprite.getPosition());
             action = new OneShotTimedAction(duration);
         }
         return action;

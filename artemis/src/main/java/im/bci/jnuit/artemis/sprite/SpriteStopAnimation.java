@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
 The MIT License (MIT)
 
@@ -24,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
 /**
  * 
@@ -33,7 +30,7 @@ package ${game-package}.game.components.visual;
  */
 public class SpriteStopAnimation extends SpriteControl {
 
-	private final Sprite sprite;
+	private Sprite sprite;
 
 	SpriteStopAnimation(Sprite sprite) {
 		this.sprite = sprite;

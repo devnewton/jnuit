@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,31 +21,55 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
 import im.bci.jnuit.timed.OneShotTimedAction;
+import pythagoras.f.Vector3;
 
 /**
  *
  * @author devnewton
  *
  */
-public class SpriteWait extends SpriteControl {
+class SpriteMoveToRelative extends SpriteControl {
 
+    private Vector3 diff;
+    private Vector3 to;
     private final float duration;
+    private final Sprite sprite;
+    private Vector3 from;
     private OneShotTimedAction action;
 
-    public SpriteWait(float duration) {
+    SpriteMoveToRelative(Sprite sprite, Vector3 diff, float duration) {
+        this.sprite = sprite;
+        this.diff = diff;
         this.duration = duration;
     }
 
     @Override
     public void update(float elapsedTime) {
-        getAction().update(elapsedTime);
+        final OneShotTimedAction a = getAction();
+        a.update(elapsedTime);
+        Vector3 newPos;
+        final float progress = a.getProgress();
+        if (progress >= 1.0f) {
+            newPos = to;
+        } else {
+            newPos = to.subtract(from);
+            newPos.multLocal(progress);
+            newPos.x += from.x;
+            newPos.y += from.y;
+            newPos.z += from.z;
+        }
+        sprite.getPosition().x = newPos.x;
+        sprite.getPosition().y = newPos.y;
+        sprite.getPosition().z = newPos.z;
     }
 
     private OneShotTimedAction getAction() {
         if (null == action) {
+            this.from = new Vector3(sprite.getPosition());
+            this.to = new Vector3(this.from.x + diff.x, this.from.y +diff.y, this.from.z + diff.z);
             action = new OneShotTimedAction(duration);
         }
         return action;
@@ -58,4 +79,5 @@ public class SpriteWait extends SpriteControl {
     public boolean isFinished() {
         return getAction().getProgress() >= 1.0f;
     }
+
 }

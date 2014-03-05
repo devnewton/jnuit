@@ -45,11 +45,15 @@ import im.bci.jnuit.lwjgl.assets.TmxAsset;
 import im.bci.jnuit.NuitToolkit;
 import ${game-package}.game.components.Level;
 import ${game-package}.game.components.ZOrder;
-import ${game-package}.game.components.visual.Sprite;
-import ${game-package}.game.components.visual.SpritePuppetControls;
+import im.bci.jnuit.artemis.sprite.Sprite;
+import im.bci.jnuit.artemis.sprite.SpritePuppetControls;
 import ${game-package}.game.constants.ZOrders;
 import ${game-package}.game.systems.DrawSystem;
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector;
+import pythagoras.f.Vector3;
+import im.bci.jnuit.artemis.sprite.IsometricSpriteProjector;
+import im.bci.jnuit.artemis.sprite.OrthogonalSpriteProjector;
+        
 
 /**
  *
@@ -118,8 +122,8 @@ public class StartGameTrigger extends Trigger {
         assets.clearUseless();
     }
 
-    private Vector3f tileToPos(TmxAsset tmx, int y, int x, int layer) {
-        return new Vector3f(x, y, layer);
+    private Vector3 tileToPos(TmxAsset tmx, int y, int x, int layer) {
+        return new Vector3(x, y, layer);
     }
 
     private Entity createEntityFromTile(final TmxTileInstance tile, Game game, TmxAsset tmx, int x, int y, int l, TmxLayer layer) {
@@ -155,14 +159,14 @@ public class StartGameTrigger extends Trigger {
 
     private Sprite createSprite(TmxAsset tmx, int x, int y, int l, final TmxTileInstance tile, ApparitionEffect apparitionEffect, Entity entity) {
         Sprite sprite = new Sprite();
-        final Vector3f pos = tileToPos(tmx, x, y, l);
-        Vector3f apparitionPos = new Vector3f(pos);
+        final Vector3 pos = tileToPos(tmx, x, y, l);
+        Vector3 apparitionPos = new Vector3(pos);
         switch (apparitionEffect) {
             case FROM_ABOVE:
-                apparitionPos.translate(0, 0, (1.0f + random.nextFloat()) * toolkit.getVirtualResolutionHeight());
+                apparitionPos.add(0, 0, (1.0f + random.nextFloat()) * toolkit.getVirtualResolutionHeight());
                 break;
             case FROM_BELOW:
-                apparitionPos.translate((2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (1.0f + random.nextFloat() * 2.0f) * -toolkit.getVirtualResolutionHeight());
+                apparitionPos.add((2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (2.0f * random.nextFloat() - 1.0f) * tmx.getMap().getWidth(), (1.0f + random.nextFloat() * 2.0f) * -toolkit.getVirtualResolutionHeight());
                 break;
             case NONE:
             default:

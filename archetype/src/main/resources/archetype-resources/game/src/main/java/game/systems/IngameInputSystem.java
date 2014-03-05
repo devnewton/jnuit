@@ -43,9 +43,11 @@ import im.bci.jnuit.lwjgl.controls.MouseButtonControl;
 import ${game-package}.game.Game;
 import ${game-package}.game.components.Triggerable;
 import ${game-package}.game.components.IngameControls;
-import ${game-package}.game.components.visual.Sprite;
-import ${game-package}.game.components.visual.SpritePuppetControls;
+import im.bci.jnuit.artemis.sprite.Sprite;
+import im.bci.jnuit.artemis.sprite.SpritePuppetControls;
 import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector;
+import pythagoras.f.Vector3;
 
 /**
  *
@@ -88,8 +90,8 @@ public class IngameInputSystem extends EntityProcessingSystem {
                 boolean rightPressed = controls.getRight().isPressed();
                 Entity hero = game.getHero();
                 if (mouseClick.isPressed()) {
-                    Vector3f selectedPosition = game.getSystem(TintMouseSelectionSystem.class).getSelectedSprite().getPosition();
-                    Vector3f heroPosition = spriteMapper.get(hero).getPosition();
+                    Vector3 selectedPosition = game.getSystem(TintMouseSelectionSystem.class).getSelectedSprite().getPosition();
+                    Vector3 heroPosition = spriteMapper.get(hero).getPosition();
                     int heroX = Math.round(heroPosition.x);
                     int heroY = Math.round(heroPosition.y);
                     int selectedX = Math.round(selectedPosition.x);
@@ -110,16 +112,16 @@ public class IngameInputSystem extends EntityProcessingSystem {
                     }
                 }
                 if (upPressed) {
-                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(-1f,0f, 0f), 0.5f));
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3(-1f,0f, 0f), 0.5f));
                     hero.changedInWorld();
                 } else if (downPressed) {
-                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(1f,0f, 0f), 0.5f));
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3(1f,0f, 0f), 0.5f));
                     hero.changedInWorld();
                 } else if (leftPressed) {
-                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(0f, -1f, 0f), 0.5f));
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3(0f, -1f, 0f), 0.5f));
                     hero.changedInWorld();
                 } else if (rightPressed) {
-                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3f(0f, 1f, 0f), 0.5f));
+                    hero.addComponent(new SpritePuppetControls(spriteMapper.get(hero)).moveToRelative(new Vector3(0f, 1f, 0f), 0.5f));
                     hero.changedInWorld();
                 }
             }

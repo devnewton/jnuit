@@ -32,11 +32,10 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import ${game-package}.game.components.ZOrder;
-import ${game-package}.game.components.visual.Sprite;
+import im.bci.jnuit.artemis.sprite.Sprite;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.vector.Vector3f;
-
+import pythagoras.f.Vector3;
 /**
  *
  * @author devnewton
@@ -45,7 +44,7 @@ public class TintMouseSelectionSystem extends EntityProcessingSystem {
 
     @Mapper
     ComponentMapper<Sprite> spriteMapper;
-    private Vector3f mousePos;
+    private Vector3 mousePos;
     private float nearestSpriteDistance;
     private Sprite nearestSprite;
     private Entity debugMouseSprite;
@@ -57,7 +56,10 @@ public class TintMouseSelectionSystem extends EntityProcessingSystem {
     @Override
     protected void begin() {
         if (null != nearestSprite) {
-            nearestSprite.setColor((Color) Color.WHITE);
+            nearestSprite.setRed(1f);
+            nearestSprite.setGreen(1f);
+            nearestSprite.setBlue(1f);
+            nearestSprite.setAlpha(1f);
             nearestSprite = null;
         }
         nearestSpriteDistance = Float.MAX_VALUE;
@@ -69,7 +71,7 @@ public class TintMouseSelectionSystem extends EntityProcessingSystem {
                 debugMouseSprite.addComponent(new ZOrder(100));
                 world.addEntity(debugMouseSprite);
             }
-            spriteMapper.get(debugMouseSprite).setPosition(new Vector3f(mousePos));
+            spriteMapper.get(debugMouseSprite).setPosition(new Vector3(mousePos));
             spriteMapper.get(debugMouseSprite).setLabel(Mouse.getX() + "," + Mouse.getY());
         }
     }
@@ -78,8 +80,7 @@ public class TintMouseSelectionSystem extends EntityProcessingSystem {
     protected void process(Entity entity) {
         if (null != mousePos && entity != debugMouseSprite) {
             Sprite sprite = spriteMapper.get(entity);
-            Vector3f v = new Vector3f();
-            Vector3f.sub(mousePos, sprite.getPosition(), v);
+            Vector3 v = mousePos.subtract(sprite.getPosition());
             float distance = v.lengthSquared();
             if (distance < nearestSpriteDistance) {
                 nearestSprite = sprite;
@@ -91,7 +92,10 @@ public class TintMouseSelectionSystem extends EntityProcessingSystem {
     @Override
     protected void end() {
         if (null != nearestSprite) {
-            nearestSprite.setColor((Color) Color.ORANGE);
+            nearestSprite.setRed(1f);
+            nearestSprite.setGreen(0.5f);
+            nearestSprite.setBlue(0f);
+            nearestSprite.setAlpha(1f);
         }
     }
 

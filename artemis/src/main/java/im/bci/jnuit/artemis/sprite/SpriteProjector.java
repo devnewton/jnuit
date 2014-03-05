@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,10 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.systems;
+package im.bci.jnuit.artemis.sprite;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector;
+import pythagoras.f.Vector3;
 
 /**
  *
@@ -35,10 +32,10 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public interface SpriteProjector {
 
-    Vector2f project(Vector3f pos);
+    Vector project(Vector3 pos);
 
-    Vector3f unProject(Vector2f pos);
+    Vector3 unProject(Vector pos);
 
-    int compare(Vector3f a, Vector3f b);
+    int compare(Vector3 a, Vector3 b);
 
 }

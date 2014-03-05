@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
 The MIT License (MIT)
 
@@ -24,36 +21,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package ${game-package}.game.systems;
-
-import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
-import com.artemis.Entity;
-import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
-import im.bci.jnuit.animation.IPlay;
-import ${game-package}.game.components.visual.Sprite;
+package im.bci.jnuit.artemis.sprite;
 
 /**
- *
+ * 
  * @author devnewton
+ *
  */
-public class SpriteAnimateSystem extends EntityProcessingSystem {
-
-    @Mapper
-    ComponentMapper<Sprite> spriteMapper;
-
-    public SpriteAnimateSystem() {
-        super(Aspect.getAspectForAll(Sprite.class));
-    }
-
-    @Override
-    protected void process(Entity entity) {
-        Sprite sprite = spriteMapper.get(entity);
-        final IPlay play = sprite.getPlay();
-        if(null != play) {
-            play.update((long) (world.getDelta() * 1000L));
-        }
-    }
-
+public abstract class SpriteControl {
+	public void update(float elapsedTime) {
+	}
+	
+	public boolean isFinished() {
+		return true;
+	}
 }

@@ -32,13 +32,14 @@ import com.artemis.managers.GroupManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import im.bci.jnuit.NuitToolkit;
+import im.bci.jnuit.artemis.sprite.SpriteAnimateSystem;
+
 import ${game-package}.game.systems.DebugSpriteSystem;
 import ${game-package}.game.systems.DialogSystem;
 import ${game-package}.game.systems.DrawSystem;
 import ${game-package}.game.systems.IngameInputSystem;
 import ${game-package}.game.systems.TriggerSystem;
 import ${game-package}.game.systems.MainMenuSystem;
-import ${game-package}.game.systems.SpriteAnimateSystem;
 import ${game-package}.game.systems.SpritePuppetControlSystem;
 import ${game-package}.game.systems.TriggerWhenRemovedSystem;
 import ${game-package}.game.systems.TintMouseSelectionSystem;

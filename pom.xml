@@ -59,6 +59,7 @@ THE SOFTWARE. -->
     </properties>
     <modules>
         <module>core</module>
+        <module>artemis</module>
         <module>jpegdecoder</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
@@ -89,6 +90,11 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>jnuit-lwjgl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
+                <artifactId>jnuit-artemis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -145,6 +151,16 @@ THE SOFTWARE. -->
                 <groupId>com.googlecode.playn</groupId>
                 <artifactId>playn-core</artifactId>
                 <version>1.8.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.samskivert</groupId>
+                <artifactId>pythagoras</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>net.onedaybeard.artemis</groupId>
+                <artifactId>artemis-odb</artifactId>
+                <version>0.5.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

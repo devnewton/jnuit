@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
 The MIT License (MIT)
 
@@ -25,11 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package ${game-package}.game.events;
+package im.bci.jnuit.artemis.sprite;
 
-import ${game-package}.game.systems.SpriteProjector;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector;
+import pythagoras.f.Vector3;
 
 /**
  *
@@ -45,17 +41,17 @@ public class IsometricSpriteProjector implements SpriteProjector {
     }
 
     @Override
-    public Vector2f project(Vector3f pos) {
-        return new Vector2f(-(pos.x - pos.y) * tileWidth / 2.0f, (pos.x + pos.y) * tileHeight / 2.0f - pos.z);
+    public Vector project(Vector3 pos) {
+        return new Vector(-(pos.x - pos.y) * tileWidth / 2.0f, (pos.x + pos.y) * tileHeight / 2.0f - pos.z);
     }
     @Override
-    public Vector3f unProject(Vector2f screenPos) {
+    public Vector3 unProject(Vector screenPos) {
         float tx = screenPos.x / tileWidth;
         float ty = screenPos.y / tileHeight;
-        return new Vector3f(ty - tx, tx + ty, 0.0f);
+        return new Vector3(ty - tx, tx + ty, 0.0f);
     }
     @Override
-    public int compare(Vector3f v1, Vector3f v2) {
+    public int compare(Vector3 v1, Vector3 v2) {
         float d1 = v1.x + v1.y + v1.z;
         float d2 = v2.x + v2.y + v2.z;
         if (Math.abs(d1 - d2) > 0.1f) {

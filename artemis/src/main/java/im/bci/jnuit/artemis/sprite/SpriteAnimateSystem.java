@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
 The MIT License (MIT)
 
@@ -24,38 +21,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
-import im.bci.jnuit.animation.IAnimation;
-import im.bci.jnuit.animation.PlayMode;
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.annotations.Mapper;
+import com.artemis.systems.EntityProcessingSystem;
+import im.bci.jnuit.animation.IPlay;
+import im.bci.jnuit.artemis.sprite.Sprite;
 
 /**
- * 
+ *
  * @author devnewton
- * 
  */
-public class SpriteStartAnimation extends SpriteControl {
+public class SpriteAnimateSystem extends EntityProcessingSystem {
 
-	private Sprite sprite;
-	private IAnimation animation;
-                  private PlayMode mode;
-        
-	SpriteStartAnimation(Sprite s, IAnimation a, PlayMode m) {
-            if(null == a) {
-                throw new IllegalArgumentException("T'es con ou quoi?");
-            }
-		this.sprite = s;
-		this.animation = a;
-                                    this.mode = m;
-	}
+    @Mapper
+    ComponentMapper<Sprite> spriteMapper;
 
-	@Override
-	public void update(float elapsedTime) {
-            try {
-		sprite.setPlay(animation.start(this.mode));
-            } catch(java.lang.NullPointerException e) {
-                System.out.println();
-            }
-	}
+    public SpriteAnimateSystem() {
+        super(Aspect.getAspectForAll(Sprite.class));
+    }
+
+    @Override
+    protected void process(Entity entity) {
+        Sprite sprite = spriteMapper.get(entity);
+        final IPlay play = sprite.getPlay();
+        if(null != play) {
+            play.update((long) (world.getDelta() * 1000L));
+        }
+    }
 
 }

@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,44 +21,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.systems;
+package im.bci.jnuit.artemis.sprite;
 
-import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
-import com.artemis.Entity;
-import com.artemis.EntitySystem;
-import com.artemis.annotations.Mapper;
-import com.artemis.managers.GroupManager;
-import com.artemis.utils.ImmutableBag;
-import ${game-package}.game.Group;
-import im.bci.jnuit.artemis.sprite.Sprite;
+import im.bci.jnuit.timed.OneShotTimedAction;
 
 /**
  *
  * @author devnewton
+ *
  */
-public class DebugSpriteSystem extends EntitySystem {
+public class SpriteWait extends SpriteControl {
 
-    @Mapper
-    ComponentMapper<Sprite> spriteMapper;
+    private float duration;
+    private OneShotTimedAction action;
 
-    public DebugSpriteSystem() {
-        super(Aspect.getAspectForAll(Sprite.class));
+    public SpriteWait(float duration) {
+        this.duration = duration;
     }
 
     @Override
-    protected void processEntities(ImmutableBag<Entity> ib) {
-        for (Entity entity : ib) {
-            if (world.getManager(GroupManager.class).isInGroup(entity, Group.DEBUG)) {
-                final Sprite sprite = entity.getComponent(Sprite.class);
-                sprite.setLabel(sprite.getPosition().x + "," + sprite.getPosition().y + "," + sprite.getPosition().z);
-            }
+    public void update(float elapsedTime) {
+        getAction().update(elapsedTime);
+    }
+
+    private OneShotTimedAction getAction() {
+        if (null == action) {
+            action = new OneShotTimedAction(duration);
         }
+        return action;
     }
 
     @Override
-    protected boolean checkProcessing() {
-        return false;
+    public boolean isFinished() {
+        return getAction().getProgress() >= 1.0f;
     }
-
 }

@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,27 +21,57 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
-import im.bci.jnuit.animation.IPlay;
-import im.bci.jnuit.animation.PlayMode;
+import im.bci.jnuit.timed.OneShotTimedAction;
+
 
 /**
  *
  * @author devnewton
  *
  */
-public class SpriteWaitAnimation extends SpriteControl {
+class SpriteRotateToRelative extends SpriteControl {
 
+    private float to;
+    private final float duration;
     private final Sprite sprite;
+    private float from;
+    private OneShotTimedAction action;
+    private final float angle;
 
-    SpriteWaitAnimation(Sprite sprite) {
+    SpriteRotateToRelative(Sprite sprite, float angle, float duration) {
         this.sprite = sprite;
+        this.angle = angle;
+        this.duration = duration;
+    }
+
+    @Override
+    public void update(float elapsedTime) {
+        final OneShotTimedAction a = getAction();
+        a.update(elapsedTime);
+        float newRotate;
+        final float progress = a.getProgress();
+        if (progress >= 1.0f) {
+            newRotate = to;
+        } else {
+            newRotate = from + (to - from) * progress;
+        }
+        sprite.setRotate(newRotate);
+    }
+
+    private OneShotTimedAction getAction() {
+        if (null == action) {
+            this.from = sprite.getRotate();
+            this.to = from + angle;
+            action = new OneShotTimedAction(duration);
+        }
+        return action;
     }
 
     @Override
     public boolean isFinished() {
-        final IPlay play = sprite.getPlay();
-        return play.isStopped() || PlayMode.LOOP == play.getMode();
+        return getAction().getProgress() >= 1.0f;
     }
+
 }

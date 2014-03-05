@@ -111,6 +111,10 @@ THE SOFTWARE. -->
             <artifactId>jnuit-lwjgl</artifactId>
         </dependency>
         <dependency>
+            <groupId>im.bci</groupId>
+            <artifactId>jnuit-artemis</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
         </dependency>

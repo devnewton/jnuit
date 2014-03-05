@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
@@ -24,14 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
 import com.artemis.Component;
 
 import im.bci.jnuit.animation.IPlay;
-
-import org.lwjgl.util.Color;
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector3;
 
 /**
  *
@@ -40,12 +35,13 @@ import org.lwjgl.util.vector.Vector3f;
 public final class Sprite extends Component {
 
     private IPlay play;
-    private Vector3f position;
+    private Vector3 position;
     private float width, height;
     private float scale = 1.0f, rotate = 0.0f;
     private boolean mirrorX, mirrorY;
-    private Color color = (Color) Color.WHITE;
+    private float red = 1f, green = 1f, blue = 1f, alpha = 1f;
     private String label;
+    private int zOrder = 0;
 
     public boolean isMirrorX() {
         return mirrorX;
@@ -71,11 +67,11 @@ public final class Sprite extends Component {
         this.play = play;
     }
 
-    public Vector3f getPosition() {
+    public Vector3 getPosition() {
         return position;
     }
 
-    public void setPosition(Vector3f position) {
+    public void setPosition(Vector3 position) {
         this.position = position;
     }
 
@@ -85,14 +81,6 @@ public final class Sprite extends Component {
 
     public void setScale(float scale) {
         this.scale = scale;
-    }
-
-    public float getRotate() {
-        return rotate;
-    }
-
-    public void setRotate(float rotate) {
-        this.rotate = rotate;
     }
 
     public float getWidth() {
@@ -111,20 +99,60 @@ public final class Sprite extends Component {
         this.height = height;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public String getLabel() {
         return label;
     }
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public int getZOrder() {
+        return zOrder;
+    }
+
+    public void setZOrder(int zOrder) {
+        this.zOrder = zOrder;
+    }
+
+    public float getRotate() {
+        return rotate;
+    }
+
+    public void setRotate(float rotate) {
+        this.rotate = rotate;
+    }
+
+    public float getRed() {
+        return red;
+    }
+
+    public void setRed(float red) {
+        this.red = red;
+    }
+
+    public float getGreen() {
+        return green;
+    }
+
+    public void setGreen(float green) {
+        this.green = green;
+    }
+
+    public float getBlue() {
+        return blue;
+    }
+
+    public void setBlue(float blue) {
+        this.blue = blue;
+    }
+
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
     }
 
 }

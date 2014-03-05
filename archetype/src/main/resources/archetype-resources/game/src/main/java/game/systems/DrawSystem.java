@@ -37,6 +37,7 @@ import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.animation.IAnimationFrame;
 import im.bci.jnuit.animation.IAnimationImage;
 import im.bci.jnuit.animation.IPlay;
+import im.bci.jnuit.artemis.sprite.SpriteProjector;
 import im.bci.jnuit.NuitToolkit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +46,7 @@ import java.util.List;
 import com.google.inject.Inject;
 import ${game-package}.game.Game;
 import im.bci.jnuit.lwjgl.assets.IAssets;
-import ${game-package}.game.components.visual.Sprite;
+import im.bci.jnuit.artemis.sprite.Sprite;
 import ${game-package}.game.components.Level;
 import ${game-package}.game.components.ui.MainMenu;
 import ${game-package}.game.components.ZOrder;
@@ -53,10 +54,9 @@ import ${game-package}.game.components.ui.DialogueComponent;
 import ${game-package}.game.utils.Viewport;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import pythagoras.f.Vector;
+import pythagoras.f.Vector3;
 
 /**
  *
@@ -138,7 +138,7 @@ public class DrawSystem extends EntitySystem {
         Entity hero = game.getHero();
         if (null != hero) {
             Sprite heroSprite = spriteMapper.get(hero);
-            Vector2f heroPos = spriteProjector.project(heroSprite.getPosition());
+            Vector heroPos = spriteProjector.project(heroSprite.getPosition());
             GL11.glTranslatef(-heroPos.x, -heroPos.y, 0.0f);
         }
 
@@ -203,11 +203,11 @@ public class DrawSystem extends EntitySystem {
     }
 
     private void drawSprite(Sprite sprite) {
-        Vector2f pos = spriteProjector.project(sprite.getPosition());
+        Vector pos = spriteProjector.project(sprite.getPosition());
         final IPlay play = sprite.getPlay();
         if (null != play) {
             GL11.glPushMatrix();
-            GL11.glTranslatef(pos.getX(), pos.getY(), 0.0f);
+            GL11.glTranslatef(pos.x, pos.y, 0.0f);
             GL11.glRotatef(sprite.getRotate(), 0, 0, 1.0f);
             GL11.glScalef(sprite.getScale(), sprite.getScale(), 1);
             final IAnimationFrame frame = play.getCurrentFrame();
@@ -234,8 +234,7 @@ public class DrawSystem extends EntitySystem {
                 v1 = frame.getV2();
                 v2 = frame.getV1();
             }
-            final Color color = sprite.getColor();
-            GL11.glColor4ub(color.getRedByte(), color.getGreenByte(), color.getBlueByte(), color.getAlphaByte());
+            GL11.glColor4f(sprite.getRed(), sprite.getGreen(), sprite.getBlue(), sprite.getAlpha());
             float x1 = -sprite.getWidth() / 2.0f;
             float x2 = sprite.getWidth() / 2.0f;
             float y1 = -sprite.getHeight() / 2.0f;
@@ -258,10 +257,10 @@ public class DrawSystem extends EntitySystem {
         }
         if (null != sprite.getLabel()) {
             GL11.glPushMatrix();
-            GL11.glTranslatef(pos.getX(), pos.getY(), 0.0f);
+            GL11.glTranslatef(pos.x, pos.y, 0.0f);
             GL11.glScalef(0.5f, -0.5f, 1f);
             GL11.glEnable(GL11.GL_BLEND);
-            LwjglNuitFont font = (LwjglNuitFont)assets.getFont("prout");
+            LwjglNuitFont font = (LwjglNuitFont)assets.getFont("");
             font.drawString(sprite.getLabel(), LwjglNuitFont.Align.CENTER);
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glPopMatrix();
@@ -276,18 +275,18 @@ public class DrawSystem extends EntitySystem {
         return spriteProjector;
     }
 
-    public Vector3f getMouseSpritePos(int yAdjust) {
+    public Vector3 getMouseSpritePos(int yAdjust) {
         if (null != spriteProjector) {
             float mouseX = (Mouse.getX() - viewPort.x) * toolkit.getVirtualResolutionWidth() / viewPort.width - toolkit.getVirtualResolutionWidth() / 2.0f;
             float mouseY = toolkit.getVirtualResolutionHeight() - ((Mouse.getY() + yAdjust - viewPort.y) * toolkit.getVirtualResolutionHeight() / viewPort.height) - toolkit.getVirtualResolutionHeight() / 2.0f;
             Entity ned = ((Game) world).getHero();
             if (null != ned) {
                 Sprite nedSprite = spriteMapper.get(ned);
-                Vector2f nedPos = spriteProjector.project(nedSprite.getPosition());
+                Vector nedPos = spriteProjector.project(nedSprite.getPosition());
                 mouseX += nedPos.x;
                 mouseY += nedPos.y;
             }
-            return spriteProjector.unProject(new Vector2f(mouseX, mouseY));
+            return spriteProjector.unProject(new Vector(mouseX, mouseY));
         } else {
             return null;
         }

@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
 The MIT License (MIT)
 
@@ -24,18 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
+
+import im.bci.jnuit.animation.IAnimation;
+import im.bci.jnuit.animation.PlayMode;
 
 /**
  * 
  * @author devnewton
- *
+ * 
  */
-public abstract class SpriteControl {
+public class SpriteStartAnimation extends SpriteControl {
+
+	private Sprite sprite;
+	private IAnimation animation;
+                  private PlayMode mode;
+        
+	SpriteStartAnimation(Sprite s, IAnimation a, PlayMode m) {
+            if(null == a) {
+                throw new IllegalArgumentException("T'es con ou quoi?");
+            }
+		this.sprite = s;
+		this.animation = a;
+                                    this.mode = m;
+	}
+
+	@Override
 	public void update(float elapsedTime) {
+            try {
+		sprite.setPlay(animation.start(this.mode));
+            } catch(java.lang.NullPointerException e) {
+                System.out.println();
+            }
 	}
-	
-	public boolean isFinished() {
-		return true;
-	}
+
 }

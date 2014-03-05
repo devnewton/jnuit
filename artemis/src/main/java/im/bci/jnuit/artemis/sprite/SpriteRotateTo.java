@@ -1,10 +1,7 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2014 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +21,25 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package ${game-package}.game.components.visual;
+package im.bci.jnuit.artemis.sprite;
 
 import im.bci.jnuit.timed.OneShotTimedAction;
 
-import org.lwjgl.util.vector.Vector3f;
 
 /**
  *
  * @author devnewton
  *
  */
-class SpriteMoveTo extends SpriteControl {
+class SpriteRotateTo extends SpriteControl {
 
-    private final Vector3f to;
+    private final float to;
     private final float duration;
     private final Sprite sprite;
-    private Vector3f from;
+    private float from;
     private OneShotTimedAction action;
 
-    SpriteMoveTo(Sprite sprite, Vector3f to, float duration) {
+    SpriteRotateTo(Sprite sprite, float to, float duration) {
         this.sprite = sprite;
         this.to = to;
         this.duration = duration;
@@ -53,26 +49,19 @@ class SpriteMoveTo extends SpriteControl {
     public void update(float elapsedTime) {
         final OneShotTimedAction a = getAction();
         a.update(elapsedTime);
-        Vector3f newPos;
+        float newRotate;
         final float progress = a.getProgress();
         if (progress >= 1.0f) {
-            newPos = to;
+            newRotate = to;
         } else {
-            newPos = new Vector3f();
-            Vector3f.sub(to, from, newPos);
-            newPos.scale(progress);
-            newPos.x += from.x;
-            newPos.y += from.y;
-            newPos.z += from.z;
+            newRotate = from + (to - from) * progress;
         }
-        sprite.getPosition().x = newPos.x;
-        sprite.getPosition().y = newPos.y;
-        sprite.getPosition().z = newPos.z;
+        sprite.setRotate(newRotate);
     }
 
     private OneShotTimedAction getAction() {
         if (null == action) {
-            this.from = new Vector3f(sprite.getPosition());
+            this.from = sprite.getRotate();
             action = new OneShotTimedAction(duration);
         }
         return action;
