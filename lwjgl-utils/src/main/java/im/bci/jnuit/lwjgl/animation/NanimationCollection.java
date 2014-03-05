@@ -15,6 +15,11 @@ public class NanimationCollection implements IAnimationCollection {
 
     LinkedHashMap<String/*animation name*/, Nanimation> animations;
     private final Map<String, NanimationImage> images;
+    
+    public NanimationCollection() {
+        animations = new LinkedHashMap<>();
+        images = new HashMap<>();
+    }
 
     public NanimationCollection(Nanim nanim) {
         images = loadImages(nanim);
@@ -55,7 +60,7 @@ public class NanimationCollection implements IAnimationCollection {
         return texture;
     }
 
-    private void addAnimation(Nanimation animation) {
+    public void addAnimation(Nanimation animation) {
         animations.put(animation.getName(), animation);
     }
 

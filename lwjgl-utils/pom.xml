@@ -115,6 +115,10 @@ THE SOFTWARE. -->
             <artifactId>protobuf-java</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
             <groupId>im.bci</groupId>
             <artifactId>libtiled-jpurexml</artifactId>
         </dependency>

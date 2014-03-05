@@ -23,6 +23,9 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import de.matthiasmann.jpegdecoder.JPEGDecoder;
 import de.matthiasmann.jpegdecoder.YUVtoRGB;
 import de.matthiasmann.twl.utils.PNGDecoder;
@@ -30,6 +33,8 @@ import im.bci.jnuit.lwjgl.IconLoader;
 import im.bci.jnuit.lwjgl.LwjglHelper;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.lwjgl.animation.NanimationCollection;
+import im.bci.jnuit.lwjgl.animation.Nanimation;
+import im.bci.jnuit.lwjgl.animation.NanimationImage;
 import im.bci.jnuit.lwjgl.animation.NanimParser.Nanim;
 import im.bci.smjpegdecoder.SmjpegDecoder;
 import java.awt.Font;
@@ -38,6 +43,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +86,16 @@ public class AssetsLoader {
     }
 
     public NanimationCollection loadAnimations(String name) {
+        if (name.endsWith(".nanim") || name.endsWith(".nanim.gz")) {
+            return loadNanim(name);
+        } else if (name.endsWith(".json")) {
+            return loadJsonNanim(name);
+        } else {
+            throw new RuntimeException("Unknow animation format for " + name);
+        }
+    }
+
+    private NanimationCollection loadNanim(String name) throws RuntimeException {
         try (InputStream vfsInputStream = vfs.open(name)) {
             logger.log(Level.FINE, "Load animation {0}", name);
             InputStream is;
@@ -188,6 +204,35 @@ public class AssetsLoader {
         LwjglNuitFont font = new FontAsset(f, antialising, new char[0], new HashMap<Character, BufferedImage>());
         font.setCorrection(false);
         return font;
+    }
+
+    private NanimationCollection loadJsonNanim(String name) {
+        NanimationCollection nanim = new NanimationCollection();
+        try (InputStream is = vfs.open(name); InputStreamReader reader = new InputStreamReader(is)) {
+            String nanimParentDir;
+            final int lastIndexOfSlash = name.lastIndexOf("/");
+            if (lastIndexOfSlash < 0) {
+                nanimParentDir = "";
+            } else {
+                nanimParentDir = name.substring(0, name.lastIndexOf("/") + 1);
+            }
+            JsonObject json = new Gson().fromJson(reader, JsonObject.class);
+            for (JsonElement jsonAnimationElement : json.getAsJsonArray("animations")) {
+                JsonObject jsonAnimation = jsonAnimationElement.getAsJsonObject();
+                Nanimation animation = new Nanimation(jsonAnimation.get("name").getAsString());
+                for (JsonElement jsonFrameElement : jsonAnimation.getAsJsonArray("frames")) {
+                    JsonObject jsonFrame = jsonFrameElement.getAsJsonObject();
+                    final String imageFilename = nanimParentDir + jsonFrame.get("image").getAsString();
+                    Texture texture = this.loadTexture(imageFilename);
+                    NanimationImage image = new NanimationImage(texture);
+                    animation.addFrame(image, jsonFrame.get("duration").getAsInt(), jsonFrame.get("u1").getAsFloat(), jsonFrame.get("v1").getAsFloat(), jsonFrame.get("u2").getAsFloat(), jsonFrame.get("v2").getAsFloat());
+                }
+                nanim.addAnimation(animation);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load animation " + name, e);
+        }
+        return nanim;
     }
 
     public void setIcon(String name) {

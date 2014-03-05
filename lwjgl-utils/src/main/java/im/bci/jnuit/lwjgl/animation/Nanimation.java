@@ -121,6 +121,10 @@ public class Nanimation implements IAnimation {
     private long totalDuration;// milliseconds
     private final String name;
 
+    public Nanimation(String name) {
+        this.name = name;
+    }
+
     public Nanimation(im.bci.jnuit.lwjgl.animation.NanimParser.Animation nanimation,
             Map<String, NanimationImage> images) {
         name = nanimation.getName();
@@ -141,6 +145,17 @@ public class Nanimation implements IAnimation {
         totalDuration += duration;
         frame.endTime = totalDuration;
         return frame;
+    }
+
+    public void addFrame(NanimationImage image, int duration, float u1, float v1, float u2, float v2) {
+        final NanimationFrame frame = new NanimationFrame(image, duration);
+        frames.add(frame);
+        totalDuration += duration;
+        frame.endTime = totalDuration;
+        frame.u1 = u1;
+        frame.v1 = v1;
+        frame.u2 = u2;
+        frame.v2 = v2;
     }
 
     @Override
