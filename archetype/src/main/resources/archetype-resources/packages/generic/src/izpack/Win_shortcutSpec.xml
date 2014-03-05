@@ -5,12 +5,12 @@
 
 <shortcuts>
 <skipIfNotSupported/>
-<programGroup defaultName="${game-name}" location="applications"/>
+<programGroup defaultName="${rootArtifactId}" location="applications"/>
 
-<shortcut name="${game-name}"
+<shortcut name="${rootArtifactId}"
         target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
-	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${game-name}_build_final_name}.jar&quot;"
-        description="Launch ${game-name}"
+	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${rootArtifactId}_build_final_name}.jar&quot;"
+        description="Launch ${rootArtifactId}"
         workingDirectory="${symbol_dollar}INSTALL_PATH"
         iconFile="${symbol_dollar}INSTALL_PATH${symbol_escape}icon.ico"
         initialState="normal"
@@ -22,10 +22,10 @@
 	<createForPack name="Core"/>
 </shortcut>
 
-<shortcut name="${game-name} safe launcher"
+<shortcut name="${rootArtifactId} safe launcher"
         target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
-	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${game-name}_build_final_name}.jar&quot; --safe"
-        description="Launch ${game-name} in safe mode"
+	commandLine="-jar  &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}${symbol_dollar}{${rootArtifactId}_build_final_name}.jar&quot; --safe"
+        description="Launch ${rootArtifactId} in safe mode"
         workingDirectory="${symbol_dollar}INSTALL_PATH"
         iconFile="${symbol_dollar}INSTALL_PATH${symbol_escape}icon.ico"
         initialState="normal"
@@ -38,11 +38,11 @@
 </shortcut>
 
 <shortcut
- 		name="Uninstall ${game-name}"
+ 		name="Uninstall ${rootArtifactId}"
 		target="${symbol_dollar}JAVA_HOME${symbol_escape}bin${symbol_escape}javaw.exe"
 		workingDirectory=""
 		commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH${symbol_escape}Uninstaller${symbol_escape}uninstaller.jar&quot;"
- 		description="Run me with administrator privilege to uninstall ${game-name}"
+ 		description="Run me with administrator privilege to uninstall ${rootArtifactId}"
  		initialState="normal"
 		programGroup="yes"
 		desktop="no"

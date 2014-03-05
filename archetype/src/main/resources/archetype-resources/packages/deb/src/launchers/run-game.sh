@@ -4,7 +4,7 @@
 ${symbol_pound}!/usr/bin/env sh
 if [ -e /usr/lib/jvm/java-7-openjdk-`/usr/share/jarwrapper/java-arch.sh`/bin/java ]
 then
-    /usr/lib/jvm/java-7-openjdk-`/usr/share/jarwrapper/java-arch.sh`/bin/java -jar /opt/${game-name}/${game-name}-game-${symbol_dollar}{project.version}.jar ${symbol_dollar}*
+    /usr/lib/jvm/java-7-openjdk-`/usr/share/jarwrapper/java-arch.sh`/bin/java -jar /opt/${rootArtifactId}/${rootArtifactId}-game-${symbol_dollar}{project.version}.jar ${symbol_dollar}*
 else
-    /opt/${game-name}/${game-name}-game-${symbol_dollar}{project.version}.jar ${symbol_dollar}*
+    /opt/${rootArtifactId}/${rootArtifactId}-game-${symbol_dollar}{project.version}.jar ${symbol_dollar}*
 fi

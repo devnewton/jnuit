@@ -23,13 +23,13 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>${groupId}</groupId>
-        <artifactId>${game-name}</artifactId>
+        <artifactId>${rootArtifactId}</artifactId>
         <version>${version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>${game-name}-game-graph-generator</artifactId>
+    <artifactId>${rootArtifactId}-game-graph-generator</artifactId>
     <packaging>jar</packaging>
-    <name>${game-name}-game-graph-generator</name>
+    <name>${rootArtifactId}-game-graph-generator</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -55,7 +55,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
-            <artifactId>${game-name}-game</artifactId>
+            <artifactId>${rootArtifactId}-game</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>

@@ -23,13 +23,13 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>${groupId}</groupId>
-        <artifactId>${game-name}</artifactId>
+        <artifactId>${rootArtifactId}</artifactId>
         <version>${version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>${game-name}-game</artifactId>
+    <artifactId>${rootArtifactId}-game</artifactId>
     <packaging>jar</packaging>
-    <name>${game-name}-game</name>
+    <name>${rootArtifactId}-game</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -90,8 +90,8 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                     <archive>
                         <index>false</index>
                         <manifest>
-                            <mainClass>${game-package}.game.Main</mainClass>
-                            <packageName>im.bci.${game-name}</packageName>
+                            <mainClass>${package}.${rootArtifactId}.game.Main</mainClass>
+                            <packageName>im.bci.${rootArtifactId}</packageName>
                             <addClasspath>true</addClasspath>
                             <addExtensions>true</addExtensions>
                         </manifest>

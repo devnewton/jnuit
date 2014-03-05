@@ -1,1 +1,1 @@
-java -jar ${game-name}-game-${project.version}.jar
+java -jar ${rootArtifactId}-game-${project.version}.jar

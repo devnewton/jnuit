@@ -5,7 +5,7 @@ Unless specified in file headers, java source code is under the following licens
 
 The MIT License (MIT)
 
-Copyright (c) ${game-name} $date devnewton <devnewton@bci.im>
+Copyright (c) ${rootArtifactId} $date devnewton <devnewton@bci.im>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

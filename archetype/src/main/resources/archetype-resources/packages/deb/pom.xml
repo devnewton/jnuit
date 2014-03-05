@@ -23,13 +23,13 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>${groupId}</groupId>
-        <artifactId>${game-name}</artifactId>
+        <artifactId>${rootArtifactId}</artifactId>
         <version>${version}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>${game-name}-deb</artifactId>
+    <artifactId>${rootArtifactId}-deb</artifactId>
     <packaging>pom</packaging>
-    <name>${game-name}-deb</name>
+    <name>${rootArtifactId}-deb</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -97,15 +97,15 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                     <goal>jdeb</goal>
                                 </goals>
                                 <configuration>
-                                    <deb>${project.build.directory}/${game-name}_${project.version}.deb</deb>
+                                    <deb>${project.build.directory}/${rootArtifactId}_${project.version}.deb</deb>
                                     <dataSet>
                                         <data>
-                                            <src>${project.build.directory}/lib/${game-name}-game-${project.version}.jar</src>
+                                            <src>${project.build.directory}/lib/${rootArtifactId}-game-${project.version}.jar</src>
                                             <type>file</type>
-                                            <dst>${game-name}-game-${project.version}.jar</dst>
+                                            <dst>${rootArtifactId}-game-${project.version}.jar</dst>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${game-name}</prefix>
+                                                <prefix>/opt/${rootArtifactId}</prefix>
                                                 <filemode>755</filemode>
                                             </mapper>
                                         </data>
@@ -114,28 +114,28 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             <type>directory</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${game-name}/data</prefix>
+                                                <prefix>/opt/${rootArtifactId}/data</prefix>
                                             </mapper>
                                         </data>
                                         <data>
                                             <src>${basedir}/target/lib</src>
                                             <type>directory</type>
-                                            <excludes>${game-name}-game-${project.version}.jar,jinput*,lwjgl*</excludes>
+                                            <excludes>${rootArtifactId}-game-${project.version}.jar,jinput*,lwjgl*</excludes>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${game-name}</prefix>
+                                                <prefix>/opt/${rootArtifactId}</prefix>
                                             </mapper>
                                         </data>
                                         <data>
                                             <type>link</type>
                                             <linkTarget>/usr/share/java/lwjgl.jar</linkTarget>
-                                            <linkName>/opt/${game-name}/lwjgl-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
+                                            <linkName>/opt/${rootArtifactId}/lwjgl-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
                                             <symlink>true</symlink>
                                         </data>
                                         <data>
                                             <type>link</type>
                                             <linkTarget>/usr/share/java/lwjgl_util.jar</linkTarget>
-                                            <linkName>/opt/${game-name}/lwjgl_util-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
+                                            <linkName>/opt/${rootArtifactId}/lwjgl_util-${lwjgl.version}.jar</linkName><!--renomme avec une fausse version pour ne pas avoir à manipuler le jar du jeu -->
                                             <symlink>true</symlink>
                                         </data>
                                         <data>
@@ -143,7 +143,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             <type>directory</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${game-name}/licenses</prefix>
+                                                <prefix>/opt/${rootArtifactId}/licenses</prefix>
                                             </mapper>
                                         </data>
                                         <data>
@@ -151,11 +151,11 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${game-name}</prefix>
+                                                <prefix>/opt/${rootArtifactId}</prefix>
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${project.build.directory}/${game-name}.desktop</src>
+                                            <src>${project.build.directory}/${rootArtifactId}.desktop</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
@@ -163,7 +163,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             </mapper>
                                         </data>
                                        <data>
-                                            <src>${project.build.directory}/${game-name}-safe.desktop</src>
+                                            <src>${project.build.directory}/${rootArtifactId}-safe.desktop</src>
                                             <type>file</type>
                                             <mapper>
                                                 <type>perm</type>
@@ -173,7 +173,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                         <data>
                                             <src>${project.build.directory}/run-game.sh</src>
                                             <type>file</type>
-                                            <dst>${game-name}</dst>
+                                            <dst>${rootArtifactId}</dst>
                                             <mapper>
                                                 <type>perm</type>
                                                 <prefix>/usr/bin</prefix>
@@ -190,7 +190,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
             <dependencies>
                 <dependency>
                     <groupId>${groupId}</groupId>
-                    <artifactId>${game-name}-game</artifactId>
+                    <artifactId>${rootArtifactId}-game</artifactId>
                 </dependency>
             </dependencies>
         </profile>

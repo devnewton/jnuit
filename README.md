@@ -35,7 +35,7 @@ The lwjgl implementation also comes with a collection of utilities to make 2d ga
 Use [maven](https://maven.apache.org/) archetype plugin to create a project using jnuit:
 
 ```bash
-mvn archetype:generate -DarchetypeGroupId=im.bci -DarchetypeArtifactId=jnuit-archetype -DarchetypeVersion=LATEST -DgroupId=comycompagny.superbaryo2 -DartifactId=superbaryo2 -Dgame-name=superbaryo2 -Dgame-package=com.mycompagny.superbaryo2 -Dversion=1.0-SNAPSHOT
+mvn archetype:generate -DarchetypeGroupId=im.bci -DarchetypeArtifactId=jnuit-archetype -DarchetypeVersion=LATEST -DgroupId=com.mycompagny -DartifactId=superbaryo2 -Dversion=1.0-SNAPSHOT
 ```
 
 This project archetype contains everything you need to do a nice game:

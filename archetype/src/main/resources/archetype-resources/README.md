@@ -1,6 +1,6 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-${symbol_pound} ${game-name}
+${symbol_pound} ${rootArtifactId}
 
 A simple game sample created with jnuit.

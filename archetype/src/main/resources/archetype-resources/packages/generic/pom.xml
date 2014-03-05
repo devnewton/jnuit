@@ -23,13 +23,13 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>${groupId}</groupId>
-        <artifactId>${game-name}</artifactId>
+        <artifactId>${rootArtifactId}</artifactId>
         <version>${version}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>${game-name}-installer</artifactId>
+    <artifactId>${rootArtifactId}-installer</artifactId>
     <packaging>jar</packaging>
-    <name>${game-name}-installer</name>
+    <name>${rootArtifactId}-installer</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -110,7 +110,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                         </goals>
                         <configuration>
                             <attach>true</attach>
-                            <installerFile>${project.build.directory}/${game-name}-installer-${project.version}.jar</installerFile>
+                            <installerFile>${project.build.directory}/${rootArtifactId}-installer-${project.version}.jar</installerFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -127,7 +127,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
-            <artifactId>${game-name}-game</artifactId>
+            <artifactId>${rootArtifactId}-game</artifactId>
         </dependency>
     </dependencies>
 </project>

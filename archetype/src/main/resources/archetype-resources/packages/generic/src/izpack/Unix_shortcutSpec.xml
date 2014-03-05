@@ -5,13 +5,13 @@
 
 <shortcuts>
 <skipIfNotSupported/>
-<programGroup defaultName="${game-name}"
+<programGroup defaultName="${rootArtifactId}"
             location="applications"/>
 <shortcut
-	name="${game-name}"
+	name="${rootArtifactId}"
 	target="/usr/bin/java"
-	commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH/${symbol_dollar}{${game-name}_build_final_name}.jar&quot;"
-	description="Launch ${game-name}"
+	commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH/${symbol_dollar}{${rootArtifactId}_build_final_name}.jar&quot;"
+	description="Launch ${rootArtifactId}"
 	iconFile="${symbol_dollar}INSTALL_PATH/icon.png"
 	workingDirectory="${symbol_dollar}INSTALL_PATH"
 	initialState="normal"
@@ -28,10 +28,10 @@
 </shortcut>
 
 <shortcut
-	name="${game-name} safe launcher"
+	name="${rootArtifactId} safe launcher"
 	target="/usr/bin/java"
-	commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH/${symbol_dollar}{${game-name}_build_final_name}.jar&quot; -- safe"
-	description="Launch ${game-name} in safe mode"
+	commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH/${symbol_dollar}{${rootArtifactId}_build_final_name}.jar&quot; -- safe"
+	description="Launch ${rootArtifactId} in safe mode"
 	iconFile="${symbol_dollar}INSTALL_PATH/icon.png"
 	workingDirectory="${symbol_dollar}INSTALL_PATH"
 	initialState="normal"
@@ -48,10 +48,10 @@
 </shortcut>
 
 <shortcut
-	name="Uninstall ${game-name}"
+	name="Uninstall ${rootArtifactId}"
 	target="/usr/bin/java"
 	commandLine="-jar &quot;${symbol_dollar}INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
-	description="Uninstall ${game-name}"
+	description="Uninstall ${rootArtifactId}"
 	workingDirectory="${symbol_dollar}INSTALL_PATH/Uninstaller"
 	initialState="normal"
 	programGroup="yes"

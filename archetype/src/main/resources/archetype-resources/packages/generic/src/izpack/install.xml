@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <installation version="1.0">
     <info>
-        <appname>${game-name}</appname>
+        <appname>${rootArtifactId}</appname>
         <appversion>@{project.version}</appversion>
         <authors>
             <author name="devnewton" email="devnewton@bci.im" />
@@ -21,7 +21,7 @@
     </locale>
 
     <variables>
-        <variable name="${game-name}_build_final_name" value="${game-name}-game-@{project.version}"/>
+        <variable name="${rootArtifactId}_build_final_name" value="${rootArtifactId}-game-@{project.version}"/>
 	<variable name="ShowCreateDirectoryMessage" value="false"/>
     </variables>
 
@@ -70,7 +70,7 @@
 		<include name="*.dll"/>
 		<os family="windows"/>
 	    </fileset>
-	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/${game-name}-game-@{project.version}.jar"/>
+	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/${rootArtifactId}-game-@{project.version}.jar"/>
 	    <executable type="bin" stage="never" targetfile="${symbol_dollar}INSTALL_PATH/run-linux.sh">
 		<os family="unix"/>
 	    </executable>

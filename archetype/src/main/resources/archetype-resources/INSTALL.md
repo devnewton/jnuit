@@ -14,7 +14,7 @@ Go to the source folder and run maven with the following command:
 
 	mvn package
 
-This will generate an executable jar in target subfolder named ${game-name}-game-${symbol_dollar}{project.version}.jar
+This will generate an executable jar in target subfolder named ${rootArtifactId}-game-${symbol_dollar}{project.version}.jar
 
 Install
 =======
@@ -22,8 +22,8 @@ Install
 Manual installation
 -------------------
 
-- Create a directory, for example /opt/${game-name}-game
-- Copy the game/target/${game-name}-game-${symbol_dollar}{project.version}.jar, the game/target/natives, game/target/lib game/data folders into it.
+- Create a directory, for example /opt/${rootArtifactId}-game
+- Copy the game/target/${rootArtifactId}-game-${symbol_dollar}{project.version}.jar, the game/target/natives, game/target/lib game/data folders into it.
 
 Create packages and installers
 ------------------------------
@@ -38,7 +38,7 @@ Run
 
 The game can be run using the following command:
 
-	java -jar ${game-name}-game-${symbol_dollar}{project.version}.jar
+	java -jar ${rootArtifactId}-game-${symbol_dollar}{project.version}.jar
 
 It will try to load the game data files in
 

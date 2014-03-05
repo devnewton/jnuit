@@ -1,0 +1,15 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+${symbol_pound}!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=${symbol_dollar}{project.version}
+Type=Application
+Terminal=false
+Categories=Game;
+Exec=/usr/bin/${rootArtifactId} --safe
+Name=${rootArtifactId}
+Comment=${rootArtifactId}
+Icon=/opt/${rootArtifactId}/data/icon.png
+Name[fr_FR]=${rootArtifactId}.desktop

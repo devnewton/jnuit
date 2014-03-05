@@ -2,14 +2,6 @@
 <archetype-descriptor xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="jnuit-archetype"
     xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <requiredProperties>
-    <requiredProperty key="game-package">
-      <defaultValue>im.bci.mygame</defaultValue>
-    </requiredProperty>
-    <requiredProperty key="game-name">
-      <defaultValue>mygame</defaultValue>
-    </requiredProperty>
-  </requiredProperties>
   <fileSets>
     <fileSet filtered="true" encoding="UTF-8">
       <directory>licenses</directory>
@@ -27,7 +19,7 @@
     </fileSet>
   </fileSets>
   <modules>
-    <module id="${game-name}-game" dir="game" name="${game-name}-game">
+    <module id="${rootArtifactId}-game" dir="game" name="${rootArtifactId}-game">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
           <directory>src/main/java</directory>
@@ -78,7 +70,7 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${game-name}-game-graph-generator" dir="game-graph-generator" name="${game-name}-game-graph-generator">
+    <module id="${rootArtifactId}-game-graph-generator" dir="game-graph-generator" name="${rootArtifactId}-game-graph-generator">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
           <directory>src/main/java</directory>
@@ -88,7 +80,7 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${game-name}-deb" dir="packages/deb" name="${game-name}-deb">
+    <module id="${rootArtifactId}-deb" dir="packages/deb" name="${rootArtifactId}-deb">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
           <directory>src/launchers</directory>
@@ -105,7 +97,7 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${game-name}-installer" dir="packages/generic" name="${game-name}-installer">
+    <module id="${rootArtifactId}-installer" dir="packages/generic" name="${rootArtifactId}-installer">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
           <directory>src/izpack</directory>
@@ -140,8 +132,8 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${game-name}-win" dir="packages/win" name="${game-name}-win" />
-    <module id="${game-name}-rpm32" dir="packages/rpm32" name="${game-name}-rpm32">
+    <module id="${rootArtifactId}-win" dir="packages/win" name="${rootArtifactId}-win" />
+    <module id="${rootArtifactId}-rpm32" dir="packages/rpm32" name="${rootArtifactId}-rpm32">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
           <directory>src/launchers</directory>
@@ -152,7 +144,7 @@
         </fileSet>
       </fileSets>
     </module>
-    <module id="${game-name}-rpm64" dir="packages/rpm64" name="${game-name}-rpm64">
+    <module id="${rootArtifactId}-rpm64" dir="packages/rpm64" name="${rootArtifactId}-rpm64">
       <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
           <directory>src/launchers</directory>
