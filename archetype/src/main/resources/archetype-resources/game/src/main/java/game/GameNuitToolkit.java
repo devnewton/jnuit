@@ -35,7 +35,7 @@ import im.bci.jnuit.NuitDisplay;
 import im.bci.jnuit.NuitRenderer;
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.NuitTranslator;
-import im.bci.jnuit.NuitFont;
+import im.bci.jnuit.lwjgl.LwjglNuitFont;
 
 /**
  *
@@ -45,7 +45,7 @@ import im.bci.jnuit.NuitFont;
 public class GameNuitToolkit extends NuitToolkit {
 
     @Inject
-    public GameNuitToolkit(NuitDisplay display, NuitTranslator translator, @NamedEntities.DefaultFont NuitFont font, NuitRenderer renderer, NuitControls controls, NuitAudio audio) {
+    public GameNuitToolkit(NuitDisplay display, NuitTranslator translator, @NamedEntities.DefaultFont LwjglNuitFont font, NuitRenderer renderer, NuitControls controls, NuitAudio audio) {
         super(display, controls, translator, font, renderer, audio);
     }
     
