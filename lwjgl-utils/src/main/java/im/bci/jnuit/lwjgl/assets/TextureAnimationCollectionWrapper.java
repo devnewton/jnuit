@@ -72,7 +72,7 @@ public class TextureAnimationCollectionWrapper implements IAnimationCollection, 
     }
 
     @Override
-    public int getId() {
+    public Object getId() {
         return getTexture().getId();
     }
 

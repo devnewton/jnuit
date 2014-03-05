@@ -29,10 +29,10 @@ THE SOFTWARE. -->
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-playn</artifactId>
+    <artifactId>jnuit-playn-utils</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-playn</name>
-    <description>jnuit playn implementation</description>
+    <name>jnuit-playn-utils</name>
+    <description>jnuit playn utility classes</description>
     <url>http://git.bci.im/jnuit</url>
     <licenses>
         <license>
@@ -107,12 +107,8 @@ THE SOFTWARE. -->
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.googlecode.playn</groupId>
-            <artifactId>playn-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>im.bci</groupId>
-            <artifactId>jnuit-core</artifactId>
+            <artifactId>jnuit-playn</artifactId>
         </dependency>
     </dependencies>
     <profiles>

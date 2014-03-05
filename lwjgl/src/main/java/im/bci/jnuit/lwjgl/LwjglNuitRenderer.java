@@ -225,7 +225,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Widget widget, TexturedBackground background) {
         IAnimationFrame frame = background.getPlay().getCurrentFrame();
         if (null != frame) {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, frame.getImage().getId());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)frame.getImage().getId());
             float x1 = widget.getX();
             float x2 = widget.getX() + widget.getWidth();
             float y1 = widget.getY();

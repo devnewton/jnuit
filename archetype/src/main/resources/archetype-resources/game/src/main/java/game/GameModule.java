@@ -37,6 +37,8 @@ import java.io.File;
 import java.util.Random;
 
 import com.google.inject.Singleton;
+import im.bci.jnuit.NuitAudio;
+import im.bci.jnuit.lwjgl.audio.OpenALNuitAudio;
 import im.bci.jnuit.NuitControls;
 import im.bci.jnuit.NuitDisplay;
 import im.bci.jnuit.NuitPreferences;
@@ -96,10 +98,21 @@ public class GameModule extends AbstractModule {
     
     @Provides
     @Singleton
-    public IAssets createAssets() {
+    public VirtualFileSystem createVfs() {
         File applicationDir = NormalLauncher.getApplicationDir();
-        VirtualFileSystem vfs = new VirtualFileSystem(new File(applicationDir, "data"), new File(applicationDir.getParentFile(), "data"));
+        return new VirtualFileSystem(new File(applicationDir, "data"), new File(applicationDir.getParentFile(), "data"));
+    }
+    
+    @Provides
+    @Singleton
+    public IAssets createAssets(VirtualFileSystem vfs) {
         return new GarbageCollectedAssets(new AssetsLoader(vfs));
+    }
+    
+    @Provides
+    @Singleton
+    public NuitAudio createNuitAudio(VirtualFileSystem vfs) {
+        return new OpenALNuitAudio(vfs);
     }
 
     @Provides

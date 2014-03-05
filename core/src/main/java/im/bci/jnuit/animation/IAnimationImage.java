@@ -29,7 +29,7 @@ package im.bci.jnuit.animation;
  */
 public interface IAnimationImage {
 
-    int getId();
+    Object getId();
 
     boolean hasAlpha();
     

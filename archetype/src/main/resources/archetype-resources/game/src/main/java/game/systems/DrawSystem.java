@@ -179,7 +179,7 @@ public class DrawSystem extends EntitySystem {
         IPlay backgroundAnimationPlay = level.getBackground();
         backgroundAnimationPlay.update((long) (world.getDelta() * 1000L));
         final IAnimationFrame currentFrame = backgroundAnimationPlay.getCurrentFrame();
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, currentFrame.getImage().getId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)currentFrame.getImage().getId());
         float x1 = -toolkit.getVirtualResolutionWidth() / 2.0f;
         float x2 = toolkit.getVirtualResolutionWidth() / 2.0f;
         float y1 = toolkit.getVirtualResolutionHeight() / 2.0f;
@@ -215,7 +215,7 @@ public class DrawSystem extends EntitySystem {
             if (image.hasAlpha()) {
                 GL11.glEnable(GL11.GL_BLEND);
             }
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, image.getId());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)image.getId());
 
             final float u1, u2;
             if (sprite.isMirrorX()) {

@@ -51,7 +51,7 @@ public class AnimationCollectionWeakReference extends WeakReference<NanimationCo
         this.name = name;
         List<Integer> ids = new ArrayList<>();
         for (NanimationImage image : animations.getImages().values()) {
-            ids.add(image.getId());
+            ids.add((Integer)image.getId());
         }
         ByteBuffer temp = ByteBuffer.allocateDirect(ids.size() * Integer.SIZE);
         temp.order(ByteOrder.nativeOrder());

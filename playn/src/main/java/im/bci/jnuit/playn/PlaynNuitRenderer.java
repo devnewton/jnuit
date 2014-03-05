@@ -32,7 +32,6 @@ import im.bci.jnuit.background.NullBackground;
 import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.border.ColoredBorder;
 import im.bci.jnuit.border.NullBorder;
-import im.bci.jnuit.playn.animation.PlaynAnimationImage;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.visitors.WidgetVisitor;
@@ -197,7 +196,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Widget widget, TexturedBackground background) {
         IAnimationFrame frame = background.getPlay().getCurrentFrame();
         if (null != frame) {
-            Image image = ((PlaynAnimationImage) frame.getImage()).getImage();
+            Image image = (Image) frame.getImage().getId();
             surface.save();
             surface.translate(widget.getX(), widget.getY());
             surface.scale(background.isMirrorX() ? -1.0f : 1.0f, background.isMirrorY() ? -1.0f : 1.0f);

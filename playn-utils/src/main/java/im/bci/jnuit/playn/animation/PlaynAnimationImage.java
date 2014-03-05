@@ -39,8 +39,8 @@ public class PlaynAnimationImage implements IAnimationImage {
     }
 
     @Override
-    public int getId() {
-        return image.hashCode();
+    public Object getId() {
+        return image;
     }
 
     @Override

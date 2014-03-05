@@ -50,7 +50,7 @@ public class NanimationCollection implements IAnimationCollection {
         imageBuffer.flip();
 
         // produce a texture from the byte buffer
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)texture.getId());
         GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
         LwjglHelper.setupGLTextureParams();
         int pixelFormat = nimage.getFormat().equals(NanimParser.PixelFormat.RGBA_8888) ? GL11.GL_RGBA

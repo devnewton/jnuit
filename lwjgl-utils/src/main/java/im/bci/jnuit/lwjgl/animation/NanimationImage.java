@@ -54,7 +54,7 @@ public class NanimationImage implements IAnimationImage {
     }
 
     @Override
-    public int getId() {
+    public Object getId() {
         return id;
     }
 

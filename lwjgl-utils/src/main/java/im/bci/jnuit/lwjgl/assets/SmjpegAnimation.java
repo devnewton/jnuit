@@ -140,7 +140,7 @@ public class SmjpegAnimation implements IAnimationCollection, IAnimation {
         }
 
         @Override
-        public int getId() {
+        public Object getId() {
             return texture.getId();
         }
 
