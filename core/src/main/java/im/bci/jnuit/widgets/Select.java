@@ -30,8 +30,9 @@ import im.bci.jnuit.visitors.WidgetVisitor;
 
 /**
  * Widget to select of value from a possible list.
+ *
  * @author devnewton
- * @param <T> 
+ * @param <T>
  */
 public class Select<T> extends Widget {
 
@@ -81,7 +82,11 @@ public class Select<T> extends Widget {
     }
 
     public T getSelected() {
-        return possibleValues.get(selected);
+        if (!possibleValues.isEmpty()) {
+            return possibleValues.get(selected);
+        } else {
+            return null;
+        }
     }
 
     public void setSelected(T value) {
