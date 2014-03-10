@@ -82,8 +82,8 @@ public class GameNuitTranslator extends NuitTranslator {
 
         addTranslation(NuitLocale.ENGLISH, "dialog.credits.devnewton", "http://devnewton.bci.im");
         
-        addTranslation(NuitLocale.FRENCH, "dialog.artworks.01", "Sketch 01");
-        addTranslation(NuitLocale.FRENCH, "dialog.artworks.02", "Sketch 02");
+        addTranslation(NuitLocale.ENGLISH, "dialog.artworks.01", "Sketch 01");
+        addTranslation(NuitLocale.ENGLISH, "dialog.artworks.02", "Sketch 02");
 
     }
 
