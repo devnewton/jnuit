@@ -69,6 +69,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     private final BottomBorderRenderer bottomBorderRenderer = new BottomBorderRenderer();
     private final LeftBorderRenderer leftBorderRenderer = new LeftBorderRenderer();
     private final RightBorderRenderer rightBorderRenderer = new RightBorderRenderer();
+    private final PlaynTextCache textCache;
 
     public void setSurface(Surface surface) {
         this.surface = surface;
@@ -137,6 +138,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public PlaynNuitRenderer(NuitTranslator translator, PlaynNuitFont font) {
         this.translator = translator;
         this.font = font;
+        this.textCache = new PlaynTextCache(font);
     }
 
     @Override
@@ -168,17 +170,8 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     private void drawText(String text, float x, float y) {
         if (!text.isEmpty()) {
-            TextLayout textLayout = PlayN.graphics().layoutText(text, font.format);
-            drawText(textLayout, x, y);
+            surface.drawImage(textCache.getTextCanvasImage(text), x, y);
         }
-    }
-
-    private void drawText(TextLayout textLayout, float x, float y) {
-        CanvasImage textImage = PlayN.graphics().createImage(textLayout.width(), textLayout.height());
-        final Canvas canvas = textImage.canvas();
-        canvas.setFillColor(Color.rgb(255, 255, 255));
-        canvas.fillText(textLayout, 0, 0);
-        surface.drawImage(textImage, x, y);
     }
 
     @Override
