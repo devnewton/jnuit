@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controller;
 import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Keyboard;
@@ -52,15 +53,22 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public List<Control> getPossibleControls() {
         List<Control> possibleControls = new ArrayList<>();
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            for (int a = 0; a < pad.getAxisCount(); ++a) {
-                possibleControls.add(new GamepadAxisControl(pad, a, true));
-                possibleControls.add(new GamepadAxisControl(pad, a, false));
+        try {
+            if (!Controllers.isCreated()) {
+                Controllers.create();
             }
-            for (int b = 0; b < pad.getButtonCount(); ++b) {
-                possibleControls.add(new GamepadButtonControl(pad, b));
+            for (int c = 0; c < Controllers.getControllerCount(); ++c) {
+                Controller pad = Controllers.getController(c);
+                for (int a = 0; a < pad.getAxisCount(); ++a) {
+                    possibleControls.add(new GamepadAxisControl(pad, a, true));
+                    possibleControls.add(new GamepadAxisControl(pad, a, false));
+                }
+                for (int b = 0; b < pad.getButtonCount(); ++b) {
+                    possibleControls.add(new GamepadButtonControl(pad, b));
+                }
             }
+        } catch (LWJGLException ex) {
+            Logger.getLogger(LwjglNuitControls.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (Field field : Keyboard.class.getFields()) {
             String name = field.getName();
