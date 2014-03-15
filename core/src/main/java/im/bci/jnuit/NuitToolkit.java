@@ -36,6 +36,7 @@ import com.esotericsoftware.tablelayout.Toolkit;
 import im.bci.jnuit.controls.Control;
 import im.bci.jnuit.controls.Pointer;
 import im.bci.jnuit.display.VideoResolution;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -276,6 +277,24 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public NuitAudio getAudio() {
         return audio;
+    }
+
+    public List<Action> getMenuActionList() {
+        return Arrays.asList(menuUp.getAction(),
+                menuDown.getAction(),
+                menuLeft.getAction(),
+                menuRight.getAction(),
+                menuOK.getAction(),
+                menuCancel.getAction());
+    }
+
+    public List<Action> getDefaultMenuActionList() {
+        return Arrays.asList(new Action("nuit.action.menu.up", controls.getDefaultMenuUpControls()),
+                new Action("nuit.action.menu.down", controls.getDefaultMenuDownControls()),
+                new Action("nuit.action.menu.left", controls.getDefaultMenuLeftControls()),
+                new Action("nuit.action.menu.right", controls.getDefaultMenuRightControls()),
+                new Action("nuit.action.menu.ok", controls.getDefaultMenuOkControls()),
+                new Action("nuit.action.menu.cancel", controls.getDefaultMenuCancelControls()));
     }
 
 }

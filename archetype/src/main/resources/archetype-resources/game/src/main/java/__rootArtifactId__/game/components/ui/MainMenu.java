@@ -236,7 +236,7 @@ public class MainMenu extends Component {
     }
 
     private void initMenuControls() {
-        menuControls = new ControlsConfigurator(toolkit, Arrays.asList(toolkit.getMenuUp(), toolkit.getMenuDown(), toolkit.getMenuLeft(), toolkit.getMenuRight(), toolkit.getMenuOK(), toolkit.getMenuCancel()), null) {
+        menuControls = new ControlsConfigurator(toolkit, toolkit.getMenuActionList(), toolkit.getDefaultMenuActionList()) {
             @Override
             public void onBack() {
                 root.show(optionsMenu);
