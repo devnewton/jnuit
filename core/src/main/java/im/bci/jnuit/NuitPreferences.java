@@ -21,13 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-
 package im.bci.jnuit;
 
 import im.bci.jnuit.controls.Control;
 
 /**
  * Platform specific preference storage.
+ *
  * @author devnewton
  */
 public interface NuitPreferences {
@@ -38,12 +38,16 @@ public interface NuitPreferences {
 
     int getInt(String name, int defaultValue);
 
+    String getString(String name, String defaultValue);
+
     void putBoolean(String name, boolean value);
 
     void putControl(String name, Control value);
 
     void putInt(String name, int value);
+    
+    void putString(String name, String value);
 
     void saveConfig();
-    
+
 }

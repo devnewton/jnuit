@@ -26,13 +26,8 @@ package im.bci.jnuit.playn;
 import im.bci.jnuit.NuitPreferences;
 import im.bci.jnuit.NuitControls;
 import im.bci.jnuit.controls.Control;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import playn.core.PlayN;
+import playn.core.Storage;
 
 /**
  *
@@ -40,61 +35,31 @@ import java.util.logging.Logger;
  */
 public class PlaynNuitPreferences implements NuitPreferences {
 
-    private final Properties store = new Properties();
-    private final String appName;
     private final NuitControls controls;
+    private Storage.Batch batch;
 
     public PlaynNuitPreferences(NuitControls controls, String appName) {
         this.controls = controls;
-        this.appName = appName;
-        load();
     }
 
-    private void load() {
-        File userConfigFile = getUserConfigFilePath();
-        if (userConfigFile.exists() && userConfigFile.canRead()) {
-            try (FileInputStream is = new FileInputStream(userConfigFile)) {
-                store.load(is);
-            } catch (IOException ex) {
-                Logger.getLogger(PlaynNuitPreferences.class.getName()).log(Level.WARNING, "Cannot load config from file " + userConfigFile, ex);
-            }
+    private Storage.Batch getOrCreateBatch() {
+        if (null == batch) {
+            batch = PlayN.storage().startBatch();
         }
+        return batch;
     }
 
     @Override
     public void saveConfig() {
-        File userConfigFile = getUserConfigFilePath();
-
-        if (!userConfigFile.exists()) {
-            getUserConfigDirPath().mkdirs();
+        if (null != batch) {
+            batch.commit();
+            batch = null;
         }
-        try (FileOutputStream os = new FileOutputStream(userConfigFile)) {
-            store.store(os, "");
-
-        } catch (IOException e) {
-            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot save config to file " + userConfigFile, e);
-        }
-    }
-
-    public File getUserConfigDirPath() {
-        String configDirPath = System.getenv("XDG_CONFIG_HOME");
-        if (null == configDirPath) {
-            configDirPath = System.getenv("APPDATA");
-        }
-        if (null == configDirPath) {
-            configDirPath = System.getProperty("user.home") + File.separator
-                    + ".config";
-        }
-        return new File(configDirPath, appName);
-    }
-
-    private File getUserConfigFilePath() {
-        return new File(getUserConfigDirPath(), "config.properties");
     }
 
     @Override
     public void putBoolean(String name, boolean value) {
-        store.setProperty(name, String.valueOf(value));
+        getOrCreateBatch().setItem(name, String.valueOf(value));
     }
 
     @Override
@@ -104,7 +69,7 @@ public class PlaynNuitPreferences implements NuitPreferences {
 
     @Override
     public void putInt(String name, int value) {
-        store.setProperty(name, String.valueOf(value));
+        getOrCreateBatch().setItem(name, String.valueOf(value));
     }
 
     @Override
@@ -115,11 +80,11 @@ public class PlaynNuitPreferences implements NuitPreferences {
     @Override
     public void putControl(String name, Control value) {
         if (null != value) {
-            store.setProperty(name + ".controller", value.getControllerName());
-            store.setProperty(name + ".control", value.getName());
+            getOrCreateBatch().setItem(name + ".controller", value.getControllerName());
+            getOrCreateBatch().setItem(name + ".control", value.getName());
         } else {
-            store.remove(name + ".controller");
-            store.remove(name + ".control");
+            getOrCreateBatch().removeItem(name + ".controller");
+            getOrCreateBatch().removeItem(name + ".control");
         }
     }
 
@@ -136,12 +101,27 @@ public class PlaynNuitPreferences implements NuitPreferences {
     }
 
     private String getSystemOrStoreProperty(String name, String defaultValue) {
-        final String systemProperty = System.getProperty("jnuit-basic-game."+name);
+        final String systemProperty = System.getProperty("jnuit-basic-game." + name);
         if (null != systemProperty) {
             return systemProperty;
         } else {
-            return store.getProperty(name, defaultValue);
+            String value = PlayN.storage().getItem(name);
+            if (null != value) {
+                return value;
+            } else {
+                return defaultValue;
+            }
         }
+    }
+
+    @Override
+    public String getString(String name, String defaultValue) {
+        return getSystemOrStoreProperty(name, String.valueOf(defaultValue));
+    }
+
+    @Override
+    public void putString(String name, String value) {
+        getOrCreateBatch().setItem(name, value);
     }
 
 }
