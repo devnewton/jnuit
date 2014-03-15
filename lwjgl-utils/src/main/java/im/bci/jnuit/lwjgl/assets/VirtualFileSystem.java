@@ -50,6 +50,10 @@ public class VirtualFileSystem {
                 return new FileInputStream(f);
             }
         }
+        File f = new File(name);
+        if(f.exists()) {
+            return  new FileInputStream(f);
+        }
         throw new FileNotFoundException();
     }
 
@@ -59,6 +63,10 @@ public class VirtualFileSystem {
             if (f.exists()) {
                 return new RandomAccessFile(f, "r");
             }
+        }
+        File f = new File(name);
+        if(f.exists()) {
+            return new RandomAccessFile(f, "r");
         }
         throw new FileNotFoundException();
     }

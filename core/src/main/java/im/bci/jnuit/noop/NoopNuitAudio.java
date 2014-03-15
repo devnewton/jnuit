@@ -77,4 +77,8 @@ public class NoopNuitAudio implements NuitAudio {
     public void stopMusic() {
     }
 
+    @Override
+    public void clearUseless() {
+    }
+
 }

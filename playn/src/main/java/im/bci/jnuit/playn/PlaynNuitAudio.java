@@ -96,4 +96,8 @@ public class PlaynNuitAudio implements NuitAudio {
         }
     }
 
+    @Override
+    public void clearUseless() {
+    }
+
 }

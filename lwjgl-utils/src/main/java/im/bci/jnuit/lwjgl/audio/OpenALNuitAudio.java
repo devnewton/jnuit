@@ -90,6 +90,10 @@ public class OpenALNuitAudio implements NuitAudio {
         protected abstract void doRun() throws Exception;
     }
 
+    public OpenALNuitAudio() {
+        this(new VirtualFileSystem());
+    }
+
     public OpenALNuitAudio(VirtualFileSystem virtualFileSystem) {
         this.poll = new AbstractOpenALTask() {
 
@@ -150,6 +154,7 @@ public class OpenALNuitAudio implements NuitAudio {
         });
     }
 
+    @Override
     public void clearUseless() {
         clearAll();
     }
@@ -160,7 +165,7 @@ public class OpenALNuitAudio implements NuitAudio {
 
             @Override
             public void play() {
-                if (effectsVolume>0.0f) {
+                if (effectsVolume > 0.0f) {
                     executor.submit(new AbstractOpenALTask() {
 
                         @Override
@@ -179,7 +184,7 @@ public class OpenALNuitAudio implements NuitAudio {
 
     @Override
     public void playMusic(final String name) {
-        if (musicVolume>0.0f) {
+        if (musicVolume > 0.0f) {
             executor.submit(new AbstractOpenALTask() {
 
                 @Override

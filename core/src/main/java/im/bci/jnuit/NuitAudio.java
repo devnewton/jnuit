@@ -44,4 +44,6 @@ public interface NuitAudio {
     void playMusic(String name);
 
     void stopMusic();
+    
+    void clearUseless();
 }

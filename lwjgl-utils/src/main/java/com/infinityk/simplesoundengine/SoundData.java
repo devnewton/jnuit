@@ -54,11 +54,11 @@ class SoundData {
         this.samplerate = samplerate;
     }
 
-    public static SoundData create(String path, VirtualFileSystem gameData) {
+    public static SoundData create(String path, VirtualFileSystem vfs) {
         if (path.endsWith(".wav")) {
-            return createFromWav(path, gameData);
+            return createFromWav(path, vfs);
         } else if (path.endsWith(".ogg")) {
-            return createFromOgg(path, gameData);
+            return createFromOgg(path, vfs);
         }
         return null;
     }
