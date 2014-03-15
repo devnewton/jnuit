@@ -303,6 +303,7 @@ public class ControlsConfigurator extends Table {
     }
 
     public void onBack() {
+        this.close();
     }
 
     @Override
