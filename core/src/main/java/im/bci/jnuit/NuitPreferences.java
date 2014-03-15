@@ -38,6 +38,8 @@ public interface NuitPreferences {
 
     int getInt(String name, int defaultValue);
 
+    float getFloat(String name, float defaultValue);
+
     String getString(String name, String defaultValue);
 
     void putBoolean(String name, boolean value);
@@ -45,7 +47,9 @@ public interface NuitPreferences {
     void putControl(String name, Control value);
 
     void putInt(String name, int value);
-    
+
+    void putFloat(String name, float value);
+
     void putString(String name, String value);
 
     void saveConfig();

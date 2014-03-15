@@ -113,6 +113,16 @@ public class LwjglNuitPreferences implements NuitPreferences {
     }
 
     @Override
+    public void putFloat(String name, float value) {
+        store.setProperty(name, String.valueOf(value));
+    }
+
+    @Override
+    public float getFloat(String name, float defaultValue) {
+        return Float.valueOf(getSystemOrStoreProperty(name, String.valueOf(defaultValue)));
+    }
+
+    @Override
     public void putControl(String name, Control value) {
         if (null != value) {
             store.setProperty(name + ".controller", value.getControllerName());

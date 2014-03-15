@@ -78,6 +78,16 @@ public class PlaynNuitPreferences implements NuitPreferences {
     }
 
     @Override
+    public void putFloat(String name, float value) {
+        getOrCreateBatch().setItem(name, String.valueOf(value));
+    }
+
+    @Override
+    public float getFloat(String name, float defaultValue) {
+        return Float.valueOf(getSystemOrStoreProperty(name, String.valueOf(defaultValue)));
+    }
+
+    @Override
     public void putControl(String name, Control value) {
         if (null != value) {
             getOrCreateBatch().setItem(name + ".controller", value.getControllerName());
