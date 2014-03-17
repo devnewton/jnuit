@@ -35,7 +35,7 @@ public class PlaynNuitFont implements NuitFont {
     final Font font;
     final TextFormat format;
     
-    PlaynNuitFont(String name, Font.Style style, float size, boolean antialiasing) {
+    public PlaynNuitFont(String name, Font.Style style, float size, boolean antialiasing) {
         font = PlayN.graphics().createFont(name, style, size);
         format = new TextFormat(font, antialiasing);
     }
