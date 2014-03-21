@@ -82,6 +82,7 @@ public class PlaynTextCache {
         TextLayout textLayout = graphics.layoutText(text, font.format);
         CanvasImage textImage = graphics.createImage(textLayout.width(), textLayout.height());
         final Canvas canvas = textImage.canvas();
+        canvas.fillRect(0, 0, canvas.width(), canvas.height());
         canvas.setFillColor(Color.rgb(255, 255, 255));
         canvas.fillText(textLayout, 0, 0);
         return textImage;

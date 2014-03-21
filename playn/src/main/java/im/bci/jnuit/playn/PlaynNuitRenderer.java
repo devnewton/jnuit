@@ -48,13 +48,10 @@ import im.bci.jnuit.widgets.Table;
 import im.bci.jnuit.widgets.Toggle;
 import im.bci.jnuit.widgets.VideoConfigurator;
 import im.bci.jnuit.widgets.Widget;
-import playn.core.Canvas;
 import playn.core.CanvasImage;
 import playn.core.Color;
 import playn.core.Image;
-import playn.core.PlayN;
 import playn.core.Surface;
-import playn.core.TextLayout;
 
 /**
  *
@@ -64,7 +61,6 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     private Surface surface;
     private final NuitTranslator translator;
-    private final PlaynNuitFont font;
     private final TopBorderRenderer topBorderRenderer = new TopBorderRenderer();
     private final BottomBorderRenderer bottomBorderRenderer = new BottomBorderRenderer();
     private final LeftBorderRenderer leftBorderRenderer = new LeftBorderRenderer();
@@ -136,8 +132,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     }
 
     public PlaynNuitRenderer(NuitTranslator translator, PlaynNuitFont font) {
-        this.translator = translator;
-        this.font = font;
+        this.translator = translator;;
         this.textCache = new PlaynTextCache(font);
     }
 
@@ -170,7 +165,8 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     private void drawText(String text, float x, float y) {
         if (!text.isEmpty()) {
-            surface.drawImage(textCache.getTextCanvasImage(text), x, y);
+            final CanvasImage textCanvasImage = textCache.getTextCanvasImage(text);
+            surface.drawImage(textCanvasImage, x - textCanvasImage.width() / 2.0f, y - textCanvasImage.height() / 2.0f);
         }
     }
 
@@ -238,11 +234,18 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         if (focused.mustDrawFocus()) {
             if (container.isFocusSucked()) {
                 surface.setFillColor(Color.rgb(127, 127, 127));
+            } else {
+                surface.setFillColor(Color.argb(255, 255, 255, 255));                
             }
-            surface.drawLine(focused.getX(), focused.getY(), focused.getX() + focused.getWidth(), focused.getY(), 2.0f);
-            surface.drawLine(focused.getX() + focused.getWidth(), focused.getY(), focused.getX() + focused.getWidth(), focused.getY() + focused.getHeight(), 2.0f);
-            surface.drawLine(focused.getX() + focused.getWidth(), focused.getY() + focused.getHeight(), focused.getX(), focused.getY() + focused.getHeight(), 2.0f);
-            surface.drawLine(focused.getX(), focused.getY() + focused.getHeight(), focused.getX(), focused.getY(), 2.0f);
+            final float x = focused.getX();
+            final float y = focused.getY();
+            final float w = focused.getWidth();
+            final float h = focused.getHeight();
+            final float lineWidth = 2.0f;
+            surface.drawLine(x, y, x + w, y, lineWidth);
+            surface.drawLine(x, y + h, x + w, y + h, lineWidth);
+            surface.drawLine(x, y, x, y + h, lineWidth);
+            surface.drawLine(x + w, y, x + w, y + h, lineWidth);
             surface.setFillColor(Color.argb(255, 255, 255, 255));
         }
     }
