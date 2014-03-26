@@ -37,9 +37,11 @@ public class PlaynNuitPreferences implements NuitPreferences {
 
     private final NuitControls controls;
     private Storage.Batch batch;
+    private final String appName;
 
     public PlaynNuitPreferences(NuitControls controls, String appName) {
         this.controls = controls;
+        this.appName = appName;
     }
 
     private Storage.Batch getOrCreateBatch() {
@@ -111,7 +113,7 @@ public class PlaynNuitPreferences implements NuitPreferences {
     }
 
     private String getSystemOrStoreProperty(String name, String defaultValue) {
-        final String systemProperty = System.getProperty("jnuit-basic-game." + name);
+        final String systemProperty = System.getProperty(appName + "." + name);
         if (null != systemProperty) {
             return systemProperty;
         } else {
