@@ -36,7 +36,7 @@ import im.bci.jnuit.background.NullBackground;
  */
 public class Dialogue extends Container {
 
-    private final ArrayList<Sentence> sentences = new ArrayList<>();
+    private final ArrayList<Sentence> sentences = new ArrayList<Sentence>();
     private int currentSentenceIndex;
     private IPlay currentPlay;
     private boolean finished;
@@ -55,7 +55,7 @@ public class Dialogue extends Container {
     }
 
     private Iterable<String> splitSentence(String sentence) {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<String>();
         String currentSubsentence = "";
         String[] words = sentence.split(" ");
         for (int i =0;i<words.length ; ++i) {

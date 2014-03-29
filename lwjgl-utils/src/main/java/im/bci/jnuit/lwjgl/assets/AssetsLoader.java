@@ -96,16 +96,21 @@ public class AssetsLoader {
     }
 
     private NanimationCollection loadNanim(String name) throws RuntimeException {
-        try (InputStream vfsInputStream = vfs.open(name)) {
-            logger.log(Level.FINE, "Load animation {0}", name);
-            InputStream is;
-            if (name.endsWith(".gz")) {
-                is = new GZIPInputStream(vfsInputStream);
-            } else {
-                is = vfsInputStream;
+        try {
+            InputStream vfsInputStream = vfs.open(name);
+            try {
+                logger.log(Level.FINE, "Load animation {0}", name);
+                InputStream is;
+                if (name.endsWith(".gz")) {
+                    is = new GZIPInputStream(vfsInputStream);
+                } else {
+                    is = vfsInputStream;
+                }
+                NanimationCollection anim = new NanimationCollection(Nanim.parseFrom(is));
+                return anim;
+            } finally {
+                vfsInputStream.close();
             }
-            NanimationCollection anim = new NanimationCollection(Nanim.parseFrom(is));
-            return anim;
         } catch (IOException e) {
             throw new RuntimeException("Cannot load animation " + name, e);
         }
@@ -129,7 +134,8 @@ public class AssetsLoader {
     }
 
     private Texture loadPngTexture(String name) throws FileNotFoundException, IOException {
-        try (InputStream is = vfs.open(name)) {
+        InputStream is = vfs.open(name);
+        try {
             PNGDecoder decoder = new PNGDecoder(is);
             int bpp;
             PNGDecoder.Format format;
@@ -158,12 +164,20 @@ public class AssetsLoader {
             GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelFormat, texWidth,
                     texHeight, 0, pixelFormat, GL11.GL_UNSIGNED_BYTE, buffer);
             return texture;
+        } finally {
+            is.close();
         }
     }
 
     public String loadText(String name) {
-        try (InputStream is = vfs.open(name); Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\Z")) {
-            return s.next();
+        try {
+            InputStream is = vfs.open(name);
+            try {
+                Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\Z");
+                return s.next();
+            } finally {
+                is.close();
+            }
         } catch (FileNotFoundException ex) {
             logger.log(Level.SEVERE, null, ex);
             throw new RuntimeException("Cannot find text file: " + name, ex);
@@ -195,10 +209,15 @@ public class AssetsLoader {
             }
         }
         Font f;
-        try (InputStream is = vfs.open(fontName)) {
+        try {
+            InputStream is = vfs.open(fontName);
             f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(fontStyle, fontSize);
-        } catch (IOException | FontFormatException e) {
+            try {
+                f = f.deriveFont(fontStyle, fontSize);
+            } finally {
+                is.close();
+            }
+        } catch (Exception e) {
             f = new Font("monospaced", fontStyle, fontSize);
         }
         LwjglNuitFont font = new FontAsset(f, antialising, new char[0], new HashMap<Character, BufferedImage>());
@@ -208,26 +227,32 @@ public class AssetsLoader {
 
     private NanimationCollection loadJsonNanim(String name) {
         NanimationCollection nanim = new NanimationCollection();
-        try (InputStream is = vfs.open(name); InputStreamReader reader = new InputStreamReader(is)) {
-            String nanimParentDir;
-            final int lastIndexOfSlash = name.lastIndexOf("/");
-            if (lastIndexOfSlash < 0) {
-                nanimParentDir = "";
-            } else {
-                nanimParentDir = name.substring(0, name.lastIndexOf("/") + 1);
-            }
-            JsonObject json = new Gson().fromJson(reader, JsonObject.class);
-            for (JsonElement jsonAnimationElement : json.getAsJsonArray("animations")) {
-                JsonObject jsonAnimation = jsonAnimationElement.getAsJsonObject();
-                Nanimation animation = new Nanimation(jsonAnimation.get("name").getAsString());
-                for (JsonElement jsonFrameElement : jsonAnimation.getAsJsonArray("frames")) {
-                    JsonObject jsonFrame = jsonFrameElement.getAsJsonObject();
-                    final String imageFilename = nanimParentDir + jsonFrame.get("image").getAsString();
-                    Texture texture = this.loadTexture(imageFilename);
-                    NanimationImage image = new NanimationImage(texture);
-                    animation.addFrame(image, jsonFrame.get("duration").getAsInt(), jsonFrame.get("u1").getAsFloat(), jsonFrame.get("v1").getAsFloat(), jsonFrame.get("u2").getAsFloat(), jsonFrame.get("v2").getAsFloat());
+        try {
+            InputStream is = vfs.open(name);
+            try {
+                InputStreamReader reader = new InputStreamReader(is);
+                String nanimParentDir;
+                final int lastIndexOfSlash = name.lastIndexOf("/");
+                if (lastIndexOfSlash < 0) {
+                    nanimParentDir = "";
+                } else {
+                    nanimParentDir = name.substring(0, name.lastIndexOf("/") + 1);
                 }
-                nanim.addAnimation(animation);
+                JsonObject json = new Gson().fromJson(reader, JsonObject.class);
+                for (JsonElement jsonAnimationElement : json.getAsJsonArray("animations")) {
+                    JsonObject jsonAnimation = jsonAnimationElement.getAsJsonObject();
+                    Nanimation animation = new Nanimation(jsonAnimation.get("name").getAsString());
+                    for (JsonElement jsonFrameElement : jsonAnimation.getAsJsonArray("frames")) {
+                        JsonObject jsonFrame = jsonFrameElement.getAsJsonObject();
+                        final String imageFilename = nanimParentDir + jsonFrame.get("image").getAsString();
+                        Texture texture = this.loadTexture(imageFilename);
+                        NanimationImage image = new NanimationImage(texture);
+                        animation.addFrame(image, jsonFrame.get("duration").getAsInt(), jsonFrame.get("u1").getAsFloat(), jsonFrame.get("v1").getAsFloat(), jsonFrame.get("u2").getAsFloat(), jsonFrame.get("v2").getAsFloat());
+                    }
+                    nanim.addAnimation(animation);
+                }
+            } finally {
+                is.close();
             }
         } catch (IOException e) {
             throw new RuntimeException("Cannot load animation " + name, e);
@@ -236,15 +261,21 @@ public class AssetsLoader {
     }
 
     public void setIcon(String name) {
-        try (InputStream is = vfs.open(name)) {
-            IconLoader.setIcon(is);
+        try {
+            InputStream is = vfs.open(name);
+            try {
+                IconLoader.setIcon(is);
+            } finally {
+                is.close();
+            }
         } catch (IOException ex) {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private Texture loadJpegTexture(String name) throws IOException {
-        try (InputStream is = vfs.open(name)) {
+        InputStream is = vfs.open(name);
+        try {
             JPEGDecoder decoder = new JPEGDecoder(is);
             decoder.startDecode();
             int texWidth = decoder.getImageWidth();
@@ -259,6 +290,8 @@ public class AssetsLoader {
             LwjglHelper.setupGLTextureParams();
             GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, texWidth, texHeight, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
             return texture;
+        } finally {
+            is.close();
         }
     }
 

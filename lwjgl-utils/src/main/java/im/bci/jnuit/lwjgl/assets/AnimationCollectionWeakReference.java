@@ -49,7 +49,7 @@ public class AnimationCollectionWeakReference extends WeakReference<NanimationCo
     AnimationCollectionWeakReference(String name, NanimationCollection animations, ReferenceQueue<NanimationCollection> queue) {
         super(animations, queue);
         this.name = name;
-        List<Integer> ids = new ArrayList<>();
+        List<Integer> ids = new ArrayList<Integer>();
         for (NanimationImage image : animations.getImages().values()) {
             ids.add((Integer)image.getId());
         }

@@ -42,7 +42,7 @@ public final class SpritePuppetControls extends Component {
 
     public SpritePuppetControls(Sprite sprite) {
         this.sprite = sprite;
-        this.updaters = new ArrayList<>();
+        this.updaters = new ArrayList<SpriteControl>();
     }
 
     public SpritePuppetControls moveTo(Vector3 pos, float duration) {

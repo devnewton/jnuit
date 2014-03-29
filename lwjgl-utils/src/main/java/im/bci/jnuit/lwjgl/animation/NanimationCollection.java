@@ -17,13 +17,13 @@ public class NanimationCollection implements IAnimationCollection {
     private final Map<String, NanimationImage> images;
     
     public NanimationCollection() {
-        animations = new LinkedHashMap<>();
-        images = new HashMap<>();
+        animations = new LinkedHashMap<String/*animation name*/, Nanimation>();
+        images = new HashMap<String, NanimationImage>();
     }
 
     public NanimationCollection(Nanim nanim) {
         images = loadImages(nanim);
-        animations = new LinkedHashMap<>(nanim.getAnimationsCount());
+        animations = new LinkedHashMap<String/*animation name*/, Nanimation>(nanim.getAnimationsCount());
         for (im.bci.jnuit.lwjgl.animation.NanimParser.Animation nanimation : nanim.getAnimationsList()) {
             addAnimation(new Nanimation(nanimation, images));
         }
@@ -31,7 +31,7 @@ public class NanimationCollection implements IAnimationCollection {
 
     private static Map<String, NanimationImage> loadImages(Nanim nanim) {
 
-        Map<String, NanimationImage> images = new HashMap<>();
+        Map<String, NanimationImage> images = new HashMap<String, NanimationImage>();
         for (im.bci.jnuit.lwjgl.animation.NanimParser.Image nimage : nanim.getImagesList()) {
             NanimationImage image = loadImage(nimage);
             images.put(nimage.getName(), image);

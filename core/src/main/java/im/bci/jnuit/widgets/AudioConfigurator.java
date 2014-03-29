@@ -77,7 +77,7 @@ public class AudioConfigurator extends Table {
     public AudioConfigurator(NuitToolkit toolkit) {
         super(toolkit);
         this.toolkit = toolkit;
-        List<Volume> possibleVolumes = new ArrayList<>();
+        List<Volume> possibleVolumes = new ArrayList<Volume>();
         for (int l = 0; l <= 100; l += 10) {
             possibleVolumes.add(new Volume(l));
         }

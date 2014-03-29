@@ -113,16 +113,11 @@ public class PlaynNuitPreferences implements NuitPreferences {
     }
 
     private String getSystemOrStoreProperty(String name, String defaultValue) {
-        final String systemProperty = System.getProperty(appName + "." + name);
-        if (null != systemProperty) {
-            return systemProperty;
+        String value = PlayN.storage().getItem(name);
+        if (null != value) {
+            return value;
         } else {
-            String value = PlayN.storage().getItem(name);
-            if (null != value) {
-                return value;
-            } else {
-                return defaultValue;
-            }
+            return defaultValue;
         }
     }
 

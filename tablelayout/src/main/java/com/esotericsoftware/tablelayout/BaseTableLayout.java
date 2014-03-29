@@ -50,9 +50,9 @@ abstract public class BaseTableLayout<C, T extends C> {
     T table;
     private int columns, rows;
 
-    private final ArrayList<Cell<C, T>> cells = new ArrayList<>(4);
+    private final ArrayList<Cell<C, T>> cells = new ArrayList<Cell<C, T>>(4);
     private final Cell<C, T> cellDefaults;
-    private final ArrayList<Cell<C, T>> columnDefaults = new ArrayList<>(2);
+    private final ArrayList<Cell<C, T>> columnDefaults = new ArrayList<Cell<C, T>>(2);
     private Cell<C, T> rowDefaults;
 
     private boolean sizeInvalid = true;
@@ -334,47 +334,47 @@ abstract public class BaseTableLayout<C, T extends C> {
      * specified value.
      */
     public BaseTableLayout<C, T> pad(float pad) {
-        padTop = new FixedValue<>(toolkit, pad);
-        padLeft = new FixedValue<>(toolkit, pad);
-        padBottom = new FixedValue<>(toolkit, pad);
-        padRight = new FixedValue<>(toolkit, pad);
+        padTop = new FixedValue<C, T>(toolkit, pad);
+        padLeft = new FixedValue<C, T>(toolkit, pad);
+        padBottom = new FixedValue<C, T>(toolkit, pad);
+        padRight = new FixedValue<C, T>(toolkit, pad);
         sizeInvalid = true;
         return this;
     }
 
     public BaseTableLayout<C, T> pad(float top, float left, float bottom, float right) {
-        padTop = new FixedValue<>(toolkit, top);
-        padLeft = new FixedValue<>(toolkit, left);
-        padBottom = new FixedValue<>(toolkit, bottom);
-        padRight = new FixedValue<>(toolkit, right);
+        padTop = new FixedValue<C, T>(toolkit, top);
+        padLeft = new FixedValue<C, T>(toolkit, left);
+        padBottom = new FixedValue<C, T>(toolkit, bottom);
+        padRight = new FixedValue<C, T>(toolkit, right);
         sizeInvalid = true;
         return this;
     }
 
     /** Padding at the top edge of the table. */
     public BaseTableLayout<C, T> padTop(float padTop) {
-        this.padTop = new FixedValue<>(toolkit, padTop);
+        this.padTop = new FixedValue<C, T>(toolkit, padTop);
         sizeInvalid = true;
         return this;
     }
 
     /** Padding at the left edge of the table. */
     public BaseTableLayout<C, T> padLeft(float padLeft) {
-        this.padLeft = new FixedValue<>(toolkit, padLeft);
+        this.padLeft = new FixedValue<C, T>(toolkit, padLeft);
         sizeInvalid = true;
         return this;
     }
 
     /** Padding at the bottom edge of the table. */
     public BaseTableLayout<C, T> padBottom(float padBottom) {
-        this.padBottom = new FixedValue<>(toolkit, padBottom);
+        this.padBottom = new FixedValue<C, T>(toolkit, padBottom);
         sizeInvalid = true;
         return this;
     }
 
     /** Padding at the right edge of the table. */
     public BaseTableLayout<C, T> padRight(float padRight) {
-        this.padRight = new FixedValue<>(toolkit, padRight);
+        this.padRight = new FixedValue<C, T>(toolkit, padRight);
         sizeInvalid = true;
         return this;
     }

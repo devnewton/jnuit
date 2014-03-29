@@ -41,11 +41,11 @@ public class LwjglNuitDisplay implements NuitDisplay {
     @Override
     public List<VideoResolution> listResolutions() {
         try {
-            TreeSet<VideoResolution> resolutions = new TreeSet<>();
+            TreeSet<VideoResolution> resolutions = new TreeSet<VideoResolution>();
             for (DisplayMode m : Display.getAvailableDisplayModes()) {
                 resolutions.add(new VideoResolution(m.getWidth(), m.getHeight()));
             }
-            return new ArrayList<>(resolutions);
+            return new ArrayList<VideoResolution>(resolutions);
         } catch (LWJGLException ex) {
             throw new RuntimeException(ex);
         }

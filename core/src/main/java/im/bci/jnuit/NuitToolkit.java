@@ -117,7 +117,7 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     @Override
     public Cell<Widget, Table> obtainCell(BaseTableLayout<Widget, Table> layout) {
-        Cell<Widget, Table> cell = new Cell<>();
+        Cell<Widget, Table> cell = new Cell<Widget, Table>();
         cell.setLayout(layout);
         return cell;
     }

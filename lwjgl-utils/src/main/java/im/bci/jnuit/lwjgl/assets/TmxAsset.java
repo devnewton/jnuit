@@ -39,7 +39,7 @@ public class TmxAsset {
 
     private final IAssets assets;
     private final TmxMap map;
-    private final HashMap<TmxTileInstance, IAnimationCollection> tileAnimations = new HashMap<>();
+    private final HashMap<TmxTileInstance, IAnimationCollection> tileAnimations = new HashMap<TmxTileInstance, IAnimationCollection>();
 
     public TmxAsset(IAssets assets, TmxMap map) {
         this.assets = assets;

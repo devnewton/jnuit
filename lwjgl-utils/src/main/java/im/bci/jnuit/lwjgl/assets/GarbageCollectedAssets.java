@@ -39,12 +39,12 @@ import java.util.logging.Logger;
 public class GarbageCollectedAssets implements IAssets {
 
     private final AssetsLoader assets;
-    private final HashMap<String/* name */, TextureWeakReference> textures = new HashMap<>();
-    private final ReferenceQueue<Texture> texturesReferenceQueue = new ReferenceQueue<>();
-    private final HashMap<String/* name */, AnimationCollectionWeakReference> animations = new HashMap<>();
-    private final ReferenceQueue<NanimationCollection> animationsReferenceQueue = new ReferenceQueue<>();
-    private final HashMap<String/* name */, TrueTypeFontWeakReference> fonts = new HashMap<>();
-    private final ReferenceQueue<LwjglNuitFont> fontsReferenceQueue = new ReferenceQueue<>();
+    private final HashMap<String/* name */, TextureWeakReference> textures = new HashMap<String/* name */, TextureWeakReference>();
+    private final ReferenceQueue<Texture> texturesReferenceQueue = new ReferenceQueue<Texture>();
+    private final HashMap<String/* name */, AnimationCollectionWeakReference> animations = new HashMap<String/* name */, AnimationCollectionWeakReference>();
+    private final ReferenceQueue<NanimationCollection> animationsReferenceQueue = new ReferenceQueue<NanimationCollection>();
+    private final HashMap<String/* name */, TrueTypeFontWeakReference> fonts = new HashMap<String/* name */, TrueTypeFontWeakReference>();
+    private final ReferenceQueue<LwjglNuitFont> fontsReferenceQueue = new ReferenceQueue<LwjglNuitFont>();
     private static final Logger logger = Logger.getLogger(GarbageCollectedAssets.class.getName());
 
     public GarbageCollectedAssets(AssetsLoader assets) {

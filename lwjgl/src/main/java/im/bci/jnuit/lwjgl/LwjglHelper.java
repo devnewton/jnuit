@@ -81,7 +81,7 @@ public class LwjglHelper {
                 methods = new Methods();
             }
             if (null != methods.getWidthMethod) {
-                return (int) methods.getWidthMethod.invoke(null);
+                return (Integer) methods.getWidthMethod.invoke(null);
             }
         } catch (Exception e) {
         }
@@ -94,7 +94,7 @@ public class LwjglHelper {
                 methods = new Methods();
             }
             if (null != methods.getHeightMethod) {
-                return (int) methods.getHeightMethod.invoke(null);
+                return (Integer) methods.getHeightMethod.invoke(null);
             }
         } catch (Exception e) {
         }

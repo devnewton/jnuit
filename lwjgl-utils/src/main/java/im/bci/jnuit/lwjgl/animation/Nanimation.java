@@ -117,7 +117,7 @@ public class Nanimation implements IAnimation {
 
         STARTED, STOPPED
     }
-    private final ArrayList<NanimationFrame> frames = new ArrayList<>();
+    private final ArrayList<NanimationFrame> frames = new ArrayList<NanimationFrame>();
     private long totalDuration;// milliseconds
     private final String name;
 

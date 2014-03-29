@@ -55,8 +55,8 @@ public class SimpleSoundEngine {
     private final VirtualFileSystem vfs;
 
     public SimpleSoundEngine(VirtualFileSystem vfs) {
-        buffers = new HashMap<>();
-        sources = new LinkedList<>();
+        buffers = new HashMap<String,SoundBufferEntry>();
+        sources = new LinkedList<SoundSourceEntry>();
         musicStreamer = new Streamer(vfs);
         sourcePos = BufferUtils.createFloatBuffer(3);
         sourceVel = BufferUtils.createFloatBuffer(3);

@@ -31,8 +31,8 @@ import java.util.Map;
 
 public class PlaynAnimationCollection implements IAnimationCollection {
 
-    final LinkedHashMap<String/*animation name*/, PlaynAnimation> animations = new LinkedHashMap<>();
-    private final Map<String, PlaynAnimationImage> images = new HashMap<>();
+    final LinkedHashMap<String/*animation name*/, PlaynAnimation> animations = new LinkedHashMap<String/*animation name*/, PlaynAnimation>();
+    private final Map<String, PlaynAnimationImage> images = new HashMap<String,PlaynAnimationImage>();
     private boolean ready;
 
     public boolean isReady() {

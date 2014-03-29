@@ -45,7 +45,10 @@ public class Action {
 
     public Action(Action action) {
         this.name = action.name;
-        this.controls = action.controls.clone();
+        this.controls = new Control[action.controls.length];
+        for(int i=0; i<controls.length; ++i) {
+            controls[i] = action.controls[i];
+        }
     }
 
     public void setName(String name) {

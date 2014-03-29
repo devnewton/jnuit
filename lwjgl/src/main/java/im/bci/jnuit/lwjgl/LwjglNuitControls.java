@@ -52,7 +52,7 @@ public class LwjglNuitControls implements NuitControls {
 
     @Override
     public List<Control> getPossibleControls() {
-        List<Control> possibleControls = new ArrayList<>();
+        List<Control> possibleControls = new ArrayList<Control>();
         try {
             if (!Controllers.isCreated()) {
                 Controllers.create();
@@ -76,7 +76,7 @@ public class LwjglNuitControls implements NuitControls {
                 try {
                     int key = field.getInt(null);
                     possibleControls.add(new KeyControl(key));
-                } catch (IllegalAccessException | IllegalArgumentException e) {
+                } catch (Exception e) {
                     Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
                 }
             }

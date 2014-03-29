@@ -110,7 +110,7 @@ public class PlaynAnimation implements IAnimation {
             return mode;
         }
     }
-    private final ArrayList<PlaynAnimationFrame> frames = new ArrayList<>();
+    private final ArrayList<PlaynAnimationFrame> frames = new ArrayList<PlaynAnimationFrame>();
     private long totalDuration;// milliseconds
     private final String name;
 

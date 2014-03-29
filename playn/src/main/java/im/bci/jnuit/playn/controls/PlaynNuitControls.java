@@ -51,12 +51,12 @@ public class PlaynNuitControls implements NuitControls {
             
             @Override
             public void onKeyDown(Keyboard.Event event) {
-                keysDown[event.key().ordinal()] = false;
+                keysDown[event.key().ordinal()] = true;
             }
             
             @Override
             public void onKeyUp(Keyboard.Event event) {
-                keysDown[event.key().ordinal()] = true;
+                keysDown[event.key().ordinal()] = false;
             }
         });
         
@@ -128,7 +128,7 @@ public class PlaynNuitControls implements NuitControls {
     
     @Override
     public List<Control> getPossibleControls() {
-        List<Control> possibleControls = new ArrayList<>();
+        List<Control> possibleControls = new ArrayList<Control>();
         for (Key key : Key.values()) {
             possibleControls.add(new KeyControl(this, key));
         }

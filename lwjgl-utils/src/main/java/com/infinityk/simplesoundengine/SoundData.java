@@ -64,17 +64,22 @@ class SoundData {
     }
 
     private static SoundData createFromWav(String path, VirtualFileSystem gameData) {
-        try (InputStream fis = gameData.open(path);
+        try {
+            InputStream fis = gameData.open(path);
+            try {
                 BufferedInputStream bis = new BufferedInputStream(fis);
-                AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
-            AudioFormat info = ais.getFormat();
-            int size = info.getChannels()
-                    * (int) ais.getFrameLength()
-                    * info.getSampleSizeInBits() / 8;
-            byte[] array = new byte[size];
-            ais.read(array);
-            ByteBuffer buffer = convertAudioBytes(array, info.getSampleSizeInBits() == 16);
-            return new SoundData(buffer, getALFormat(info), (int) info.getSampleRate());
+                AudioInputStream ais = AudioSystem.getAudioInputStream(bis);
+                AudioFormat info = ais.getFormat();
+                int size = info.getChannels()
+                        * (int) ais.getFrameLength()
+                        * info.getSampleSizeInBits() / 8;
+                byte[] array = new byte[size];
+                ais.read(array);
+                ByteBuffer buffer = convertAudioBytes(array, info.getSampleSizeInBits() == 16);
+                return new SoundData(buffer, getALFormat(info), (int) info.getSampleRate());
+            } finally {
+                fis.close();
+            }
         } catch (Exception ex) {
             logger.log(Level.WARNING, "Loading wav file " + path, ex);
         }
@@ -83,21 +88,25 @@ class SoundData {
 
     private static SoundData createFromOgg(String path, VirtualFileSystem vfs) {
 
-        try (InputStream fis = vfs.open(path);
+        try {
+            InputStream fis = vfs.open(path);
+            try {
                 BufferedInputStream bis = new BufferedInputStream(fis);
-                OggInputStream ogg = new OggInputStream(bis);) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(128 * 1024);
-            byte[] buffer = new byte[1024];
-            int readed;
-            while ((readed = ogg.read(buffer)) > 0) {
-                bos.write(buffer, 0, readed);
+                OggInputStream ogg = new OggInputStream(bis);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream(128 * 1024);
+                byte[] buffer = new byte[1024];
+                int readed;
+                while ((readed = ogg.read(buffer)) > 0) {
+                    bos.write(buffer, 0, readed);
+                }
+                buffer = bos.toByteArray();
+                ByteBuffer bb = ByteBuffer.allocateDirect(buffer.length);
+                bb.put(buffer);
+                bb.rewind();
+                return new SoundData(bb, getALFormat(ogg), ogg.getRate());
+            } finally {
+                fis.close();
             }
-            buffer = bos.toByteArray();
-            ByteBuffer bb = ByteBuffer.allocateDirect(buffer.length);
-            bb.put(buffer);
-            bb.rewind();
-            return new SoundData(bb, getALFormat(ogg), ogg.getRate());
-
         } catch (Exception ex) {
             logger.log(Level.WARNING, "Loading ogg file " + path, ex);
         }

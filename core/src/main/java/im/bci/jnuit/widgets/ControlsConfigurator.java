@@ -106,7 +106,7 @@ public class ControlsConfigurator extends Table {
     }
 
     private void initResets() {
-        this.resets = new ArrayList<>();
+        this.resets = new ArrayList<Action>();
         for (Action action : actions) {
             resets.add(new Action(action));
         }
@@ -312,7 +312,7 @@ public class ControlsConfigurator extends Table {
     }
 
     private void initPossibleControls() {
-        possibleControls = new ArrayList<>();
+        possibleControls = new ArrayList<ControlActivatedDetector>();
         for (Control control : toolkit.getPossibleControls()) {
             possibleControls.add(new ControlActivatedDetector(control));
         }

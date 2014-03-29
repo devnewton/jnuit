@@ -21,7 +21,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-
 package im.bci.jnuit.display;
 
 /**
@@ -29,6 +28,7 @@ package im.bci.jnuit.display;
  * @author devnewton
  */
 public class VideoResolution implements Comparable<VideoResolution> {
+
     private final int width;
     private final int height;
 
@@ -70,12 +70,20 @@ public class VideoResolution implements Comparable<VideoResolution> {
 
     @Override
     public int compareTo(VideoResolution o) {
-        return Integer.compare(width * height, o.width * o.height);
+        int nbPixels = width * height;
+        int nbPixelsO = o.width * o.height;
+        if (nbPixels < nbPixelsO) {
+            return -1;
+        } else if (nbPixels > nbPixelsO) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public String toString() {
         return width + " x " + height;
     }
-    
+
 }

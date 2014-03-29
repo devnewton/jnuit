@@ -43,7 +43,7 @@ public class VideoConfigurator extends Table {
         this.toolkit = toolkit;
         defaults().expand();
         cell(new Label(toolkit, "nuit.video.configurator.mode"));
-        mode = new Select<>(toolkit, toolkit.listResolutions());
+        mode = new Select<VideoResolution>(toolkit, toolkit.listResolutions());
         cell(mode);
         row();
         cell(new Label(toolkit, "nuit.video.configurator.fullscreen"));

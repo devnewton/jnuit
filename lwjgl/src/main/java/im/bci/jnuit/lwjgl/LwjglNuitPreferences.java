@@ -53,8 +53,13 @@ public class LwjglNuitPreferences implements NuitPreferences {
     private void load() {
         File userConfigFile = getUserConfigFilePath();
         if (userConfigFile.exists() && userConfigFile.canRead()) {
-            try (FileInputStream is = new FileInputStream(userConfigFile)) {
-                store.load(is);
+            try {
+                FileInputStream is = new FileInputStream(userConfigFile);
+                try {
+                    store.load(is);
+                } finally {
+                    is.close();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(LwjglNuitPreferences.class.getName()).log(Level.WARNING, "Cannot load config from file " + userConfigFile, ex);
             }
@@ -68,9 +73,14 @@ public class LwjglNuitPreferences implements NuitPreferences {
         if (!userConfigFile.exists()) {
             getUserConfigDirPath().mkdirs();
         }
-        try (FileOutputStream os = new FileOutputStream(userConfigFile)) {
-            store.store(os, "");
 
+        try {
+            FileOutputStream os = new FileOutputStream(userConfigFile);
+            try {
+                store.store(os, "");
+            } finally {
+                os.close();
+            }
         } catch (IOException e) {
             Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot save config to file " + userConfigFile, e);
         }

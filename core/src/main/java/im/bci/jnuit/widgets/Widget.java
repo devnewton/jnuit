@@ -44,7 +44,7 @@ public abstract class Widget {
     private Background focusedBackground = NullBackground.INSTANCE;
     private Border topBorder = NullBorder.INSTANCE, bottomBorder = NullBorder.INSTANCE, leftBorder = NullBorder.INSTANCE, rightBorder = NullBorder.INSTANCE;
     private boolean mustDrawFocus = true;
-    private final List<Widget> children = new ArrayList<>();
+    private final List<Widget> children = new ArrayList<Widget>();
     private Widget parent;
     
     public Widget getParent() {
@@ -346,7 +346,7 @@ public abstract class Widget {
     }
     
     private List<Widget> getFocusableChildren() {
-        List<Widget> result = new ArrayList<>();
+        List<Widget> result = new ArrayList<Widget>();
         for (Widget w : getChildren()) {
             if (w.isFocusable()) {
                 result.add(w);
