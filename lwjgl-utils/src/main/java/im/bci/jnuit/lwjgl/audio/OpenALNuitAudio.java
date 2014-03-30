@@ -99,8 +99,11 @@ public class OpenALNuitAudio implements NuitAudio {
 
             @Override
             public void doRun() {
-                engine.poll();
-                Thread.yield();
+                try {
+                    long sleep = engine.poll() ? 1 : 10;
+                    Thread.sleep(sleep);
+                } catch (InterruptedException ex) {
+                }
                 if (null != poll) {
                     executor.submit(poll);
                 }

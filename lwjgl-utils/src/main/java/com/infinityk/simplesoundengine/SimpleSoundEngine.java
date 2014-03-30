@@ -124,8 +124,8 @@ public class SimpleSoundEngine {
         }
     }
 
-    public void poll(){
-        musicStreamer.poll();
+    public boolean poll(){
+        return musicStreamer.poll();
     }
     //</editor-fold>
     

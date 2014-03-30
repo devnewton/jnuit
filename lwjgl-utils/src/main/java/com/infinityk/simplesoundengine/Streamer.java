@@ -136,9 +136,9 @@ class Streamer {
     }
     
    
-    public void poll() {
+    public boolean poll() {
         if (idle || !initiated || paused) {
-            return;
+            return false;
         }
         for (int processed = AL10.alGetSourcei(source, AL10.AL_BUFFERS_PROCESSED);
                 processed > 0; processed--) {
@@ -161,7 +161,7 @@ class Streamer {
                 }
             }
         }
-
+        return true;
     }
     
 
