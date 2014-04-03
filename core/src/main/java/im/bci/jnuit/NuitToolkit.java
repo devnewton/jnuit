@@ -213,7 +213,7 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
             root.onCancel();
         }
 
-        controls.pollPointer(root, pointer);
+        controls.pollPointer(root.getWidth(), root.getHeight(), pointer);
         if (pointer.getX() != oldPointerX || pointer.getY() != oldPointerY) {
             root.onMouseMove(pointer.getX(), pointer.getY());
         }

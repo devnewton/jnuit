@@ -21,28 +21,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-
 package im.bci.jnuit;
 
 import im.bci.jnuit.controls.Control;
 import im.bci.jnuit.controls.Pointer;
-import im.bci.jnuit.widgets.Root;
 import java.util.List;
 
 /**
- * Platform specific possible and default controls 
+ * Platform specific possible and default controls
+ *
  * @author devnewton
  */
 public interface NuitControls {
+
     List<Control> getPossibleControls();
 
     Control[] getDefaultMenuUpControls();
+
     Control[] getDefaultMenuDownControls();
+
     Control[] getDefaultMenuLeftControls();
+
     Control[] getDefaultMenuRightControls();
+
     Control[] getDefaultMenuOkControls();
+
     Control[] getDefaultMenuCancelControls();
-    
-    void pollPointer(Root root, Pointer pointer);
-    
+
+    void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer);
+
 }

@@ -172,9 +172,9 @@ public class LwjglNuitControls implements NuitControls {
     }
 
     @Override
-    public void pollPointer(Root root, Pointer pointer) {
-        pointer.setX(Mouse.getX() * root.getWidth() / LwjglHelper.getWidth());
-        pointer.setY(root.getHeight() - (Mouse.getY() * root.getHeight() / LwjglHelper.getHeight()));
+    public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
+        pointer.setX(Mouse.getX() * virtualResolutionWidth / LwjglHelper.getWidth());
+        pointer.setY(virtualResolutionHeight - (Mouse.getY() * virtualResolutionHeight / LwjglHelper.getHeight()));
         pointer.setDown(Mouse.isButtonDown(0));
     }
 

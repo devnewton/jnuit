@@ -40,29 +40,29 @@ import playn.core.PlayN;
  * @author devnewton
  */
 public class PlaynNuitControls implements NuitControls {
-    
+
     Pointer pointer = new Pointer();
     boolean isMouseButtonRightDown, isMouseButtonMiddleDown;
     boolean[] keysDown = new boolean[Key.values().length];
-    
+
     public PlaynNuitControls() {
-        
+
         PlayN.keyboard().setListener(new Keyboard.Adapter() {
-            
+
             @Override
             public void onKeyDown(Keyboard.Event event) {
                 keysDown[event.key().ordinal()] = true;
             }
-            
+
             @Override
             public void onKeyUp(Keyboard.Event event) {
                 keysDown[event.key().ordinal()] = false;
             }
         });
-        
+
         if (PlayN.mouse().hasMouse()) {
             PlayN.mouse().setListener(new Mouse.Adapter() {
-                
+
                 @Override
                 public void onMouseDown(Mouse.ButtonEvent be) {
                     final int button = be.button();
@@ -74,7 +74,7 @@ public class PlaynNuitControls implements NuitControls {
                         isMouseButtonMiddleDown = true;
                     }
                 }
-                
+
                 @Override
                 public void onMouseUp(Mouse.ButtonEvent be) {
                     final int button = be.button();
@@ -86,46 +86,46 @@ public class PlaynNuitControls implements NuitControls {
                         isMouseButtonMiddleDown = false;
                     }
                 }
-                
+
                 @Override
                 public void onMouseMove(Mouse.MotionEvent me) {
                     pointer.setX(me.x());
-                    pointer.setX(me.y());
+                    pointer.setY(me.y());
                 }
             });
         } else {
             PlayN.pointer().setListener(new playn.core.Pointer.Listener() {
-                
+
                 @Override
                 public void onPointerStart(playn.core.Pointer.Event event) {
                     pointer.setX(event.x());
-                    pointer.setX(event.y());
+                    pointer.setY(event.y());
                     pointer.setDown(true);
                 }
-                
+
                 @Override
                 public void onPointerEnd(playn.core.Pointer.Event event) {
                     pointer.setX(event.x());
-                    pointer.setX(event.y());
+                    pointer.setY(event.y());
                     pointer.setDown(false);
                 }
-                
+
                 @Override
                 public void onPointerDrag(playn.core.Pointer.Event event) {
                     pointer.setX(event.x());
-                    pointer.setX(event.y());
+                    pointer.setY(event.y());
                 }
-                
+
                 @Override
                 public void onPointerCancel(playn.core.Pointer.Event event) {
                     pointer.setX(event.x());
-                    pointer.setX(event.y());
+                    pointer.setY(event.y());
                     pointer.setDown(false);
                 }
             });
         }
     }
-    
+
     @Override
     public List<Control> getPossibleControls() {
         List<Control> possibleControls = new ArrayList<Control>();
@@ -133,35 +133,35 @@ public class PlaynNuitControls implements NuitControls {
             possibleControls.add(new KeyControl(this, key));
         }
         possibleControls.add(new MouseButtonControl("Left click", Mouse.BUTTON_LEFT) {
-            
+
             @Override
             public float getValue() {
                 return pointer.isDown() ? 1.0f : 0.0f;
             }
-            
+
         });
-        
+
         if (PlayN.mouse().hasMouse()) {
             possibleControls.add(new MouseButtonControl("Right click", Mouse.BUTTON_RIGHT) {
-                
+
                 @Override
                 public float getValue() {
                     return isMouseButtonRightDown ? 1.0f : 0.0f;
                 }
-                
+
             });
             possibleControls.add(new MouseButtonControl("Middle click", Mouse.BUTTON_MIDDLE) {
-                
+
                 @Override
                 public float getValue() {
                     return isMouseButtonMiddleDown ? 1.0f : 0.0f;
                 }
-                
+
             });
         }
         return possibleControls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuUpControls() {
         Control[] controls = new Control[2];
@@ -169,7 +169,7 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuDownControls() {
         Control[] controls = new Control[2];
@@ -177,7 +177,7 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuLeftControls() {
         Control[] controls = new Control[2];
@@ -185,7 +185,7 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuRightControls() {
         Control[] controls = new Control[2];
@@ -193,7 +193,7 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuOkControls() {
         Control[] controls = new Control[2];
@@ -201,7 +201,7 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
     public Control[] getDefaultMenuCancelControls() {
         Control[] controls = new Control[2];
@@ -209,12 +209,11 @@ public class PlaynNuitControls implements NuitControls {
         controls[1] = NullControl.INSTANCE;
         return controls;
     }
-    
+
     @Override
-    public void pollPointer(Root root, Pointer p) {
-        p.setX(pointer.getX() * root.getWidth() / PlayN.graphics().width());
-        p.setY(root.getHeight() - (pointer.getY() * root.getHeight() / PlayN.graphics().height()));
+    public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer p) {
+        p.setX(pointer.getX() * virtualResolutionWidth / PlayN.graphics().width());
+        p.setY(pointer.getY() * virtualResolutionHeight / PlayN.graphics().height());
         p.setDown(pointer.isDown());
     }
-    
 }
