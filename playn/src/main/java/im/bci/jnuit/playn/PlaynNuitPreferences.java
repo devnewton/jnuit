@@ -27,7 +27,6 @@ import im.bci.jnuit.NuitPreferences;
 import im.bci.jnuit.NuitControls;
 import im.bci.jnuit.controls.Control;
 import playn.core.PlayN;
-import playn.core.Storage;
 
 /**
  *
@@ -36,32 +35,18 @@ import playn.core.Storage;
 public class PlaynNuitPreferences implements NuitPreferences {
 
     private final NuitControls controls;
-    private Storage.Batch batch;
-    private final String appName;
-
+    
     public PlaynNuitPreferences(NuitControls controls, String appName) {
         this.controls = controls;
-        this.appName = appName;
-    }
-
-    private Storage.Batch getOrCreateBatch() {
-        if (null == batch) {
-            batch = PlayN.storage().startBatch();
-        }
-        return batch;
     }
 
     @Override
     public void saveConfig() {
-        if (null != batch) {
-            batch.commit();
-            batch = null;
-        }
     }
 
     @Override
     public void putBoolean(String name, boolean value) {
-        getOrCreateBatch().setItem(name, String.valueOf(value));
+        PlayN.storage().setItem(name, String.valueOf(value));
     }
 
     @Override
@@ -71,7 +56,7 @@ public class PlaynNuitPreferences implements NuitPreferences {
 
     @Override
     public void putInt(String name, int value) {
-        getOrCreateBatch().setItem(name, String.valueOf(value));
+        PlayN.storage().setItem(name, String.valueOf(value));
     }
 
     @Override
@@ -81,7 +66,7 @@ public class PlaynNuitPreferences implements NuitPreferences {
 
     @Override
     public void putFloat(String name, float value) {
-        getOrCreateBatch().setItem(name, String.valueOf(value));
+        PlayN.storage().setItem(name, String.valueOf(value));
     }
 
     @Override
@@ -92,11 +77,11 @@ public class PlaynNuitPreferences implements NuitPreferences {
     @Override
     public void putControl(String name, Control value) {
         if (null != value) {
-            getOrCreateBatch().setItem(name + ".controller", value.getControllerName());
-            getOrCreateBatch().setItem(name + ".control", value.getName());
+            PlayN.storage().setItem(name + ".controller", value.getControllerName());
+            PlayN.storage().setItem(name + ".control", value.getName());
         } else {
-            getOrCreateBatch().removeItem(name + ".controller");
-            getOrCreateBatch().removeItem(name + ".control");
+            PlayN.storage().removeItem(name + ".controller");
+            PlayN.storage().removeItem(name + ".control");
         }
     }
 
@@ -128,7 +113,7 @@ public class PlaynNuitPreferences implements NuitPreferences {
 
     @Override
     public void putString(String name, String value) {
-        getOrCreateBatch().setItem(name, value);
+        PlayN.storage().setItem(name, value);
     }
 
 }
