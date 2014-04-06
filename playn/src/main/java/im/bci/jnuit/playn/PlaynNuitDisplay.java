@@ -53,4 +53,9 @@ public class PlaynNuitDisplay implements NuitDisplay {
     public boolean isFullscreen() {
         return false;
     }
+
+    @Override
+    public boolean canChangeResolution() {
+        return false;
+    }
 }

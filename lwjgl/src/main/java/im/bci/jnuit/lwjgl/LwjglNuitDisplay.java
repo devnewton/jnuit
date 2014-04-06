@@ -80,4 +80,9 @@ public class LwjglNuitDisplay implements NuitDisplay {
     public boolean isFullscreen() {
         return Display.isFullscreen();
     }
+
+    @Override
+    public boolean canChangeResolution() {
+      return true;
+    }
 }

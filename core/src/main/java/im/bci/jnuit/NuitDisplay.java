@@ -33,6 +33,8 @@ import java.util.List;
 public interface NuitDisplay {
 
     List<VideoResolution> listResolutions();
+    
+    boolean canChangeResolution();
 
     void changeResolution(VideoResolution resolution, boolean fullscreen);
     

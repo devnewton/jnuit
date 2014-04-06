@@ -297,4 +297,8 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
                 new Action("nuit.action.menu.cancel", controls.getDefaultMenuCancelControls()));
     }
 
+    public boolean canChangeResolution() {
+        return display.canChangeResolution();
+    }
+
 }
