@@ -64,7 +64,8 @@ public class PlaynNuitAudio implements NuitAudio {
 
     @Override
     public Sound getSound(final String name) {
-        final playn.core.Sound sound = assets.getSound(name);
+        String baseName = name.substring(0, name.lastIndexOf('.'));
+        final playn.core.Sound sound = assets.getSound(baseName);
         sound.setVolume(effectsVolume);
         return new Sound() {
 
