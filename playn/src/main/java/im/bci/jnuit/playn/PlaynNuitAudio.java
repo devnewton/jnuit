@@ -84,7 +84,8 @@ public class PlaynNuitAudio implements NuitAudio {
     @Override
     public void playMusic(String name) {
         stopMusic();
-        music = assets.getMusic(name);
+        String baseName = name.substring(0, name.lastIndexOf('.'));
+        music = assets.getMusic(baseName);
         music.setLooping(true);
         music.setVolume(musicVolume);
         music.play();
