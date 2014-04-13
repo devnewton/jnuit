@@ -28,6 +28,7 @@ import im.bci.jnuit.visitors.WidgetVisitor;
 
 /**
  * Root widget of GUI.
+ *
  * @author devnewton
  */
 public class Root extends Stack {
@@ -47,8 +48,8 @@ public class Root extends Stack {
             child.update(delta);
         }
     }
-    
-        @Override
+
+    @Override
     public void accept(WidgetVisitor visitor) {
         visitor.visit(this);
     }

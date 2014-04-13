@@ -132,7 +132,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     }
 
     public PlaynNuitRenderer(NuitTranslator translator, PlaynNuitFont font) {
-        this.translator = translator;;
+        this.translator = translator;
         this.textCache = new PlaynTextCache(font);
     }
 
@@ -217,7 +217,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         for (Widget child : widget.getChildren()) {
             child.getBackground().accept(child, this);
             if (focused == child) {
-                final Background focusedBackground = child.getFocusedBackground();
+                final Background focusedBackground = widget.isFocusSucked() ? child.getSuckedFocusedBackground() : child.getFocusedBackground();
                 if (null != focusedBackground) {
                     focusedBackground.accept(child, this);
                 }
@@ -235,7 +235,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
             if (container.isFocusSucked()) {
                 surface.setFillColor(Color.rgb(127, 127, 127));
             } else {
-                surface.setFillColor(Color.argb(255, 255, 255, 255));                
+                surface.setFillColor(Color.argb(255, 255, 255, 255));
             }
             final float x = focused.getX();
             final float y = focused.getY();

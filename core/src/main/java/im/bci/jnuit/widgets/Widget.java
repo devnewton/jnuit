@@ -35,22 +35,32 @@ import java.util.List;
 
 /**
  * Base class for all widget.
+ *
  * @author devnewton
  */
 public abstract class Widget {
-    
+
     private float x, y, width, height;
     private Background background = NullBackground.INSTANCE;
     private Background focusedBackground = NullBackground.INSTANCE;
+    private Background suckedFocusedBackground = NullBackground.INSTANCE;
     private Border topBorder = NullBorder.INSTANCE, bottomBorder = NullBorder.INSTANCE, leftBorder = NullBorder.INSTANCE, rightBorder = NullBorder.INSTANCE;
     private boolean mustDrawFocus = true;
     private final List<Widget> children = new ArrayList<Widget>();
     private Widget parent;
-    
+
+    public Background getSuckedFocusedBackground() {
+        return suckedFocusedBackground;
+    }
+
+    public void setSuckedFocusedBackground(Background suckedFocusedBackground) {
+        this.suckedFocusedBackground = suckedFocusedBackground;
+    }
+
     public Widget getParent() {
         return parent;
     }
-    
+
     public void setParent(Widget parent) {
         this.parent = parent;
     }
@@ -63,196 +73,196 @@ public abstract class Widget {
             parent.remove(this);
         }
     }
-    
+
     public Border getTopBorder() {
         return topBorder;
     }
-    
+
     public void setTopBorder(Border topBorder) {
         this.topBorder = topBorder;
     }
-    
+
     public Border getBottomBorder() {
         return bottomBorder;
     }
-    
+
     public void setBottomBorder(Border bottomBorder) {
         this.bottomBorder = bottomBorder;
     }
-    
+
     public Border getLeftBorder() {
         return leftBorder;
     }
-    
+
     public void setLeftBorder(Border leftBorder) {
         this.leftBorder = leftBorder;
     }
-    
+
     public Border getRightBorder() {
         return rightBorder;
     }
-    
+
     public void setRightBorder(Border rightBorder) {
         this.rightBorder = rightBorder;
     }
-    
+
     public Background getBackground() {
         return background;
     }
-    
+
     public void setBackground(Background background) {
         this.background = background;
     }
-    
+
     public Background getFocusedBackground() {
         return focusedBackground;
     }
-    
+
     public void setFocusedBackground(Background focusedBackground) {
         this.focusedBackground = focusedBackground;
     }
-    
+
     public List<Widget> getChildren() {
         return children;
     }
-    
+
     public boolean isFocusable() {
         return true;
     }
-    
+
     public boolean isFocusWhore() {
         return false;
     }
-    
+
     public void onLeft() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onLeft();
         }
     }
-    
+
     public void onRight() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onRight();
         }
     }
-    
+
     public void onUp() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onUp();
         }
     }
-    
+
     public void onDown() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onDown();
         }
     }
-    
+
     public void onOK() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onOK();
         }
     }
-    
+
     public void onCancel() {
         Widget child = getFocusedChild();
         if (null != child) {
             child.onCancel();
         }
     }
-    
+
     public Widget getFocusedChild() {
         return null;
     }
-    
+
     public abstract void accept(WidgetVisitor visitor);
-    
+
     public void add(Widget child) {
         children.remove(child);
         children.add(child);
         child.setParent(this);
     }
-    
+
     public void remove(Widget child) {
         if (null != child) {
             children.remove(child);
             child.setParent(null);
         }
     }
-    
+
     public float getMinWidth() {
         return 0;
     }
-    
+
     public float getMinHeight() {
         return 0;
     }
-    
+
     public float getPreferredWidth() {
         return 0;
     }
-    
+
     public float getPreferredHeight() {
         return 0;
     }
-    
+
     public float getMaxWidth() {
         return 0;
     }
-    
+
     public float getMaxHeight() {
         return 0;
     }
-    
+
     public float getCenterX() {
         return x + width / 2.0f;
     }
-    
+
     public float getX() {
         return x;
     }
-    
+
     public void setX(float x) {
         this.x = x;
     }
-    
+
     public float getCenterY() {
         return y + height / 2.0f;
     }
-    
+
     public float getY() {
         return y;
     }
-    
+
     public void setY(float y) {
         this.y = y;
     }
-    
+
     public float getWidth() {
         return width;
     }
-    
+
     public void setWidth(float width) {
         this.width = width;
     }
-    
+
     public float getHeight() {
         return height;
     }
-    
+
     public void setHeight(float height) {
         this.height = height;
     }
-    
+
     public Widget findClosestLeftFocusableWidget(Widget widget) {
         Widget closestLeftChild = null;
         if (null != widget) {
-            
+
             float closestLeftChildLengthSquared = Float.MAX_VALUE;
             for (Widget w : getChildren()) {
                 if (w.isFocusable() && w.getCenterX() < widget.getCenterX()) {
@@ -266,11 +276,11 @@ public abstract class Widget {
         }
         return closestLeftChild;
     }
-    
+
     public Widget findClosestRightFocusableWidget(Widget widget) {
         Widget closestLeftChild = null;
         if (null != widget) {
-            
+
             float closestLeftChildLengthSquared = Float.MAX_VALUE;
             for (Widget w : getChildren()) {
                 if (w.isFocusable() && w.getCenterX() > widget.getCenterX()) {
@@ -284,11 +294,11 @@ public abstract class Widget {
         }
         return closestLeftChild;
     }
-    
+
     public Widget findClosestUpFocusableWidget(Widget widget) {
         Widget closestLeftChild = null;
         if (null != widget) {
-            
+
             float closestLeftChildLengthSquared = Float.MAX_VALUE;
             for (Widget w : getChildren()) {
                 if (w.isFocusable() && w.getCenterY() < widget.getCenterY()) {
@@ -302,11 +312,11 @@ public abstract class Widget {
         }
         return closestLeftChild;
     }
-    
+
     public Widget findClosestDownFocusableWidget(Widget widget) {
         Widget closestLeftChild = null;
         if (null != widget) {
-            
+
             float closestLeftChildLengthSquared = Float.MAX_VALUE;
             for (Widget w : getChildren()) {
                 if (w.isFocusable() && w.getCenterY() > widget.getCenterY()) {
@@ -320,31 +330,31 @@ public abstract class Widget {
         }
         return closestLeftChild;
     }
-    
+
     private static float distanceSquared(Widget w1, Widget w2) {
         float dx = w1.getCenterX() - w2.getCenterX();
         float dy = w1.getCenterY() - w2.getCenterY();
         return dx * dx + dy * dy;
     }
-    
+
     protected Widget getTopLeftFocusableChild() {
         final List<Widget> focusableChildren = getFocusableChildren();
-        if(!focusableChildren.isEmpty()) {
-        return Collections.min(focusableChildren, new Comparator<Widget>() {
-            @Override
-            public int compare(Widget w1, Widget w2) {
-                int result = Float.compare(w1.getCenterY(), w2.getCenterY());
-                if (result == 0) {
-                    result = Float.compare(w1.getCenterX(), w2.getCenterX());
+        if (!focusableChildren.isEmpty()) {
+            return Collections.min(focusableChildren, new Comparator<Widget>() {
+                @Override
+                public int compare(Widget w1, Widget w2) {
+                    int result = Float.compare(w1.getCenterY(), w2.getCenterY());
+                    if (result == 0) {
+                        result = Float.compare(w1.getCenterX(), w2.getCenterX());
+                    }
+                    return result;
                 }
-                return result;
-            }
-        });
+            });
         } else {
             return null;
         }
     }
-    
+
     private List<Widget> getFocusableChildren() {
         List<Widget> result = new ArrayList<Widget>();
         for (Widget w : getChildren()) {
@@ -354,10 +364,10 @@ public abstract class Widget {
         }
         return result;
     }
-    
+
     public void suckFocus() {
     }
-    
+
     public boolean isSuckingFocus() {
         return false;
     }
@@ -378,7 +388,7 @@ public abstract class Widget {
             child.update(delta);
         }
     }
-    
+
     public void onMouseMove(float mouseX, float mouseY) {
         for (Widget child : children) {
             if (mouseX >= child.getX() && mouseX <= (child.getX() + child.getWidth()) && mouseY >= child.getY() && mouseY <= (child.getY() + child.getHeight())) {
@@ -386,7 +396,7 @@ public abstract class Widget {
             }
         }
     }
-    
+
     public void onMouseClick(float mouseX, float mouseY) {
         for (Widget child : children) {
             if (mouseX >= child.getX() && mouseX <= (child.getX() + child.getWidth()) && mouseY >= child.getY() && mouseY <= (child.getY() + child.getHeight())) {
@@ -394,14 +404,14 @@ public abstract class Widget {
             }
         }
     }
-    
+
     public void onShow() {
     }
-    
+
     public boolean mustDrawFocus() {
         return mustDrawFocus;
     }
-    
+
     public void setMustDrawFocus(boolean drawFocus) {
         this.mustDrawFocus = drawFocus;
     }

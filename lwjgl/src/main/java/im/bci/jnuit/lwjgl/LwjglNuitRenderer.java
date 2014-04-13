@@ -262,7 +262,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         for (Widget child : widget.getChildren()) {
             child.getBackground().accept(child, this);
             if (focused == child) {
-                final Background focusedBackground = child.getFocusedBackground();
+                final Background focusedBackground = widget.isFocusSucked()? child.getSuckedFocusedBackground() : child.getFocusedBackground();
                 if (null != focusedBackground) {
                     focusedBackground.accept(child, this);
                 }
