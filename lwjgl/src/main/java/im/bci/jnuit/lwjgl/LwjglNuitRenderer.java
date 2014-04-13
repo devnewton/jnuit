@@ -32,8 +32,12 @@ import im.bci.jnuit.background.NullBackground;
 import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.border.ColoredBorder;
 import im.bci.jnuit.border.NullBorder;
+import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
+import im.bci.jnuit.focus.FocusCursor;
+import im.bci.jnuit.focus.NullFocusCursor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
+import im.bci.jnuit.visitors.FocusCursorVisitor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 import im.bci.jnuit.widgets.AudioConfigurator;
 import im.bci.jnuit.widgets.Button;
@@ -225,7 +229,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Widget widget, TexturedBackground background) {
         IAnimationFrame frame = background.getPlay().getCurrentFrame();
         if (null != frame) {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)frame.getImage().getId());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer) frame.getImage().getId());
             float x1 = widget.getX();
             float x2 = widget.getX() + widget.getWidth();
             float y1 = widget.getY();
@@ -262,7 +266,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         for (Widget child : widget.getChildren()) {
             child.getBackground().accept(child, this);
             if (focused == child) {
-                final Background focusedBackground = widget.isFocusSucked()? child.getSuckedFocusedBackground() : child.getFocusedBackground();
+                final Background focusedBackground = widget.isFocusSucked() ? child.getSuckedFocusedBackground() : child.getFocusedBackground();
                 if (null != focusedBackground) {
                     focusedBackground.accept(child, this);
                 }
@@ -275,13 +279,13 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         }
     }
 
-    private void drawFocus(Container container, Widget focused) {
-        if (focused.mustDrawFocus()) {
+    private class FocusRenderer implements FocusCursorVisitor {
+
+        @Override
+        public void visit(Widget focused, ColoredRectangleFocusCursor cursor) {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glColor4f(cursor.getRed(), cursor.getGreen(), cursor.getBlue(), cursor.getAlpha());
             GL11.glLineWidth(2.0f);
-            if (container.isFocusSucked()) {
-                GL11.glColor3f(0.5f, 0.5f, 0.5f);
-            }
             GL11.glBegin(GL11.GL_LINE_LOOP);
             GL11.glVertex2f(focused.getX(), focused.getY());
             GL11.glVertex2f(focused.getX() + focused.getWidth(), focused.getY());
@@ -293,6 +297,18 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
             GL11.glLineWidth(1.0f);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
         }
+
+        @Override
+        public void visit(Widget focused, NullFocusCursor cursor) {
+        }
+
+    }
+
+    private final FocusRenderer focusRenderer = new FocusRenderer();
+
+    private void drawFocus(Container container, Widget focused) {
+        FocusCursor focusCursor = container.isFocusSucked() ? focused.getSuckedFocusCursor() : focused.getFocusCursor();
+        focusCursor.accept(focused, focusRenderer);
     }
 
     @Override

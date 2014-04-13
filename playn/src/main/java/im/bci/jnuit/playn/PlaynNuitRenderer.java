@@ -32,8 +32,12 @@ import im.bci.jnuit.background.NullBackground;
 import im.bci.jnuit.background.TexturedBackground;
 import im.bci.jnuit.border.ColoredBorder;
 import im.bci.jnuit.border.NullBorder;
+import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
+import im.bci.jnuit.focus.FocusCursor;
+import im.bci.jnuit.focus.NullFocusCursor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
+import im.bci.jnuit.visitors.FocusCursorVisitor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 import im.bci.jnuit.widgets.AudioConfigurator;
 import im.bci.jnuit.widgets.Button;
@@ -230,24 +234,34 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         }
     }
 
-    private void drawFocus(Container container, Widget focused) {
-        if (focused.mustDrawFocus()) {
-            if (container.isFocusSucked()) {
-                surface.setFillColor(Color.rgb(127, 127, 127));
-            } else {
-                surface.setFillColor(Color.argb(255, 255, 255, 255));
-            }
+    private class FocusRenderer implements FocusCursorVisitor {
+
+        @Override
+        public void visit(Widget focused, ColoredRectangleFocusCursor cursor) {
             final float x = focused.getX();
             final float y = focused.getY();
             final float w = focused.getWidth();
             final float h = focused.getHeight();
             final float lineWidth = 2.0f;
+            surface.setFillColor(Color.argb((int) (255 * cursor.getAlpha()), (int) (255 * cursor.getRed()), (int) (255 * cursor.getGreen()), (int) (255 * cursor.getBlue())));
             surface.drawLine(x, y, x + w, y, lineWidth);
             surface.drawLine(x, y + h, x + w, y + h, lineWidth);
             surface.drawLine(x, y, x, y + h, lineWidth);
             surface.drawLine(x + w, y, x + w, y + h, lineWidth);
             surface.setFillColor(Color.argb(255, 255, 255, 255));
         }
+
+        @Override
+        public void visit(Widget focused, NullFocusCursor cursor) {
+        }
+
+    }
+
+    private final FocusRenderer focusRenderer = new FocusRenderer();
+
+    private void drawFocus(Container container, Widget focused) {
+        FocusCursor focusCursor = container.isFocusSucked() ? focused.getSuckedFocusCursor() : focused.getFocusCursor();
+        focusCursor.accept(focused, focusRenderer);
     }
 
     @Override

@@ -27,6 +27,8 @@ import im.bci.jnuit.background.Background;
 import im.bci.jnuit.background.NullBackground;
 import im.bci.jnuit.border.Border;
 import im.bci.jnuit.border.NullBorder;
+import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
+import im.bci.jnuit.focus.FocusCursor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,13 +43,30 @@ import java.util.List;
 public abstract class Widget {
 
     private float x, y, width, height;
+    private FocusCursor focusCursor = ColoredRectangleFocusCursor.WHITE;
+    private FocusCursor suckedFocusCursor = ColoredRectangleFocusCursor.GREY;
     private Background background = NullBackground.INSTANCE;
     private Background focusedBackground = NullBackground.INSTANCE;
     private Background suckedFocusedBackground = NullBackground.INSTANCE;
     private Border topBorder = NullBorder.INSTANCE, bottomBorder = NullBorder.INSTANCE, leftBorder = NullBorder.INSTANCE, rightBorder = NullBorder.INSTANCE;
-    private boolean mustDrawFocus = true;
     private final List<Widget> children = new ArrayList<Widget>();
     private Widget parent;
+
+    public FocusCursor getFocusCursor() {
+        return focusCursor;
+    }
+
+    public void setFocusCursor(FocusCursor focusCursor) {
+        this.focusCursor = focusCursor;
+    }
+
+    public FocusCursor getSuckedFocusCursor() {
+        return suckedFocusCursor;
+    }
+
+    public void setSuckedFocusCursor(FocusCursor suckedFocusCursor) {
+        this.suckedFocusCursor = suckedFocusCursor;
+    }
 
     public Background getSuckedFocusedBackground() {
         return suckedFocusedBackground;
@@ -406,13 +425,5 @@ public abstract class Widget {
     }
 
     public void onShow() {
-    }
-
-    public boolean mustDrawFocus() {
-        return mustDrawFocus;
-    }
-
-    public void setMustDrawFocus(boolean drawFocus) {
-        this.mustDrawFocus = drawFocus;
     }
 }
