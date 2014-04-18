@@ -26,6 +26,7 @@ package im.bci.jnuit.widgets;
 import java.util.List;
 
 import im.bci.jnuit.NuitToolkit;
+import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
 /**

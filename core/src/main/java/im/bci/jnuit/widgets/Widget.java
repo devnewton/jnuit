@@ -29,6 +29,7 @@ import im.bci.jnuit.border.Border;
 import im.bci.jnuit.border.NullBorder;
 import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
 import im.bci.jnuit.focus.FocusCursor;
+import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +52,9 @@ public abstract class Widget {
     private Border topBorder = NullBorder.INSTANCE, bottomBorder = NullBorder.INSTANCE, leftBorder = NullBorder.INSTANCE, rightBorder = NullBorder.INSTANCE;
     private final List<Widget> children = new ArrayList<Widget>();
     private Widget parent;
+    protected TextColor focusedTextColor = TextColor.WHITE;
+    protected TextColor suckedFocusTextColor = TextColor.WHITE;
+    protected TextColor textColor = TextColor.WHITE;
 
     public FocusCursor getFocusCursor() {
         return focusCursor;
@@ -425,5 +429,29 @@ public abstract class Widget {
     }
 
     public void onShow() {
+    }
+
+    public TextColor getFocusedTextColor() {
+        return focusedTextColor;
+    }
+
+    public TextColor getSuckedFocusTextColor() {
+        return suckedFocusTextColor;
+    }
+
+    public TextColor getTextColor() {
+        return textColor;
+    }
+
+    public void setFocusedTextColor(TextColor focusedTextColor) {
+        this.focusedTextColor = focusedTextColor;
+    }
+
+    public void setSuckedFocusTextColor(TextColor suckedFocusTextColor) {
+        this.suckedFocusTextColor = suckedFocusTextColor;
+    }
+
+    public void setTextColor(TextColor textColor) {
+        this.textColor = textColor;
     }
 }

@@ -35,6 +35,7 @@ import im.bci.jnuit.border.NullBorder;
 import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
 import im.bci.jnuit.focus.FocusCursor;
 import im.bci.jnuit.focus.NullFocusCursor;
+import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.visitors.FocusCursorVisitor;
@@ -66,6 +67,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     private final BottomBorderRenderer bottomBorderRenderer = new BottomBorderRenderer();
     private final LeftBorderRenderer leftBorderRenderer = new LeftBorderRenderer();
     private final RightBorderRenderer rightBorderRenderer = new RightBorderRenderer();
+    private TextColor textColor;
 
     private class TopBorderRenderer implements BorderVisitor {
 
@@ -201,14 +203,12 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Button widget) {
-        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
-        GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String translatedText = translator.getMessage(widget.getText());
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f /*- font.getWidth(translatedText)/2.0f*/, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        font.drawString(translatedText, LwjglNuitFont.Align.CENTER);
-        GL11.glPopAttrib();
+        drawString(widget, translatedText, LwjglNuitFont.Align.CENTER);
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 
@@ -266,10 +266,19 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         for (Widget child : widget.getChildren()) {
             child.getBackground().accept(child, this);
             if (focused == child) {
-                final Background focusedBackground = widget.isFocusSucked() ? child.getSuckedFocusedBackground() : child.getFocusedBackground();
+                final Background focusedBackground;
+                if (widget.isFocusSucked()) {
+                    focusedBackground = child.getSuckedFocusedBackground();
+                    textColor = child.getSuckedFocusTextColor();
+                } else {
+                    focusedBackground = child.getFocusedBackground();
+                    textColor = child.getFocusedTextColor();
+                }
                 if (null != focusedBackground) {
                     focusedBackground.accept(child, this);
                 }
+            } else {
+                textColor = child.getTextColor();
             }
             drawBorders(child);
             child.accept(this);
@@ -277,6 +286,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         if (null != focused) {
             drawFocus(widget, focused);
         }
+        textColor = null;
     }
 
     private class FocusRenderer implements FocusCursorVisitor {
@@ -321,27 +331,35 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         String text = widget.getText();
 
         if (null != text) {
-            GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
-            GL11.glEnable(GL11.GL_BLEND);
             GL11.glPushMatrix();
             GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
             GL11.glScalef(1, -1, 1);
-            font.drawString(text);
-            GL11.glPopAttrib();
+            drawString(widget, text, LwjglNuitFont.Align.LEFT);
             GL11.glPopMatrix();
         }
     }
 
+    private void drawString(Widget widget, String text, LwjglNuitFont.Align align) {
+        GL11.glEnable(GL11.GL_BLEND);
+        TextColor c;
+        if (null == textColor) {
+            c = widget.getTextColor();
+        } else {
+            c = textColor;
+        }
+        GL11.glColor4f(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
+        font.drawString(text, align);
+        GL11.glColor3f(1f, 1f, 1f);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
     @Override
     public void visit(Label widget) {
-        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
-        GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String translatedText = translator.getMessage(widget.getText());
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(translatedText) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        font.drawString(translatedText);
-        GL11.glPopAttrib();
+        drawString(widget, translatedText, LwjglNuitFont.Align.LEFT);
         GL11.glPopMatrix();
     }
 
@@ -355,14 +373,11 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Select widget) {
-        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
-        GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String text = String.valueOf(widget.getSelected());
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        font.drawString(text);
-        GL11.glPopAttrib();
+        drawString(widget, text, LwjglNuitFont.Align.LEFT);
         GL11.glPopMatrix();
     }
 
@@ -381,14 +396,11 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Toggle widget) {
-        GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ENABLE_BIT);
-        GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         String text = widget.getText();
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        font.drawString(text);
-        GL11.glPopAttrib();
+        drawString(widget, text, LwjglNuitFont.Align.LEFT);
         GL11.glPopMatrix();
     }
 
