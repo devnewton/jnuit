@@ -40,9 +40,44 @@ import playn.core.TextLayout;
 public class PlaynTextCache {
 
     private final PlaynNuitFont font;
-    private final HashMap<String, CachedTextImage> cache = new HashMap<String, CachedTextImage>();
+    private final HashMap<CachedTextKey, CachedTextImage> cache = new HashMap<CachedTextKey, CachedTextImage>();
 
     private static final double LIFETIME = 1000;
+
+    private static class CachedTextKey {
+
+        String text;
+        int color;
+
+        public CachedTextKey(String text, int color) {
+            this.text = text;
+            this.color = color;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 29 * hash + (this.text != null ? this.text.hashCode() : 0);
+            hash = 29 * hash + this.color;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final CachedTextKey other = (CachedTextKey) obj;
+            if ((this.text == null) ? (other.text != null) : !this.text.equals(other.text)) {
+                return false;
+            }
+            return this.color == other.color;
+        }
+
+    }
 
     private static class CachedTextImage {
 
@@ -55,36 +90,37 @@ public class PlaynTextCache {
     }
 
     public void clearUseless() {
-        Iterator<Map.Entry<String, CachedTextImage>> it = cache.entrySet().iterator();
+        Iterator<Map.Entry<CachedTextKey, CachedTextImage>> it = cache.entrySet().iterator();
         final double currentTime = PlayN.currentTime();
         while (it.hasNext()) {
-            Map.Entry<String, CachedTextImage> entry = it.next();
+            Map.Entry<CachedTextKey, CachedTextImage> entry = it.next();
             final CachedTextImage cached = entry.getValue();
-            if( currentTime > cached.timeToDie ) {
+            if (currentTime > cached.timeToDie) {
                 it.remove();
             }
         }
     }
 
-    public CanvasImage getTextCanvasImage(String text) {
-        CachedTextImage cached = cache.get(text);
+    public CanvasImage getTextCanvasImage(String text, int color) {
+        CachedTextKey key = new CachedTextKey(text, color);
+        CachedTextImage cached = cache.get(key);
         if (null == cached) {
             cached = new CachedTextImage();
-            cached.image = createTextCanvasImage(text);
-            cache.put(text, cached);
+            cached.image = createTextCanvasImage(text, color);
+            cache.put(key, cached);
         }
         cached.timeToDie = PlayN.currentTime() + LIFETIME;
         return cached.image;
     }
 
-    private CanvasImage createTextCanvasImage(String text) {
+    private CanvasImage createTextCanvasImage(String text, int color) {
         final Graphics graphics = PlayN.graphics();
         TextLayout textLayout = graphics.layoutText(text, font.format);
         CanvasImage textImage = graphics.createImage(textLayout.width(), textLayout.height());
         final Canvas canvas = textImage.canvas();
         canvas.setFillColor(Color.argb(0, 123, 123, 123));
         canvas.fillRect(0, 0, canvas.width(), canvas.height());
-        canvas.setFillColor(Color.rgb(255, 255, 255));
+        canvas.setFillColor(color);
         canvas.fillText(textLayout, 0, 0);
         return textImage;
     }
