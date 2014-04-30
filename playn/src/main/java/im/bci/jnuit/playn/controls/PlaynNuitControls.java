@@ -27,7 +27,6 @@ import im.bci.jnuit.NuitControls;
 import im.bci.jnuit.controls.Control;
 import im.bci.jnuit.controls.NullControl;
 import im.bci.jnuit.controls.Pointer;
-import im.bci.jnuit.widgets.Root;
 import java.util.ArrayList;
 import java.util.List;
 import playn.core.Key;
