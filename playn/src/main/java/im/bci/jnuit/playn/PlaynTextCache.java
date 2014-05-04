@@ -109,7 +109,8 @@ public class PlaynTextCache {
             cached.image = createTextCanvasImage(text, color);
             cache.put(key, cached);
         }
-        cached.timeToDie = PlayN.currentTime() + LIFETIME;
+        double currentTime = PlayN.currentTime();
+        cached.timeToDie = currentTime + LIFETIME;
         return cached.image;
     }
 

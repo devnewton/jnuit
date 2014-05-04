@@ -150,6 +150,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         drawBackgroundAndBorder(root);
         drawStack(root);
         surface.restore();
+        this.textCache.clearUseless();
     }
 
     private void drawBackgroundAndBorder(Widget widget) {
