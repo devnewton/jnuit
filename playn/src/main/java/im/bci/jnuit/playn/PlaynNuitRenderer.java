@@ -200,11 +200,11 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         if (null != frame) {
             Image image = (Image) frame.getImage().getId();
             surface.save();
-            surface.translate(widget.getX(), widget.getY());
+            surface.translate(widget.getX() + widget.getWidth()/2.0f, widget.getY()+widget.getHeight()/2.0f);
             surface.scale(background.isMirrorX() ? -1.0f : 1.0f, background.isMirrorY() ? -1.0f : 1.0f);
             surface.drawImage(image,
-                    0,
-                    0,
+                    -widget.getWidth()/2.0f,
+                    -widget.getHeight()/2.0f,
                     widget.getWidth(),
                     widget.getHeight(),
                     frame.getU1() * image.width(),
