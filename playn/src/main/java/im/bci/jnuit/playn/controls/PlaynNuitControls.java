@@ -131,34 +131,45 @@ public class PlaynNuitControls implements NuitControls {
         for (Key key : Key.values()) {
             possibleControls.add(new KeyControl(this, key));
         }
-        possibleControls.add(new MouseButtonControl("Left click", Mouse.BUTTON_LEFT) {
+        possibleControls.add(getClickControl());
+        if (PlayN.mouse().hasMouse()) {
+            possibleControls.add(getRightClickControl());
+            possibleControls.add(getMiddleClickControl());
+        }
+        return possibleControls;
+    }
 
+    public MouseButtonControl getMiddleClickControl() {
+        return new MouseButtonControl("Middle click", Mouse.BUTTON_MIDDLE) {
+            
+            @Override
+            public float getValue() {
+                return isMouseButtonMiddleDown ? 1.0f : 0.0f;
+            }
+            
+        };
+    }
+
+    public MouseButtonControl getRightClickControl() {
+        return new MouseButtonControl("Right click", Mouse.BUTTON_RIGHT) {
+            
+            @Override
+            public float getValue() {
+                return isMouseButtonRightDown ? 1.0f : 0.0f;
+            }
+            
+        };
+    }
+
+    public MouseButtonControl getClickControl() {
+        return new MouseButtonControl("Left click", Mouse.BUTTON_LEFT) {
+            
             @Override
             public float getValue() {
                 return pointer.isDown() ? 1.0f : 0.0f;
             }
-
-        });
-
-        if (PlayN.mouse().hasMouse()) {
-            possibleControls.add(new MouseButtonControl("Right click", Mouse.BUTTON_RIGHT) {
-
-                @Override
-                public float getValue() {
-                    return isMouseButtonRightDown ? 1.0f : 0.0f;
-                }
-
-            });
-            possibleControls.add(new MouseButtonControl("Middle click", Mouse.BUTTON_MIDDLE) {
-
-                @Override
-                public float getValue() {
-                    return isMouseButtonMiddleDown ? 1.0f : 0.0f;
-                }
-
-            });
-        }
-        return possibleControls;
+            
+        };
     }
 
     @Override
