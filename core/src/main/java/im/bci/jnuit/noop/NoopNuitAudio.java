@@ -70,7 +70,7 @@ public class NoopNuitAudio implements NuitAudio {
     }
 
     @Override
-    public void playMusic(String name) {
+    public void playMusic(String name, boolean loop) {
     }
 
     @Override

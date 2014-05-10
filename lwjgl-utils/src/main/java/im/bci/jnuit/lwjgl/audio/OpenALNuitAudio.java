@@ -186,14 +186,14 @@ public class OpenALNuitAudio implements NuitAudio {
     }
 
     @Override
-    public void playMusic(final String name) {
+    public void playMusic(final String name, final boolean loop) {
         if (musicVolume > 0.0f) {
             executor.submit(new AbstractOpenALTask() {
 
                 @Override
                 public void doRun() {
                     try {
-                        engine.playMusic(name, true);
+                        engine.playMusic(name, loop);
                     } catch (IOException ex) {
                         logger.log(Level.SEVERE, "Cannot play music " + name, ex);
                     }

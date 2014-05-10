@@ -41,7 +41,7 @@ public interface NuitAudio {
 
     Sound getSound(String name);
 
-    void playMusic(String name);
+    void playMusic(String name, boolean loop);
 
     void stopMusic();
     
