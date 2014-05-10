@@ -43,6 +43,7 @@ class NotReadyPlay implements IPlay {
         this.animationCollection = animationCollection;
         this.animationName = animationName;
         this.mode = mode;
+        state = PlaynAnimationPlayState.STARTED;
     }
 
     @Override

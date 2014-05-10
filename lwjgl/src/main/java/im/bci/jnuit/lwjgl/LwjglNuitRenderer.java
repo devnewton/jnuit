@@ -208,7 +208,6 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f /*- font.getWidth(translatedText)/2.0f*/, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
         drawString(widget, translatedText, LwjglNuitFont.Align.CENTER);
-        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 
@@ -340,7 +339,6 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     }
 
     private void drawString(Widget widget, String text, LwjglNuitFont.Align align) {
-        GL11.glEnable(GL11.GL_BLEND);
         TextColor c;
         if (null == textColor) {
             c = widget.getTextColor();
@@ -350,7 +348,6 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         GL11.glColor4f(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
         font.drawString(text, align);
         GL11.glColor3f(1f, 1f, 1f);
-        GL11.glDisable(GL11.GL_BLEND);
     }
 
     @Override

@@ -35,6 +35,7 @@ import im.bci.jnuit.border.NullBorder;
 import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
 import im.bci.jnuit.focus.FocusCursor;
 import im.bci.jnuit.focus.NullFocusCursor;
+import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
 import im.bci.jnuit.visitors.FocusCursorVisitor;
@@ -70,6 +71,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     private final LeftBorderRenderer leftBorderRenderer = new LeftBorderRenderer();
     private final RightBorderRenderer rightBorderRenderer = new RightBorderRenderer();
     private final PlaynTextCache textCache;
+    private TextColor textColor;
 
     public void setSurface(Surface surface) {
         this.surface = surface;
@@ -148,6 +150,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         drawBackgroundAndBorder(root);
         drawStack(root);
         surface.restore();
+        this.textCache.clearUseless();
     }
 
     private void drawBackgroundAndBorder(Widget widget) {
@@ -164,12 +167,19 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Button widget) {
-        drawText(translator.getMessage(widget.getText()), widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
+        drawText(widget, translator.getMessage(widget.getText()), widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
     }
 
-    private void drawText(String text, float x, float y) {
+    private void drawText(Widget widget, String text, float x, float y) {
         if (!text.isEmpty()) {
-            final CanvasImage textCanvasImage = textCache.getTextCanvasImage(text);
+            TextColor c;
+            if (null == textColor) {
+                c = widget.getTextColor();
+            } else {
+                c = textColor;
+            }
+            int color = Color.argb((int) (255 * c.getAlpha()), (int) (255 * c.getRed()), (int) (255 * c.getGreen()), (int) (255 * c.getBlue()));
+            final CanvasImage textCanvasImage = textCache.getTextCanvasImage(text, color);
             surface.drawImage(textCanvasImage, x - textCanvasImage.width() / 2.0f, y - textCanvasImage.height() / 2.0f);
         }
     }
@@ -191,11 +201,11 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         if (null != frame) {
             Image image = (Image) frame.getImage().getId();
             surface.save();
-            surface.translate(widget.getX(), widget.getY());
+            surface.translate(widget.getX() + widget.getWidth()/2.0f, widget.getY()+widget.getHeight()/2.0f);
             surface.scale(background.isMirrorX() ? -1.0f : 1.0f, background.isMirrorY() ? -1.0f : 1.0f);
             surface.drawImage(image,
-                    0,
-                    0,
+                    -widget.getWidth()/2.0f,
+                    -widget.getHeight()/2.0f,
                     widget.getWidth(),
                     widget.getHeight(),
                     frame.getU1() * image.width(),
@@ -221,10 +231,19 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         for (Widget child : widget.getChildren()) {
             child.getBackground().accept(child, this);
             if (focused == child) {
-                final Background focusedBackground = widget.isFocusSucked() ? child.getSuckedFocusedBackground() : child.getFocusedBackground();
+                final Background focusedBackground;
+                if (widget.isFocusSucked()) {
+                    focusedBackground = child.getSuckedFocusedBackground();
+                    textColor = child.getSuckedFocusTextColor();
+                } else {
+                    focusedBackground = child.getFocusedBackground();
+                    textColor = child.getFocusedTextColor();
+                }
                 if (null != focusedBackground) {
                     focusedBackground.accept(child, this);
                 }
+            } else {
+                textColor = child.getTextColor();
             }
             drawBorders(child);
             child.accept(this);
@@ -232,6 +251,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         if (null != focused) {
             drawFocus(widget, focused);
         }
+        textColor = null;
     }
 
     private class FocusRenderer implements FocusCursorVisitor {
@@ -273,14 +293,14 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(ControlsConfigurator.ControlConfigurator widget) {
         String text = widget.getText();
         if (null != text) {
-            drawText(text, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
+            drawText(widget, text, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
         }
     }
 
     @Override
     public void visit(Label widget) {
         String translatedText = translator.getMessage(widget.getText());
-        drawText(translatedText, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
+        drawText(widget, translatedText, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
     }
 
     @Override
@@ -294,7 +314,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     @Override
     public void visit(Select widget) {
         String text = String.valueOf(widget.getSelected());
-        drawText(text, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
+        drawText(widget, text, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
     }
 
     @Override
@@ -312,7 +332,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Toggle widget) {
-        drawText(widget.getText(), widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
+        drawText(widget, widget.getText(), widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
     }
 
     @Override

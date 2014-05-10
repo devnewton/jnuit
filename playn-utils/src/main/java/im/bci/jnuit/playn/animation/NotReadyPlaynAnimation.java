@@ -48,11 +48,15 @@ public class NotReadyPlaynAnimation implements IAnimation {
 
     @Override
     public IPlay start(PlayMode mode) {
-        return new NotReadyPlay(animationCollection, name, mode);
+        if (animationCollection.isReady()) {
+            return animationCollection.getAnimationByName(name).start(mode);
+        } else {
+            return new NotReadyPlay(animationCollection, name, mode);
+        }
     }
 
     @Override
     public void stop(IPlay play) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        play.stop();
     }
 }
