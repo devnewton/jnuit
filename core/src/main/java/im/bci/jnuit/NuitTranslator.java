@@ -80,7 +80,9 @@ public class NuitTranslator {
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.right", "Right");
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.ok", "OK");
         addTranslation(NuitLocale.ENGLISH, "nuit.action.menu.cancel", "Cancel");
-
+        
+        addTranslation(NuitLocale.ENGLISH, "nuit.action.press.any.key", "Press any key");
+        
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.mode", "Mode");
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.fullscreen", "Fullscreen");
         addTranslation(NuitLocale.ENGLISH, "nuit.video.configurator.apply", "Apply");
@@ -114,6 +116,8 @@ public class NuitTranslator {
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.right", "Droite");
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.ok", "OK");
         addTranslation(NuitLocale.FRENCH, "nuit.action.menu.cancel", "Annuler");
+        
+        addTranslation(NuitLocale.FRENCH, "nuit.action.press.any.key", "Appuyer sur une touche");
 
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.mode", "Mode");
         addTranslation(NuitLocale.FRENCH, "nuit.video.configurator.fullscreen", "Plein écran");

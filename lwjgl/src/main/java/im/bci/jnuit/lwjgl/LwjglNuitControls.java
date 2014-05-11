@@ -51,7 +51,7 @@ import org.lwjgl.input.Mouse;
 public class LwjglNuitControls implements NuitControls {
 
     @Override
-    public List<Control> getPossibleControls() {
+    public Control[] getPossibleControls() {
         List<Control> possibleControls = new ArrayList<Control>();
         try {
             if (!Controllers.isCreated()) {
@@ -84,7 +84,7 @@ public class LwjglNuitControls implements NuitControls {
         for (int m = 0; m < Mouse.getButtonCount(); ++m) {
             possibleControls.add(new MouseButtonControl(m));
         }
-        return possibleControls;
+        return possibleControls.toArray(new Control[possibleControls.size()]);
     }
 
     @Override

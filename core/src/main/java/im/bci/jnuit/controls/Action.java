@@ -33,7 +33,7 @@ public class Action {
     
     public Action(String name, Control... ctrls) {
         this.name = name;
-        controls = new Control[2];
+        controls = new Control[Math.max(2, ctrls.length)];
         int i=0;
         for(int n= Math.min(controls.length, ctrls.length); i<n; ++i) {
             controls[i] = ctrls[i];

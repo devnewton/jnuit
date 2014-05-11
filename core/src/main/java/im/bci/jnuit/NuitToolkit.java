@@ -59,6 +59,7 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
     private int virtualResolutionWidth = 1920;
     private int virtualResolutionHeight = 1080;
     private final NuitAudio audio;
+    private Action pressAnyKeyAction;
 
     public NuitToolkit(NuitDisplay display, NuitControls controls, NuitTranslator translator, NuitFont font, NuitRenderer renderer, NuitAudio audio) {
         this.font = font;
@@ -235,7 +236,7 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
         menuCancel.reset();
     }
 
-    public List<Control> getPossibleControls() {
+    public Control[] getPossibleControls() {
         return controls.getPossibleControls();
     }
 
@@ -299,6 +300,13 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
 
     public boolean canChangeResolution() {
         return display.canChangeResolution();
+    }
+
+    public Action getPressAnyKeyAction() {
+        if(null == pressAnyKeyAction) {
+            pressAnyKeyAction = new Action("nuit.action.press.any.key", getPossibleControls());
+        }
+        return pressAnyKeyAction;
     }
 
 }

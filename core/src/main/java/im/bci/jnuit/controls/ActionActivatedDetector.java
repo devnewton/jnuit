@@ -56,12 +56,12 @@ public class ActionActivatedDetector {
         
     public void poll() {
         Control[] controls = action.getControls();
-        int nbActions = controls.length;
-        if(null == previousStates || nbActions != previousStates.length) {
-            previousStates = new Float[nbActions];
+        int nbControls = controls.length;
+        if(null == previousStates || nbControls != previousStates.length) {
+            previousStates = new Float[nbControls];
         }
         activated = false;
-        for(int i=0; i<nbActions; ++i) {
+        for(int i=0; i<nbControls; ++i) {
             Control control = controls[i];
             float newState =  control.getValue();
             if(null != previousStates[i]) {

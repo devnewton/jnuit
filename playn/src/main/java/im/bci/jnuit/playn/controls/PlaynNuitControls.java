@@ -126,7 +126,7 @@ public class PlaynNuitControls implements NuitControls {
     }
 
     @Override
-    public List<Control> getPossibleControls() {
+    public Control[] getPossibleControls() {
         List<Control> possibleControls = new ArrayList<Control>();
         for (Key key : Key.values()) {
             possibleControls.add(new KeyControl(this, key));
@@ -136,7 +136,7 @@ public class PlaynNuitControls implements NuitControls {
             possibleControls.add(getRightClickControl());
             possibleControls.add(getMiddleClickControl());
         }
-        return possibleControls;
+        return possibleControls.toArray(new Control[possibleControls.size()]);
     }
 
     public MouseButtonControl getMiddleClickControl() {

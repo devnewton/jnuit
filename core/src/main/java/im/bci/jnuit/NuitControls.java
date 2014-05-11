@@ -34,7 +34,7 @@ import java.util.List;
  */
 public interface NuitControls {
 
-    List<Control> getPossibleControls();
+    Control[] getPossibleControls();
 
     Control[] getDefaultMenuUpControls();
 
