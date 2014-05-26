@@ -26,7 +26,6 @@ package im.bci.jnuit.widgets;
 import java.util.List;
 
 import im.bci.jnuit.NuitToolkit;
-import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.WidgetVisitor;
 
 /**
@@ -42,6 +41,8 @@ public class Select<T> extends Widget {
     private int selected;
     private int oldSelected;
     private boolean suckFocus;
+    private String valueSuffix = " >";
+    private String valuePrefix = "< ";
 
     public Select(NuitToolkit toolkit, List<T> possibleValues) {
         this.toolkit = toolkit;
@@ -52,7 +53,7 @@ public class Select<T> extends Widget {
     public float getMinWidth() {
         float minWidth = 0.0f;
         for (T value : possibleValues) {
-            minWidth = Math.max(toolkit.getFont().getWidth(value.toString()), minWidth);
+            minWidth = Math.max(toolkit.getFont().getWidth(valuePrefix + value.toString() + valueSuffix), minWidth);
         }
         return minWidth;
     }
@@ -61,7 +62,7 @@ public class Select<T> extends Widget {
     public float getMinHeight() {
         float minHeight = 0.0f;
         for (T value : possibleValues) {
-            minHeight = Math.max(toolkit.getFont().getHeight(value.toString()), minHeight);
+            minHeight = Math.max(toolkit.getFont().getHeight(valuePrefix + value.toString() + valueSuffix), minHeight);
         }
         return minHeight;
     }
@@ -120,7 +121,12 @@ public class Select<T> extends Widget {
 
     @Override
     public void onMouseClick(float mouseX, float mouseY) {
-        onRight();
+        float centerX = getX() + this.getWidth() / 2.0f;
+        if (mouseX < centerX) {
+            onLeft();
+        } else {
+            onRight();
+        }
     }
 
     @Override
@@ -133,4 +139,21 @@ public class Select<T> extends Widget {
     public void accept(WidgetVisitor visitor) {
         visitor.visit(this);
     }
+
+    public String getValueSuffix() {
+        return valueSuffix;
+    }
+
+    public void setValueSuffix(String valueSuffix) {
+        this.valueSuffix = valueSuffix;
+    }
+
+    public String getValuePrefix() {
+        return valuePrefix;
+    }
+
+    public void setValuePrefix(String valuePrefix) {
+        this.valuePrefix = valuePrefix;
+    }
+
 }

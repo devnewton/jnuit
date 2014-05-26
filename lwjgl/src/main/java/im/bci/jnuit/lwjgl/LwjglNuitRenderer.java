@@ -205,7 +205,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Button widget) {
         GL11.glPushMatrix();
         String translatedText = translator.getMessage(widget.getText());
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f /*- font.getWidth(translatedText)/2.0f*/, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
         drawString(widget, translatedText, LwjglNuitFont.Align.CENTER);
         GL11.glPopMatrix();
@@ -331,9 +331,9 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
         if (null != text) {
             GL11.glPushMatrix();
-            GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+            GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
             GL11.glScalef(1, -1, 1);
-            drawString(widget, text, LwjglNuitFont.Align.LEFT);
+            drawString(widget, text, LwjglNuitFont.Align.CENTER);
             GL11.glPopMatrix();
         }
     }
@@ -354,9 +354,9 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Label widget) {
         GL11.glPushMatrix();
         String translatedText = translator.getMessage(widget.getText());
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(translatedText) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(translatedText) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        drawString(widget, translatedText, LwjglNuitFont.Align.LEFT);
+        drawString(widget, translatedText, LwjglNuitFont.Align.CENTER);
         GL11.glPopMatrix();
     }
 
@@ -371,10 +371,10 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     @Override
     public void visit(Select widget) {
         GL11.glPushMatrix();
-        String text = String.valueOf(widget.getSelected());
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+        String text = widget.getValuePrefix() + String.valueOf(widget.getSelected()) + widget.getValueSuffix();
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        drawString(widget, text, LwjglNuitFont.Align.LEFT);
+        drawString(widget, text, LwjglNuitFont.Align.CENTER);
         GL11.glPopMatrix();
     }
 
@@ -395,9 +395,9 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Toggle widget) {
         GL11.glPushMatrix();
         String text = widget.getText();
-        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f - font.getWidth(text) / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
+        GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f + font.getHeight(text) / 2.0f, 0.0f);
         GL11.glScalef(1, -1, 1);
-        drawString(widget, text, LwjglNuitFont.Align.LEFT);
+        drawString(widget, text, LwjglNuitFont.Align.CENTER);
         GL11.glPopMatrix();
     }
 
