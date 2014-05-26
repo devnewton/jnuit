@@ -29,7 +29,7 @@ THE SOFTWARE. -->
         <version>9</version>
     </parent>
     <artifactId>jnuit</artifactId>
-    <version>0.11</version>
+    <version>0.12-SNAPSHOT</version>
     <name>jnuit</name>
     <packaging>pom</packaging>
     <description>Simple gui toolkit for lwjgl or playn videogames.</description>
@@ -56,6 +56,7 @@ THE SOFTWARE. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <lwjgl.version>2.9.1</lwjgl.version>
+        <playn.version>1.8.5</playn.version>
     </properties>
     <modules>
         <module>core</module>
@@ -64,6 +65,7 @@ THE SOFTWARE. -->
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
         <module>playn</module>
+        <module>playn-java</module>
         <module>playn-utils</module>
         <module>smjpegdecoder</module>
         <module>samples</module>
@@ -150,7 +152,12 @@ THE SOFTWARE. -->
             <dependency>
                 <groupId>com.googlecode.playn</groupId>
                 <artifactId>playn-core</artifactId>
-                <version>1.8.5</version>
+                <version>${playn.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.playn</groupId>
+                <artifactId>playn-java</artifactId>
+                <version>${playn.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.samskivert</groupId>

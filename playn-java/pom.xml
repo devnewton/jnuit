@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- The MIT License (MIT)
 
-Copyright (c) 2013 devnewton <devnewton@bci.im>
+Copyright (c) 2014 devnewton <devnewton@bci.im>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +29,15 @@ THE SOFTWARE. -->
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>im.bci</groupId>
-    <artifactId>tablelayout</artifactId>
+    <artifactId>jnuit-playn-java</artifactId>
     <packaging>jar</packaging>
-    <name>tablelayout</name>
-    <description>TableLayout is a lightweight Java library for setting the position and size of UI widgets using a logical table, similar to HTML tables.</description>
+    <name>jnuit-playn-java</name>
+    <description>jnuit playn implementation</description>
     <url>http://git.bci.im/jnuit</url>
     <licenses>
         <license>
-            <name>BSD</name>
-            <url>http://git.bci.im/jnuit/blob/master/tablelayout/LICENSE</url>
+            <name>MIT</name>
+            <url>http://git.bci.im/jnuit/blob/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -88,9 +88,25 @@ THE SOFTWARE. -->
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                 </configuration>
-            </plugin>
+            </plugin> 
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.playn</groupId>
+            <artifactId>playn-java</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>jlayer</groupId>
+                    <artifactId>mp3spi</artifactId>        
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>im.bci</groupId>
+            <artifactId>jnuit-playn</artifactId>
+        </dependency>
+    </dependencies>
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
