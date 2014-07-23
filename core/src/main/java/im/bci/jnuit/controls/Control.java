@@ -25,7 +25,7 @@ package im.bci.jnuit.controls;
 
 /**
  * Interface for controls (keyboard key, gamepad button or axis, mouse button...).
- * @author bcolombi
+ * @author devnewton
  */
 public interface Control {
     String getControllerName();
