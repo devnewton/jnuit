@@ -35,7 +35,7 @@ public class SpriteWaitAnimation extends SpriteControl {
 
     private final Sprite sprite;
 
-    SpriteWaitAnimation(Sprite sprite) {
+    public SpriteWaitAnimation(Sprite sprite) {
         this.sprite = sprite;
     }
 

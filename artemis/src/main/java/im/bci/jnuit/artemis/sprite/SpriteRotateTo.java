@@ -31,7 +31,7 @@ import im.bci.jnuit.timed.OneShotTimedAction;
  * @author devnewton
  *
  */
-class SpriteRotateTo extends SpriteControl {
+public class SpriteRotateTo extends SpriteControl {
 
     private final float to;
     private final float duration;
@@ -39,7 +39,7 @@ class SpriteRotateTo extends SpriteControl {
     private float from;
     private OneShotTimedAction action;
 
-    SpriteRotateTo(Sprite sprite, float to, float duration) {
+    public SpriteRotateTo(Sprite sprite, float to, float duration) {
         this.sprite = sprite;
         this.to = to;
         this.duration = duration;

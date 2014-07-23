@@ -31,7 +31,7 @@ import im.bci.jnuit.timed.OneShotTimedAction;
  * @author devnewton
  *
  */
-class SpriteRotateToRelative extends SpriteControl {
+public class SpriteRotateToRelative extends SpriteControl {
 
     private float to;
     private final float duration;
@@ -40,7 +40,7 @@ class SpriteRotateToRelative extends SpriteControl {
     private OneShotTimedAction action;
     private final float angle;
 
-    SpriteRotateToRelative(Sprite sprite, float angle, float duration) {
+    public SpriteRotateToRelative(Sprite sprite, float angle, float duration) {
         this.sprite = sprite;
         this.angle = angle;
         this.duration = duration;

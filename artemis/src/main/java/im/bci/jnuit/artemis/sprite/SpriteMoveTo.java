@@ -31,7 +31,7 @@ import pythagoras.f.Vector3;
  * @author devnewton
  *
  */
-class SpriteMoveTo extends SpriteControl {
+public class SpriteMoveTo extends SpriteControl {
 
     private final Vector3 to;
     private final float duration;
@@ -39,7 +39,7 @@ class SpriteMoveTo extends SpriteControl {
     private Vector3 from;
     private OneShotTimedAction action;
 
-    SpriteMoveTo(Sprite sprite, Vector3 to, float duration) {
+    public SpriteMoveTo(Sprite sprite, Vector3 to, float duration) {
         this.sprite = sprite;
         this.to = to;
         this.duration = duration;

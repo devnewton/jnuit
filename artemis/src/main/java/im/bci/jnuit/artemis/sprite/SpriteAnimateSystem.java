@@ -29,7 +29,6 @@ import com.artemis.Entity;
 
 import com.artemis.systems.EntityProcessingSystem;
 import im.bci.jnuit.animation.IPlay;
-import im.bci.jnuit.artemis.sprite.Sprite;
 
 /**
  *

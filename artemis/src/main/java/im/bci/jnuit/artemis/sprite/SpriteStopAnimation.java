@@ -32,7 +32,7 @@ public class SpriteStopAnimation extends SpriteControl {
 
 	private Sprite sprite;
 
-	SpriteStopAnimation(Sprite sprite) {
+	public SpriteStopAnimation(Sprite sprite) {
 		this.sprite = sprite;
 	}
 

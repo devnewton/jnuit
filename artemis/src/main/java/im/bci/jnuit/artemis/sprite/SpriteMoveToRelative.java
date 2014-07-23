@@ -31,16 +31,16 @@ import pythagoras.f.Vector3;
  * @author devnewton
  *
  */
-class SpriteMoveToRelative extends SpriteControl {
+public class SpriteMoveToRelative extends SpriteControl {
 
-    private Vector3 diff;
+    private final Vector3 diff;
     private Vector3 to;
     private final float duration;
     private final Sprite sprite;
     private Vector3 from;
     private OneShotTimedAction action;
 
-    SpriteMoveToRelative(Sprite sprite, Vector3 diff, float duration) {
+    public SpriteMoveToRelative(Sprite sprite, Vector3 diff, float duration) {
         this.sprite = sprite;
         this.diff = diff;
         this.duration = duration;

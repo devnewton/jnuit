@@ -37,7 +37,7 @@ public class SpriteStartAnimation extends SpriteControl {
 	private IAnimation animation;
                   private PlayMode mode;
         
-	SpriteStartAnimation(Sprite s, IAnimation a, PlayMode m) {
+	public SpriteStartAnimation(Sprite s, IAnimation a, PlayMode m) {
             if(null == a) {
                 throw new IllegalArgumentException("T'es con ou quoi?");
             }
