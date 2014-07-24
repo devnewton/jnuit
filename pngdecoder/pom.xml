@@ -29,22 +29,22 @@ THE SOFTWARE. -->
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>im.bci</groupId>
-    <artifactId>jnuit-lwjgl-utils</artifactId>
+    <artifactId>pngdecoder</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-lwjgl-utils</name>
-    <description>jnuit lwjgl utility classes</description>
+    <name>pngdecoder</name>
+    <description>Java PNG decoder</description>
     <url>http://git.bci.im/jnuit</url>
     <licenses>
         <license>
-            <name>MIT</name>
-            <url>http://git.bci.im/jnuit/blob/master/LICENSE</url>
+            <name>BSD</name>
+            <url>http://git.bci.im/jnuit/blob/master/pngdecoder/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
     <developers>
         <developer>
-            <name>Dave Newton</name>
-            <url>http://devnewton.bci.im</url>
+            <name>Matthias Mann</name>
+            <url>http://www.matthiasmann.de/</url>
         </developer>
     </developers>
     <properties>
@@ -88,43 +88,9 @@ THE SOFTWARE. -->
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                 </configuration>
-            </plugin> 
+            </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>jnuit-lwjgl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>jnuit-artemis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>libtiled-jpurexml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>smjpegdecoder</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>im.bci</groupId>
-            <artifactId>pngdecoder</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jcraft</groupId>
-            <artifactId>jorbis</artifactId>
-        </dependency>
-    </dependencies>
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>

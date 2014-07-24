@@ -67,6 +67,7 @@ THE SOFTWARE. -->
         <module>playn</module>
         <module>playn-java</module>
         <module>playn-utils</module>
+        <module>pngdecoder</module>
         <module>smjpegdecoder</module>
         <module>samples</module>
         <module>tablelayout</module>
@@ -116,6 +117,11 @@ THE SOFTWARE. -->
             </dependency>
             <dependency>
                 <groupId>im.bci</groupId>
+                <artifactId>pngdecoder</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
                 <artifactId>jpegdecoder</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -138,11 +144,6 @@ THE SOFTWARE. -->
                 <groupId>im.bci</groupId>
                 <artifactId>libtiled-jpurexml</artifactId>
                 <version>0.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.l33tlabs.twl</groupId>
-                <artifactId>pngdecoder</artifactId>
-                <version>1.0</version>
             </dependency>
             <dependency>
                 <groupId>org.jcraft</groupId>
