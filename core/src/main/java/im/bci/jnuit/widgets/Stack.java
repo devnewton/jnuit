@@ -28,6 +28,7 @@ import java.util.List;
 
 /**
  * Stack layout widget container: only the top widget is show.
+ *
  * @author devnewton
  */
 public class Stack extends Widget {
@@ -87,6 +88,14 @@ public class Stack extends Widget {
             return children.get(size - 1);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void onMouseHover(float mouseX, float mouseY, boolean mouseButtonDown) {
+        Widget child = getFocusedChild();
+        if (null != child) {
+            child.onMouseHover(mouseX, mouseY, mouseButtonDown);
         }
     }
 

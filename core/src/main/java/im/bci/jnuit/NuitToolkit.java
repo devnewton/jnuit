@@ -215,13 +215,14 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
         }
 
         controls.pollPointer(root.getWidth(), root.getHeight(), pointer);
+        root.onMouseHover(pointer.getX(), pointer.getY(), pointer.isDown());
         if (pointer.getX() != oldPointerX || pointer.getY() != oldPointerY) {
             root.onMouseMove(pointer.getX(), pointer.getY());
         }
         oldPointerX = pointer.getX();
         oldPointerY = pointer.getY();
         boolean isMouseButtonDown = pointer.isDown();
-        if (isMouseButtonDown && Boolean.FALSE == oldIsMouseButtonDown) {
+        if (isMouseButtonDown && Boolean.FALSE.equals(oldIsMouseButtonDown)) {
             root.onMouseClick(pointer.getX(), pointer.getY());
         }
         oldIsMouseButtonDown = isMouseButtonDown;
@@ -308,5 +309,4 @@ public class NuitToolkit extends Toolkit<Widget, Table> {
         }
         return pressAnyKeyAction;
     }
-
 }

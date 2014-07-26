@@ -412,6 +412,14 @@ public abstract class Widget {
         }
     }
 
+    public void onMouseHover(float mouseX, float mouseY, boolean mouseButtonDown) {
+        for (Widget child : children) {
+            if (mouseX >= child.getX() && mouseX <= (child.getX() + child.getWidth()) && mouseY >= child.getY() && mouseY <= (child.getY() + child.getHeight())) {
+                child.onMouseHover(mouseX, mouseY, mouseButtonDown);
+            }
+        }
+    }
+
     public void onMouseMove(float mouseX, float mouseY) {
         for (Widget child : children) {
             if (mouseX >= child.getX() && mouseX <= (child.getX() + child.getWidth()) && mouseY >= child.getY() && mouseY <= (child.getY() + child.getHeight())) {
