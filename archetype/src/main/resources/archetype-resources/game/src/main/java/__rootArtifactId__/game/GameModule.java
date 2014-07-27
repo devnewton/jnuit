@@ -99,8 +99,17 @@ public class GameModule extends AbstractModule {
     @Provides
     @Singleton
     public VirtualFileSystem createVfs() {
-        File applicationDir = NormalLauncher.getApplicationDir();
-        return new VirtualFileSystem(new File(applicationDir, "assets"), new File(applicationDir.getParentFile(), "assets"));
+        File currentDir = NormalLauncher.getApplicationDir();
+        for (;;) {
+            File assetsDir = new File(currentDir, "assets");
+            if (assetsDir.exists()) {
+                return new VirtualFileSystem(assetsDir);
+            }
+            currentDir = currentDir.getParentFile();
+            if (null == currentDir) {
+                throw new RuntimeException("Cannot find assets directory");
+            }
+        }
     }
     
     @Provides
