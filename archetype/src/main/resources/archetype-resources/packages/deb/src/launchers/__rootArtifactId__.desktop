@@ -11,5 +11,5 @@ Categories=Game;
 Exec=/usr/bin/${rootArtifactId}
 Name=${rootArtifactId}
 Comment=${rootArtifactId}
-Icon=/opt/${rootArtifactId}/data/icon.png
+Icon=/opt/${rootArtifactId}/assets/icon.png
 Name[fr_FR]=${rootArtifactId}.desktop

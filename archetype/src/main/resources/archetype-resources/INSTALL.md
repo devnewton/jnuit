@@ -23,7 +23,7 @@ Manual installation
 -------------------
 
 - Create a directory, for example /opt/${rootArtifactId}-game
-- Copy the game/target/${rootArtifactId}-game-${symbol_dollar}{project.version}.jar, the game/target/natives, game/target/lib game/data folders into it.
+- Copy the game/target/${rootArtifactId}-game-${symbol_dollar}{project.version}.jar, the game/target/natives, game/target/lib and assets folders into it.
 
 Create packages and installers
 ------------------------------
@@ -42,10 +42,10 @@ The game can be run using the following command:
 
 It will try to load the game data files in
 
-	./data
+	./assets
 
 or
 
-	../data
+	../assets
 
 NB: lwjgl shared libraries must be loadable, check the [lwjgl](www.lwjgl.org) documentation for more information.

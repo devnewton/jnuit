@@ -53,9 +53,9 @@
             <file src="../../target/run-windows.bat" targetdir="${symbol_dollar}INSTALL_PATH" >
 		<os family="windows"/>
 	    </file>
-            <file src="../../../../game/data/icon.png" targetdir="${symbol_dollar}INSTALL_PATH" />
+            <file src="../../../../assets/icon.png" targetdir="${symbol_dollar}INSTALL_PATH" />
             <fileset dir="../../../../licenses" targetdir="${symbol_dollar}INSTALL_PATH/licenses" override="true"/>
-	    <fileset dir="../../../../game/data" targetdir="${symbol_dollar}INSTALL_PATH/data" override="true" />
+	    <fileset dir="../../../../assets" targetdir="${symbol_dollar}INSTALL_PATH/assets" override="true" />
             <fileset dir="../../target/lib" targetdir="${symbol_dollar}INSTALL_PATH" override="true" />
             <fileset dir="../../target/natives" targetdir="${symbol_dollar}INSTALL_PATH/natives" override="true">
 		<include name="*.so"/>

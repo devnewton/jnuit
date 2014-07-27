@@ -100,7 +100,7 @@ public class GameModule extends AbstractModule {
     @Singleton
     public VirtualFileSystem createVfs() {
         File applicationDir = NormalLauncher.getApplicationDir();
-        return new VirtualFileSystem(new File(applicationDir, "data"), new File(applicationDir.getParentFile(), "data"));
+        return new VirtualFileSystem(new File(applicationDir, "assets"), new File(applicationDir.getParentFile(), "assets"));
     }
     
     @Provides

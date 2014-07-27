@@ -133,12 +133,12 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             </sources>
                                         </mapping>
                                         <mapping>
-                                            <directory>/opt/${rootArtifactId}/data</directory>
+                                            <directory>/opt/${rootArtifactId}/assets</directory>
                                             <username>root</username>
                                             <groupname>root</groupname>
                                             <sources>
                                                 <source>
-                                                    <location>${basedir}/../../game/data</location>
+                                                    <location>${basedir}/../../assets</location>
                                                 </source>
                                             </sources>
                                         </mapping>

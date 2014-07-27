@@ -110,11 +110,11 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
                                             </mapper>
                                         </data>
                                         <data>
-                                            <src>${basedir}/../../game/data</src>
+                                            <src>${basedir}/../../assets</src>
                                             <type>directory</type>
                                             <mapper>
                                                 <type>perm</type>
-                                                <prefix>/opt/${rootArtifactId}/data</prefix>
+                                                <prefix>/opt/${rootArtifactId}/assets</prefix>
                                             </mapper>
                                         </data>
                                         <data>
