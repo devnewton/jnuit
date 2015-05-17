@@ -24,7 +24,7 @@ THE SOFTWARE. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="h
     <parent>
         <groupId>im.bci</groupId>
         <artifactId>jnuit</artifactId>
-        <version>0.13</version>
+        <version>0.14-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>jnuit-artemis</artifactId>
