@@ -462,4 +462,10 @@ public abstract class Widget {
     public void setTextColor(TextColor textColor) {
         this.textColor = textColor;
     }
+
+	public void onLoseFocus() {
+	}
+
+	public void onGainFocus() {
+	}
 }
