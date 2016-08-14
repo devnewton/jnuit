@@ -7,7 +7,6 @@
         <version>0.14-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>im.bci</groupId>
     <artifactId>jnuit-archetype</artifactId>
     <packaging>maven-archetype</packaging>
     <name>jnuit-archetype</name>

@@ -28,7 +28,6 @@ THE SOFTWARE. -->
         <version>0.14-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>im.bci</groupId>
     <artifactId>jnuit-playn</artifactId>
     <packaging>jar</packaging>
     <name>jnuit-playn</name>
@@ -82,7 +81,6 @@ THE SOFTWARE. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.4.2</version>
                 <configuration>
                     <goals>deploy</goals>
                     <pushChanges>false</pushChanges>
