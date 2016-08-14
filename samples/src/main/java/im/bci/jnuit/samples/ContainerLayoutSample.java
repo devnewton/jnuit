@@ -28,7 +28,6 @@ import im.bci.jnuit.background.ColoredBackground;
 import im.bci.jnuit.widgets.Container;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.Root;
-import im.bci.jnuit.widgets.Table;
 
 /**
  *

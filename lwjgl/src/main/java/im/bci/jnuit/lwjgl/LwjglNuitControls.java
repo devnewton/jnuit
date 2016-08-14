@@ -32,7 +32,6 @@ import im.bci.jnuit.lwjgl.controls.GamepadButtonControl;
 import im.bci.jnuit.lwjgl.controls.KeyControl;
 import im.bci.jnuit.lwjgl.controls.MouseButtonControl;
 import im.bci.jnuit.widgets.ControlsConfigurator;
-import im.bci.jnuit.widgets.Root;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;

@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.lwjgl.input.Controllers;

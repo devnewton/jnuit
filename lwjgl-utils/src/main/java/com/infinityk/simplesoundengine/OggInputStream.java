@@ -138,7 +138,6 @@ class OggInputStream extends InputStream {
      */
     private int total;
 
-    private BufferedInputStream bis;
     private FileInputStream fis;
 
     /**

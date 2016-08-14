@@ -31,7 +31,9 @@ import java.io.IOException;
  * @author devnewton
  */
 public class SmjpegParsingException extends IOException{
-    SmjpegParsingException(String message) {
+	private static final long serialVersionUID = 1L;
+
+	SmjpegParsingException(String message) {
         super(message);        
     }
 }

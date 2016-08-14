@@ -28,7 +28,6 @@ import im.bci.jnuit.playn.animation.PlaynAnimationLoader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Logger;
 import playn.core.PlayN;
 
 /**

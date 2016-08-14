@@ -38,7 +38,6 @@ import im.bci.jnuit.lwjgl.animation.NanimationImage;
 import im.bci.jnuit.lwjgl.animation.NanimParser.Nanim;
 import im.bci.smjpegdecoder.SmjpegDecoder;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;

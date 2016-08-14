@@ -25,7 +25,6 @@ package im.bci.jnuit;
 
 import im.bci.jnuit.controls.Control;
 import im.bci.jnuit.controls.Pointer;
-import java.util.List;
 
 /**
  * Platform specific possible and default controls
