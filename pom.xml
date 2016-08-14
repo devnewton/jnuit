@@ -55,7 +55,7 @@ THE SOFTWARE. -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <lwjgl.version>2.9.1</lwjgl.version>
+        <lwjgl.version>2.9.3</lwjgl.version>
         <playn.version>1.8.5</playn.version>
     </properties>
     <modules>
