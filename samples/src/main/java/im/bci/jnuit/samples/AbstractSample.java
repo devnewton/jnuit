@@ -51,7 +51,7 @@ import org.lwjgl.opengl.GL11;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public abstract class AbstractSample {
 

@@ -37,7 +37,7 @@ public abstract class TimedAction {
 
     /**
      * Update action according to elapsed time since created.
-     * @param elapsedTime 
+     * @param elapsedTime time elapsed since created
      */
     public abstract void update(float elapsedTime);
     

@@ -35,7 +35,7 @@ public interface IAnimation {
 
     /**
      * Call play.stop
-     * @param play
+     * @param play play to stop
      */
     void stop(IPlay play);
 }

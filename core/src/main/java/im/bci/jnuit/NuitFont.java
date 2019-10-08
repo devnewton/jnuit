@@ -33,7 +33,7 @@ public interface NuitFont {
     /**
      * Compute height needed to show specified string.
      *
-     * @param str
+     * @param str string
      * @return height in pixels
      */
     int getHeight(String str);
@@ -41,7 +41,7 @@ public interface NuitFont {
     /**
      * Compute width needed to show specified string.
      *
-     * @param str
+     * @param str string
      * @return height in pixels
      */
     int getWidth(String str);

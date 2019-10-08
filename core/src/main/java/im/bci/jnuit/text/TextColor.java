@@ -25,7 +25,7 @@ package im.bci.jnuit.text;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class TextColor {
     public static final TextColor WHITE = new TextColor(1f, 1f, 1f, 1f);

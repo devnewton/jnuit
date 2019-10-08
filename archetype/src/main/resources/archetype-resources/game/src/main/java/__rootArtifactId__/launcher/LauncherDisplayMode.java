@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class LauncherDisplayMode {
 

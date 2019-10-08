@@ -48,12 +48,12 @@ import org.lwjgl.util.glu.GLU;
  * A TrueType font implementation originally for Slick, edited for Bobjob's
  * Engine
  *
- * @original author James Chambers (Jimmy)
- * @original author Jeremy Adams (elias4444)
- * @original author Kevin Glass (kevglass)
- * @original author Peter Korzuszek (genail)
+ * original author James Chambers (Jimmy)
+ * original author Jeremy Adams (elias4444)
+ * original author Kevin Glass (kevglass)
+ * original author Peter Korzuszek (genail)
  *
- * @new version edited by David Aaron Muhar (bobjob)
+ * new version edited by David Aaron Muhar (bobjob)
  */
 public class LwjglNuitFont implements NuitFont {
 
