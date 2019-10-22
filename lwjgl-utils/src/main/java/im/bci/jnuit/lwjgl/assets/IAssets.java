@@ -49,7 +49,7 @@ public interface IAssets {
 
     ITexture grabScreenToTexture();
 
-    void setIcon(String name);
+    void setIcon(long glfwWindow, String name);
 
     String getText(String name);
     

@@ -24,19 +24,22 @@
 package im.bci.jnuit.lwjgl.controls;
 
 import im.bci.jnuit.controls.Control;
-import org.lwjgl.input.Mouse;
+
+import org.lwjgl.glfw.GLFW;
 
 public class MouseButtonControl implements Control {
 
+	private final long glfwWindow;
     private final int button;
 
-    public MouseButtonControl(int button) {
+    public MouseButtonControl(long glfwWindow, int button) {
+    	this.glfwWindow = glfwWindow;
         this.button = button;
     }
 
     @Override
     public String getName() {
-        return Mouse.getButtonName(button);
+        return "Button " + button;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class MouseButtonControl implements Control {
 
     @Override
     public float getValue() {
-        return Mouse.isButtonDown(button) ? 1.0f : 0.0f;
+        return GLFW.glfwGetMouseButton(glfwWindow, button) == GLFW.GLFW_PRESS ? 1.0f : 0.0f;
     }
 
     @Override

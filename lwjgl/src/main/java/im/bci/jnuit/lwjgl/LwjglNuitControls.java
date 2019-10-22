@@ -33,15 +33,14 @@ import im.bci.jnuit.lwjgl.controls.KeyControl;
 import im.bci.jnuit.lwjgl.controls.MouseButtonControl;
 import im.bci.jnuit.widgets.ControlsConfigurator;
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Controller;
-import org.lwjgl.input.Controllers;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+
+import org.lwjgl.glfw.GLFW;
 
 /**
  *
@@ -49,132 +48,144 @@ import org.lwjgl.input.Mouse;
  */
 public class LwjglNuitControls implements NuitControls {
 
-    @Override
-    public Control[] getPossibleControls() {
-        List<Control> possibleControls = new ArrayList<Control>();
-        try {
-            if (!Controllers.isCreated()) {
-                Controllers.create();
-            }
-            for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-                Controller pad = Controllers.getController(c);
-                for (int a = 0; a < pad.getAxisCount(); ++a) {
-                    possibleControls.add(new GamepadAxisControl(pad, a, true));
-                    possibleControls.add(new GamepadAxisControl(pad, a, false));
-                }
-                for (int b = 0; b < pad.getButtonCount(); ++b) {
-                    possibleControls.add(new GamepadButtonControl(pad, b));
-                }
-            }
-        } catch (LWJGLException ex) {
-            Logger.getLogger(LwjglNuitControls.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for (Field field : Keyboard.class.getFields()) {
-            String name = field.getName();
-            if (name.startsWith("KEY_")) {
-                try {
-                    int key = field.getInt(null);
-                    possibleControls.add(new KeyControl(key));
-                } catch (Exception e) {
-                    Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
-                }
-            }
-        }
-        for (int m = 0; m < Mouse.getButtonCount(); ++m) {
-            possibleControls.add(new MouseButtonControl(m));
-        }
-        return possibleControls.toArray(new Control[possibleControls.size()]);
-    }
+	private final long glfwWindow;
 
-    @Override
-    public Control[] getDefaultMenuUpControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_UP);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getAxisCount() >= 2) {
-                controls[1] = new GamepadAxisControl(pad, 1, true);
-            }
-        }
-        return controls;
-    }
+	public LwjglNuitControls(long glfwWindow) {
+		this.glfwWindow = glfwWindow;
+	}
 
-    @Override
-    public Control[] getDefaultMenuDownControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_DOWN);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getAxisCount() >= 2) {
-                controls[1] = new GamepadAxisControl(pad, 1, false);
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getPossibleControls() {
+		List<Control> possibleControls = new ArrayList<Control>();
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad <= GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+			if (null != axes) {
+				int nbAxis = axes.array().length;
+				for (int a = 0; a < nbAxis; ++a) {
+					possibleControls.add(new GamepadAxisControl(pad, a, true));
+					possibleControls.add(new GamepadAxisControl(pad, a, false));
+				}
+			}
+			ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+			if (null != buttons) {
+				int nbButtons = buttons.array().length;
+				for (int b = 0; b < nbButtons; ++b) {
+					possibleControls.add(new GamepadButtonControl(pad, b));
+				}
+			}
+		}
+		for (Field field : GLFW.class.getFields()) {
+			String name = field.getName();
+			if (name.startsWith("GLFW_KEY_")) {
+				try {
+					int key = field.getInt(null);
+					possibleControls.add(new KeyControl(glfwWindow, key));
+				} catch (Exception e) {
+					Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
+				}
+			}
+		}
+		for (int b = GLFW.GLFW_MOUSE_BUTTON_1; b <= GLFW.GLFW_MOUSE_BUTTON_LAST; ++b) {
+			possibleControls.add(new MouseButtonControl(glfwWindow, b));
+		}
+		return possibleControls.toArray(new Control[possibleControls.size()]);
+	}
 
-    @Override
-    public Control[] getDefaultMenuLeftControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_LEFT);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getAxisCount() >= 1) {
-                controls[1] = new GamepadAxisControl(pad, 0, false);
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuUpControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_UP);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+			if (null != axes && axes.array().length >= 2) {
+				controls[1] = new GamepadAxisControl(pad, 1, true);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuRightControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_RIGHT);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getAxisCount() >= 1) {
-                controls[1] = new GamepadAxisControl(pad, 0, true);
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuDownControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_DOWN);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+			if (null != axes && axes.array().length >= 2) {
+				controls[1] = new GamepadAxisControl(pad, 1, false);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuOkControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_RETURN);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getButtonCount() >= 1) {
-                controls[1] = new GamepadButtonControl(pad, 0);
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuLeftControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_LEFT);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+			if (null != axes && axes.array().length >= 1) {
+				controls[1] = new GamepadAxisControl(pad, 0, false);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuCancelControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(Keyboard.KEY_ESCAPE);
-        controls[1] = NullControl.INSTANCE;
-        for (int c = 0; c < Controllers.getControllerCount(); ++c) {
-            Controller pad = Controllers.getController(c);
-            if (pad.getButtonCount() >= 2) {
-                controls[1] = new GamepadButtonControl(pad, 1);
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuRightControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_RIGHT);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+			if (null != axes && axes.array().length >= 1) {
+				controls[1] = new GamepadAxisControl(pad, 0, true);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
-        pointer.setX(Mouse.getX() * virtualResolutionWidth / LwjglHelper.getWidth());
-        pointer.setY(virtualResolutionHeight - (Mouse.getY() * virtualResolutionHeight / LwjglHelper.getHeight()));
-        pointer.setDown(Mouse.isButtonDown(0));
-    }
+	@Override
+	public Control[] getDefaultMenuOkControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ENTER);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+			if (null != buttons && buttons.array().length >= 1) {
+				controls[1] = new GamepadButtonControl(pad, 0);
+			}
+		}
+		return controls;
+	}
+
+	@Override
+	public Control[] getDefaultMenuCancelControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ESCAPE);
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+			if (null != buttons && buttons.array().length >= 2) {
+				controls[1] = new GamepadButtonControl(pad, 1);
+			}
+		}
+		return controls;
+	}
+
+	@Override
+	public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
+		double[] xpos = new double[1];
+		double[] ypos = new double[1];
+		GLFW.glfwGetCursorPos(glfwWindow, xpos, ypos);
+		int[] width = new int[1];
+		int[] height = new int[1];
+		GLFW.glfwGetFramebufferSize(glfwWindow, width, height);
+		pointer.setX((float) (xpos[0] * (double) virtualResolutionWidth / (double) width[0]));
+		pointer.setY((float) (ypos[0] * (double) virtualResolutionHeight / (double) height[0]));
+		pointer.setDown(GLFW.glfwGetMouseButton(glfwWindow, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS);
+	}
 
 }

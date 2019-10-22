@@ -23,20 +23,23 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.controls;
 
+import org.lwjgl.glfw.GLFW;
+
 import im.bci.jnuit.controls.Control;
-import org.lwjgl.input.Keyboard;
 
 public class KeyControl implements Control {
 
     private final int key;
+    private final long glfwWindow;
     
-    public KeyControl(int key) {
+    public KeyControl(long glfwWindow, int key) {
         this.key = key;
+        this.glfwWindow = glfwWindow;
     }
 
     @Override
     public String getName() {
-        return Keyboard.getKeyName(key);
+		return GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key));
     }
 
     @Override
@@ -46,7 +49,7 @@ public class KeyControl implements Control {
 
     @Override
     public float getValue() {
-        return Keyboard.isKeyDown(key) ? 1.0f : 0.0f;
+        return GLFW.glfwGetKey(glfwWindow, key) == GLFW.GLFW_PRESS ? 1.0f : 0.0f;
     }
 
     @Override

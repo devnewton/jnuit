@@ -24,16 +24,19 @@
 package im.bci.jnuit.lwjgl.controls;
 
 import im.bci.jnuit.controls.Control;
+
+import java.nio.FloatBuffer;
 import java.util.Objects;
-import org.lwjgl.input.Controller;
+
+import org.lwjgl.glfw.GLFW;
 
 public class GamepadAxisControl implements Control {
 
-    private final Controller pad;
+    private final int pad;
     private final int axis;
     private final float scale;
 
-    public GamepadAxisControl(Controller pad, int axis, boolean positive) {
+    public GamepadAxisControl(int pad, int axis, boolean positive) {
         this.pad = pad;
         this.axis = axis;
         this.scale = positive ? 1.0f : -1.0f;
@@ -41,22 +44,31 @@ public class GamepadAxisControl implements Control {
 
     @Override
     public String getName() {
-        return pad.getAxisName(axis) + (scale > 0.0f ? '+' : '-');
+        return "Axis " + axis + (scale > 0.0f ? '+' : '-');
     }
 
     @Override
     public float getDeadZone() {
-        return pad.getDeadZone(axis);
+    	return 0.25f;
     }
 
     @Override
     public float getValue() {
-        return Math.max(0.0f, pad.getAxisValue(axis) * scale);
+    	FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+    	if(null == axes) {
+    		return 0.0f;
+    	}
+    	float[] axesValues = GLFW.glfwGetJoystickAxes(pad).array();
+    	if(axis < axesValues.length) {
+            return Math.max(0.0f, axesValues[axis] * scale);
+    	}else {
+    		return 0.0f;
+    	}
     }
 
     @Override
     public String getControllerName() {
-        return pad.getName();
+        return GLFW.glfwGetJoystickName(pad);
     }
 
     @Override

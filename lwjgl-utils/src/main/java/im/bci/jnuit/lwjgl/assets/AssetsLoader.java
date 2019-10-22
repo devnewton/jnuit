@@ -125,7 +125,9 @@ public class AssetsLoader {
 
     public Texture grabScreenToTexture() {
         int maxSize = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
-        Texture texture = new Texture(Math.min(maxSize, LwjglHelper.getWidth()), Math.min(maxSize, LwjglHelper.getHeight()), false);
+        int[] viewport = new int[4];
+        GL11.glGetIntegerv(GL11.GL_VIEWPORT, viewport);
+        Texture texture = new Texture(Math.min(maxSize, viewport[2]), Math.min(maxSize, viewport[3]), false);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());
         LwjglHelper.setupGLTextureParams();
         GL11.glCopyTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, 0, 0, texture.getWidth(), texture.getHeight(), 0);
@@ -259,11 +261,11 @@ public class AssetsLoader {
         return nanim;
     }
 
-    public void setIcon(String name) {
+    public void setIcon(long glfwWindow, String name) {
         try {
             InputStream is = vfs.open(name);
             try {
-                IconLoader.setIcon(is);
+                IconLoader.setIcon(glfwWindow, is);
             } finally {
                 is.close();
             }

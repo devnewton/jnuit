@@ -32,7 +32,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 import pythagoras.f.Vector;
 
 /**
@@ -45,7 +44,7 @@ public class SpriteBatcher {
     private final FloatBuffer vertices = ByteBuffer.allocateDirect(BATCH_SIZE * 4 * 2 * Float.SIZE / 8).order(ByteOrder.nativeOrder()).asFloatBuffer();
     private final FloatBuffer texCoords = ByteBuffer.allocateDirect(BATCH_SIZE * 4 * 2 * Float.SIZE / 8).order(ByteOrder.nativeOrder()).asFloatBuffer();
     private IAnimationImage currentImage = null;
-    private final Color currentColor = new Color();
+    private float currentRed = 1f, currentGreen = 1f, currentBlue = 1f, currentAlpha = 1f;
     private int currentSpriteInBatch = 0;
     private SpriteProjector spriteProjector;
 
@@ -55,8 +54,7 @@ public class SpriteBatcher {
 
             final IAnimationFrame frame = play.getCurrentFrame();
             final IAnimationImage image = frame.getImage();
-            final Color color = new Color((int)(sprite.getRed() * 255), (int)(sprite.getGreen() * 255), (int)(sprite.getBlue() * 255), (int)(sprite.getAlpha() * 255));
-            flushIfNeeded(image, color);
+            flushIfNeeded(image, sprite);
 
             Vector pos = spriteProjector.project(sprite.getPosition());
             float scale = sprite.getScale() / 2.0f;
@@ -129,11 +127,18 @@ public class SpriteBatcher {
         texCoords.put(v);
     }
 
-    private void flushIfNeeded(IAnimationImage image, Color color) {
-        if (currentImage != image || !currentColor.equals(color) || currentSpriteInBatch == BATCH_SIZE) {
+    private void flushIfNeeded(IAnimationImage image, Sprite sprite) {
+    	float red = sprite.getRed();
+    	float green = sprite.getGreen();
+    	float blue = sprite.getBlue();
+    	float alpha = sprite.getAlpha();
+        if (currentImage != image || currentRed != red || currentGreen != green || currentBlue != blue || currentAlpha != alpha || currentSpriteInBatch == BATCH_SIZE) {
             flush();
         }
-        currentColor.setColor(color);
+        currentRed = red;
+        currentGreen = green;
+        currentBlue = blue;
+        currentAlpha = alpha;
         currentImage = image;
     }
 
@@ -146,9 +151,9 @@ public class SpriteBatcher {
             texCoords.flip();
             vertices.flip();
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer)currentImage.getId());
-            GL11.glTexCoordPointer(2, 0, texCoords);
-            GL11.glVertexPointer(2, 0, vertices);
-            GL11.glColor4ub(currentColor.getRedByte(), currentColor.getGreenByte(), currentColor.getBlueByte(), currentColor.getAlphaByte());
+            GL11.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texCoords);
+            GL11.glVertexPointer(2, GL11.GL_FLOAT, 0, vertices);
+            GL11.glColor4f(currentRed, currentGreen, currentBlue, currentAlpha);
             GL11.glDrawArrays(GL11.GL_QUADS, 0, currentSpriteInBatch * 4);
             if (hasAlpha) {
                 GL11.glDisable(GL11.GL_BLEND);

@@ -25,7 +25,9 @@ package com.infinityk.simplesoundengine;
 
 import im.bci.jnuit.lwjgl.assets.VirtualFileSystem;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,9 +35,11 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALC10;
+import org.lwjgl.openal.ALCCapabilities;
 
 /**
  *
@@ -48,6 +52,7 @@ public class SimpleSoundEngine {
     private final LinkedList<SoundSourceEntry> sources;
     private final Streamer musicStreamer;
     private boolean initiated;
+    private long context, device;
     
     private final FloatBuffer sourcePos;
     private final FloatBuffer sourceVel;
@@ -66,8 +71,20 @@ public class SimpleSoundEngine {
     //<editor-fold defaultstate="collapsed" desc="SoundEngine">
     public void init(){
         if(!initiated){
-            try {
-                AL.create();
+            try {           	
+            	device = ALC10.alcOpenDevice((ByteBuffer)null);
+                if (device == 0) {
+                    throw new IllegalStateException("Failed to open the default device.");
+                }
+                ALCCapabilities deviceCaps = ALC.createCapabilities(device);
+                if (!deviceCaps.OpenALC10) {
+                    throw new IllegalStateException("No OpenALC10 capability");
+                }
+                context = ALC10.alcCreateContext(device, (IntBuffer)null);
+                if(!ALC10.alcMakeContextCurrent(context)) {
+                    throw new IllegalStateException("Failed to make context current");
+                }
+                AL.createCapabilities(deviceCaps);
                 //init the listener
                 FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(
                         new float[]{0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f});
@@ -78,9 +95,9 @@ public class SimpleSoundEngine {
                 listenerPos.flip();
                 listenerVel.flip();
                 listenerOri.flip();
-                AL10.alListener(AL10.AL_POSITION, listenerPos);
-                AL10.alListener(AL10.AL_VELOCITY, listenerVel);
-                AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+                AL10.alListenerfv(AL10.AL_POSITION, listenerPos);
+                AL10.alListenerfv(AL10.AL_VELOCITY, listenerVel);
+                AL10.alListenerfv(AL10.AL_ORIENTATION, listenerOri);
                 //init streamer
                 musicStreamer.init();
                 //pregenerate sound sources
@@ -95,7 +112,7 @@ public class SimpleSoundEngine {
                 }
                 logger.log(Level.INFO, "SoundEngine initiated with {0} sources", validSources);
                 initiated = true;
-            } catch (LWJGLException ex) {
+            } catch (Exception ex) {
                 logger.log(Level.WARNING, "Initiating sound engine", ex);
             }
         }
@@ -108,7 +125,9 @@ public class SimpleSoundEngine {
                 AL10.alDeleteSources(e.sourceId);
             }
             musicStreamer.destroy();
-            AL.destroy();
+            ALC10.alcMakeContextCurrent(0);
+            ALC10.alcDestroyContext(context);
+            ALC10.alcCloseDevice(device);
             sources.clear();
             initiated = false;
         }
@@ -164,7 +183,7 @@ public class SimpleSoundEngine {
         SoundBufferEntry buffer = buffers.get(path);
         if(buffer == null){ return; }
         for(SoundSourceEntry source : buffer.playingAt.keySet()){
-            AL10.alSourceStop(source.sourceId);
+            AL10.alSourceStopv(source.sourceId);
             AL10.alSourcei(source.sourceId.get(0), AL10.AL_BUFFER, 0);
             source.setLastPlayed(null);
         }
@@ -195,15 +214,15 @@ public class SimpleSoundEngine {
 	sourcePos.put(new float[] { 0, 0, 0 });
 	sourcePos.flip();
 	sourceVel.flip();
-	AL10.alSource(sourceId, AL10.AL_POSITION, sourcePos);
-    	AL10.alSource(sourceId, AL10.AL_VELOCITY, sourceVel);
+	AL10.alSourcefv(sourceId, AL10.AL_POSITION, sourcePos);
+    	AL10.alSourcefv(sourceId, AL10.AL_VELOCITY, sourceVel);
 	AL10.alSourcePlay(sourceId); 			
     }
     
     
     public void stopAllSounds(){
         for(SoundSourceEntry e : sources){
-            AL10.alSourceStop(e.sourceId);
+            AL10.alSourceStopv(e.sourceId);
             AL10.alSourcei(e.sourceId.get(0), AL10.AL_BUFFER, 0);
             e.setLastPlayed(null);
         }

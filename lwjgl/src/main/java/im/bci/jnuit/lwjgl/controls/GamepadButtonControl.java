@@ -24,22 +24,25 @@
 package im.bci.jnuit.lwjgl.controls;
 
 import im.bci.jnuit.controls.Control;
+
+import java.nio.ByteBuffer;
 import java.util.Objects;
-import org.lwjgl.input.Controller;
+
+import org.lwjgl.glfw.GLFW;
 
 public class GamepadButtonControl implements Control {
 
-    private final Controller pad;
+    private final int pad;
     private final int button;
 
-    public GamepadButtonControl(Controller pad, int button) {
+    public GamepadButtonControl(int pad, int button) {
         this.pad = pad;
         this.button = button;
     }
 
     @Override
     public String getName() {
-        return pad.getButtonName(button);
+        return "Button " + button;
     }
 
     @Override
@@ -49,12 +52,21 @@ public class GamepadButtonControl implements Control {
 
     @Override
     public float getValue() {
-        return pad.isButtonPressed(button) ? 1.0f : 0.0f;
+    	ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+    	if(null == buttons) {
+    		return 0f;
+    	}
+    	byte[] buttonsValues = buttons.array();
+    	if(button < buttonsValues.length) {
+    		return buttonsValues[button] == GLFW.GLFW_PRESS ? 1.0f : 0.0f;
+    	} else {
+    		return 0f;
+    	}
     }
 
     @Override
     public String getControllerName() {
-        return pad.getName();
+    	return GLFW.glfwGetJoystickName(pad);
     }
 
     @Override

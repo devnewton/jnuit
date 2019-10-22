@@ -41,8 +41,9 @@ import java.util.Map;
 import java.awt.GraphicsEnvironment;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
+import org.lwjgl.opengl.GL30;
 
 /**
  * A TrueType font implementation originally for Slick, edited for Bobjob's
@@ -266,7 +267,7 @@ public class LwjglNuitFont implements NuitFont {
             if (i < 256) { // standard characters
                 charArray[i] = newIntObject;
             } else { // custom characters
-                customChars.put(new Character(ch), newIntObject);
+                customChars.put(Character.valueOf(ch), newIntObject);
             }
 
             fontImage = null;
@@ -305,7 +306,7 @@ public class LwjglNuitFont implements NuitFont {
             if (currentChar < 256) {
                 intObject = charArray[currentChar];
             } else {
-                intObject = customChars.get(new Character((char) currentChar));
+                intObject = customChars.get(Character.valueOf((char) currentChar));
             }
 
             if (intObject != null) {
@@ -367,7 +368,7 @@ public class LwjglNuitFont implements NuitFont {
                     if (charCurrent < 256) {
                         intObject = charArray[charCurrent];
                     } else {
-                        intObject = customChars.get(new Character((char) charCurrent));
+                        intObject = customChars.get(Character.valueOf((char) charCurrent));
                     }
                     totalwidth += intObject.width - correctL;
                 }
@@ -389,7 +390,7 @@ public class LwjglNuitFont implements NuitFont {
             if (charCurrent < 256) {
                 intObject = charArray[charCurrent];
             } else {
-                intObject = customChars.get(new Character((char) charCurrent));
+                intObject = customChars.get(Character.valueOf((char) charCurrent));
             }
 
             if (intObject != null) {
@@ -408,7 +409,7 @@ public class LwjglNuitFont implements NuitFont {
                             if (charCurrent < 256) {
                                 intObject = charArray[charCurrent];
                             } else {
-                                intObject = customChars.get(new Character((char) charCurrent));
+                                intObject = customChars.get(Character.valueOf((char) charCurrent));
                             }
                             totalwidth += intObject.width - correctL;
                         }
@@ -468,7 +469,11 @@ public class LwjglNuitFont implements NuitFont {
 
         GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 
-        GLU.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, internalFormat, width, height, format, GL11.GL_UNSIGNED_BYTE, byteBuffer);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL11.GL_UNSIGNED_BYTE, byteBuffer);
+        
+        if(GL.getCapabilities().OpenGL30) {
+        	GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+        }
         return textureId.get(0);
     }
 

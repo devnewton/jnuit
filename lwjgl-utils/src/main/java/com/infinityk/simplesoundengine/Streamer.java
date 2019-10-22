@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
-import org.lwjgl.openal.OpenALException;
 
 /**
  * A sound implementation wrapped round a player which reads (and potentially) rereads
@@ -190,7 +189,7 @@ class Streamer {
                 int format = audio.getChannels() > 1 ? AL10.AL_FORMAT_STEREO16 : AL10.AL_FORMAT_MONO16;
                 try {
                     AL10.alBufferData(bufferId, format, bufferData, audio.getRate());
-                } catch (OpenALException e) {
+                } catch (Exception e) {
                     logger.log(Level.WARNING, "Failed to loop buffer: " + bufferId + " " + format + " " + count + " " + audio.getRate(), e);
                     return false;
                 }

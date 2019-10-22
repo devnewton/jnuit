@@ -41,11 +41,10 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.lwjgl.input.Controllers;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -55,25 +54,6 @@ import org.lwjgl.opengl.GL11;
 public abstract class AbstractSample {
 
     private static final Logger logger = Logger.getLogger(AbstractSample.class.getName());
-
-    private static void setupLibraryPath() {
-        String libraryPath = System.getProperty("java.library.path");
-        if (libraryPath != null && libraryPath.contains("natives")) {
-            return;
-        }
-        try {
-            File nativeDir = new File(getApplicationDir(), "natives");
-            if (nativeDir.exists() && nativeDir.isDirectory() && nativeDir.list().length > 0) {
-                String nativePath = nativeDir.getCanonicalPath();
-                System.setProperty("org.lwjgl.librarypath", nativePath);
-                System.setProperty("net.java.games.input.librarypath", nativePath);
-                return;
-            }
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "error", e);
-        }
-        logger.log(Level.INFO, "Cannot find 'natives' library folder, try system libraries");
-    }
 
     public static File getApplicationDir() {
         try {
@@ -86,35 +66,39 @@ public abstract class AbstractSample {
 
     public void launch(String[] args) {
         try {
-            setupLibraryPath();
-        } catch (Throwable e) {
-            handleError(e, "Unexpected error during startup. Check your java version and your opengl driver.\n");
-            return;
-        }
-
-        try {
-            Display.setFullscreen(false);
-            DisplayMode mode = new DisplayMode(640, 480);
-            Display.setDisplayMode(mode);
-            Display.create();
-            Display.setTitle(getClass().getSimpleName());
+        	GLFWErrorCallback.createPrint(System.err).set();
+        	if (!GLFW.glfwInit()) {
+                throw new IllegalStateException("Unable to initialize glfw");
+            }
+        	GLFW.glfwDefaultWindowHints();
+        	GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
+        	GLFW.glfwWindowHint(GLFW.GLFW_SCALE_TO_MONITOR, GLFW.GLFW_TRUE);
+        	GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+        	long window = GLFW.glfwCreateWindow(640, 480, getClass().getSimpleName(), 0, 0);
+        	if(0 == window) {
+        		throw new RuntimeException("Failed to create the GLFW window");
+        	}
+        	GLFW.glfwMakeContextCurrent(window);
+        	GLFW.glfwSwapInterval(1);//enable vsync
+        	GLFW.glfwShowWindow(window);
+        	GL.createCapabilities();
             LwjglNuitFont font = new LwjglNuitFont(new Font("Arial", Font.BOLD, 32), true, new char[0], new HashMap<Character, BufferedImage>());
             NuitTranslator translator = new NuitTranslator();
-            final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font);
-            NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(), new LwjglNuitControls(), translator, font, renderer, new OpenALNuitAudio(createVFS()));
+            final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font, window);
+            OpenALNuitAudio audio = new OpenALNuitAudio(createVFS());
+			NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(window), new LwjglNuitControls(window), translator, font, renderer, audio);
             Root root = new Root(toolkit);
             setup(toolkit, root);
-            while (!Display.isCloseRequested()) {
+            while (!GLFW.glfwWindowShouldClose(window)) {
                 toolkit.update(root);
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                 renderer.render(root);
-                Display.update(false);
-                Display.sync(60);
-                Display.processMessages();
-                Mouse.poll();
-                Keyboard.poll();
-                Controllers.poll();
+                GLFW.glfwSwapBuffers(window);
+                GLFW.glfwPollEvents();
             }
+            GLFW.glfwDestroyWindow(window);
+            GLFW.glfwTerminate();
+            audio.close();
         } catch (Throwable e) {
             handleError(e, "Unexpected error during execution\n");
         }

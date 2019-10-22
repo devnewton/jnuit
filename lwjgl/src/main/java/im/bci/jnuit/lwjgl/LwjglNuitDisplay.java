@@ -28,9 +28,8 @@ import im.bci.jnuit.display.VideoResolution;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWVidMode;
 
 /**
  *
@@ -38,51 +37,48 @@ import org.lwjgl.opengl.DisplayMode;
  */
 public class LwjglNuitDisplay implements NuitDisplay {
 
-    @Override
-    public List<VideoResolution> listResolutions() {
-        try {
-            TreeSet<VideoResolution> resolutions = new TreeSet<VideoResolution>();
-            for (DisplayMode m : Display.getAvailableDisplayModes()) {
-                resolutions.add(new VideoResolution(m.getWidth(), m.getHeight()));
-            }
-            return new ArrayList<VideoResolution>(resolutions);
-        } catch (LWJGLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+	private long glfwWindow;
 
-    @Override
-    public void changeResolution(VideoResolution chosenResolution, boolean fullscreen) {
-        DisplayMode chosenMode = LwjglHelper.findBestDisplayMode(chosenResolution.getWidth(), chosenResolution.getHeight());
-        try {
-            if (fullscreen) {
-                Display.setDisplayModeAndFullscreen(chosenMode);
-            } else {
-                Display.setFullscreen(false);
-                Display.setDisplayMode(chosenMode);
-            }
-            LwjglHelper.setResizable(true);
-            if (!Display.isCreated()) {
-                Display.create();
-            }
-            Display.setVSyncEnabled(true);
-        } catch (LWJGLException e) {
-            throw new RuntimeException("Unable to create display");
-        }
-    }
+	public LwjglNuitDisplay(long glfwWindow) {
+		this.glfwWindow = glfwWindow;
+	}
 
-    @Override
-    public VideoResolution getResolution() {
-        return new VideoResolution(Display.getDisplayMode().getWidth(), Display.getDisplayMode().getHeight());
-    }
+	@Override
+	public List<VideoResolution> listResolutions() {
+		TreeSet<VideoResolution> resolutions = new TreeSet<VideoResolution>();
 
-    @Override
-    public boolean isFullscreen() {
-        return Display.isFullscreen();
-    }
+		for (GLFWVidMode m : GLFW.glfwGetVideoModes(getCurrentMonitor())) {
+			resolutions.add(new VideoResolution(m.width(), m.height()));
+		}
+		return new ArrayList<VideoResolution>(resolutions);
+	}
+	
+	private long getCurrentMonitor() {
+		if(0 != glfwWindow) {
+			return GLFW.glfwGetWindowMonitor(glfwWindow);
+		} else {
+			return GLFW.glfwGetPrimaryMonitor();
+		}
+	}
 
-    @Override
-    public boolean canChangeResolution() {
-      return true;
-    }
+	@Override
+	public void changeResolution(VideoResolution chosenResolution, boolean fullscreen) {
+		GLFW.glfwSetWindowMonitor(glfwWindow, fullscreen ? getCurrentMonitor() : 0, 0, 0, chosenResolution.getWidth(), chosenResolution.getHeight(), GLFW.GLFW_DONT_CARE);
+	}
+
+	@Override
+	public VideoResolution getResolution() {
+		GLFWVidMode m = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+		return new VideoResolution(m.width(), m.height());
+	}
+
+	@Override
+	public boolean isFullscreen() {
+		return 0 != GLFW.glfwGetWindowMonitor(glfwWindow);
+	}
+
+	@Override
+	public boolean canChangeResolution() {
+		return true;
+	}
 }

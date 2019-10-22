@@ -32,41 +32,42 @@ import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import org.lwjgl.opengl.Display;
+
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
 
 public class IconLoader {
 
-    public static void setIcon(InputStream is) {
+    public static void setIcon(long glfwWindow, InputStream is) {
         try {
-            int nbIcons = Display.setIcon(IconLoader.loadIcon(is));
-            Logger.getLogger(IconLoader.class.getName()).log(Level.INFO, "nbIcons = {0}", nbIcons);
+            GLFW.glfwSetWindowIcon(glfwWindow, loadIcon(is));
         } catch (Exception ex) {
             Logger.getLogger(IconLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private static ByteBuffer[] loadIcon(InputStream is) throws IOException {
+    private static GLFWImage.Buffer loadIcon(InputStream is) throws IOException {
         BufferedImage image = ImageIO.read(is);
-        ByteBuffer[] buffers = new ByteBuffer[3];
-        buffers[0] = loadIconInstance(image, 128);
-        buffers[1] = loadIconInstance(image, 32);
-        buffers[2] = loadIconInstance(image, 16);
-        return buffers;
+    	GLFWImage.Buffer imageBuffer = GLFWImage.malloc(3);
+    	imageBuffer.put(loadIconInstance(image, 128));
+    	imageBuffer.put(loadIconInstance(image, 32));
+    	imageBuffer.put(loadIconInstance(image, 16));
+        return imageBuffer;
     }
 
     private static BufferedImage scale(BufferedImage source, int width, int height) {
         BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
         Graphics2D g = buf.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(source, 0, 0, width, height, null);
         g.dispose();
-
         return buf;
     }
 
-    private static ByteBuffer loadIconInstance(BufferedImage image, int dimension) {
-        return readImageAsByteBuffer(scale(image, dimension, dimension));
+    private static GLFWImage loadIconInstance(BufferedImage image, int dimension) {
+    	GLFWImage glfwImage = GLFWImage.malloc();
+    	glfwImage.set(dimension, dimension, readImageAsByteBuffer(scale(image, dimension, dimension)));
+        return glfwImage;
     }
 
     private static byte[] getRGBAPixels(BufferedImage image) {
