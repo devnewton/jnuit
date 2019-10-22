@@ -32,7 +32,7 @@ import im.bci.jnuit.visitors.WidgetVisitor;
  * Widget to select of value from a possible list.
  *
  * @author devnewton
- * @param <T>
+ * @param <T> type
  */
 public class Select<T> extends Widget {
 

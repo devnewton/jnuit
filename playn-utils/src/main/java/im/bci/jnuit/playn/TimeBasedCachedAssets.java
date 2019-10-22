@@ -32,7 +32,7 @@ import playn.core.PlayN;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class TimeBasedCachedAssets {
 

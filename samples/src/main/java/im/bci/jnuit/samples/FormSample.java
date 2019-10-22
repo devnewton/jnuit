@@ -35,7 +35,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class FormSample extends AbstractSample {
     

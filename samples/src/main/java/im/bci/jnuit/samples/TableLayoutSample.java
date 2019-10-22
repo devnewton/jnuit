@@ -31,7 +31,7 @@ import im.bci.jnuit.widgets.Table;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class TableLayoutSample extends AbstractSample {
 

@@ -29,7 +29,7 @@ import im.bci.jnuit.widgets.Root;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class AudioConfiguratorSample extends AbstractSample {
 

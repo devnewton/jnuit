@@ -34,7 +34,7 @@ import ${package}.${rootArtifactId}.game.NormalLauncher;
 
 /**
  *
- * @author devnewton <devnewton@bci.im>
+ * @author devnewton
  */
 public class SafeLauncher extends javax.swing.JDialog {
 
