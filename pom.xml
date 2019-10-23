@@ -61,13 +61,11 @@ THE SOFTWARE. -->
     </properties>
     <modules>
         <module>core</module>
-        <module>jpegdecoder</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
         <module>playn</module>
         <module>playn-java</module>
         <module>playn-utils</module>
-        <module>pngdecoder</module>
         <module>samples</module>
         <module>tablelayout</module>
     </modules>
@@ -109,22 +107,7 @@ THE SOFTWARE. -->
                 <groupId>im.bci</groupId>
                 <artifactId>tablelayout</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>im.bci</groupId>
-                <artifactId>pngdecoder</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>im.bci</groupId>
-                <artifactId>jpegdecoder</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>im.bci</groupId>
-                <artifactId>smjpegdecoder</artifactId>
-                <version>${project.version}</version>
-            </dependency>       
+            </dependency>      
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
@@ -159,11 +142,6 @@ THE SOFTWARE. -->
                 <groupId>com.samskivert</groupId>
                 <artifactId>pythagoras</artifactId>
                 <version>1.3.2</version>
-            </dependency>
-            <dependency>
-                <groupId>net.onedaybeard.artemis</groupId>
-                <artifactId>artemis-odb</artifactId>
-                <version>0.5.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

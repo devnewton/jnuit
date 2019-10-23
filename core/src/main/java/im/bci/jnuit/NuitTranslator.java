@@ -49,7 +49,7 @@ public class NuitTranslator {
         String message = translations.get(currentLocale).get(key);
         if (null == message) {
             for (NuitLocale l : NuitLocale.values()) {
-                message = translations.get(currentLocale).get(key);
+                message = translations.get(l).get(key);
                 if (null != message) {
                     break;
                 }

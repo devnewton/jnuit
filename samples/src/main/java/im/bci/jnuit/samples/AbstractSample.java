@@ -35,7 +35,6 @@ import im.bci.jnuit.widgets.Root;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.logging.Level;

@@ -58,7 +58,7 @@ public interface WidgetVisitor {
 
     void visit(NullWidget widget);
 
-    void visit(Select widget);
+    void visit(Select<?> widget);
 
     void visit(Stack widget);
 

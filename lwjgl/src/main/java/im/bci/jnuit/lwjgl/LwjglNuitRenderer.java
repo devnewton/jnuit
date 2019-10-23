@@ -383,7 +383,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 	}
 
 	@Override
-	public void visit(Select widget) {
+	public void visit(Select<?> widget) {
 		GL11.glPushMatrix();
 		String text = widget.getValuePrefix() + String.valueOf(widget.getSelected()) + widget.getValueSuffix();
 		GL11.glTranslatef(widget.getX() + widget.getWidth() / 2.0f,

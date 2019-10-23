@@ -312,7 +312,7 @@ public class PlaynNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     }
 
     @Override
-    public void visit(Select widget) {
+    public void visit(Select<?> widget) {
         String text = String.valueOf(widget.getSelected());
         drawText(widget, text, widget.getX() + widget.getWidth() / 2.0f, widget.getY() + widget.getHeight() / 2.0f);
     }
