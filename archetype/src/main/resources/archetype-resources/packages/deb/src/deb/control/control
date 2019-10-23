@@ -1,9 +1,0 @@
-Package: ${rootArtifactId}
-Version: [[version]]
-Section: misc/games
-Priority: optional
-Architecture: all
-Depends: liblwjgl-java, java7-runtime, jarwrapper, libopenal-dev
-Maintainer: devnewton <devnewton@bci.im>
-Description: ${rootArtifactId}
-Homepage: http://devnewton.bci.im
