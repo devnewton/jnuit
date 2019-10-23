@@ -46,6 +46,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.Scanner;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;
 
@@ -69,18 +71,23 @@ public class AssetsLoader {
     public Texture loadTexture(String name) {
         logger.log(Level.FINE, "Load texture {0}", name);
         try (InputStream is = vfs.open(name)) {
-            IntBuffer width = IntBuffer.allocate(1);
-            IntBuffer height = IntBuffer.allocate(1);
-            IntBuffer bpp = IntBuffer.allocate(1);
-            ByteBuffer buffer = ByteBuffer.wrap(is.readAllBytes());
-            ByteBuffer pixels = STBImage.stbi_load_from_memory(buffer, width, height, bpp, 0);
-            int pixelFormat = bpp.get() == 4 ? GL11.GL_RGBA : GL11.GL_RGB;
-            Texture texture = new Texture(width.get(), height.get(), pixelFormat == GL11.GL_RGBA);
+            IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
+            IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
+            IntBuffer bppBuffer = BufferUtils.createIntBuffer(1);
+            byte[] bytes = is.readAllBytes();
+            ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+            buffer.put(bytes).flip();
+            ByteBuffer pixels = STBImage.stbi_load_from_memory(buffer, widthBuffer, heightBuffer, bppBuffer, 0);
+            int width = widthBuffer.get();
+            int height = heightBuffer.get();
+            int bpp = bppBuffer.get();
+            int pixelFormat = bpp == 4 ? GL11.GL_RGBA : GL11.GL_RGB;
+            Texture texture = new Texture(width, height, pixelFormat == GL11.GL_RGBA);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getId());
             GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
             LwjglHelper.setupGLTextureParams();
-            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelFormat, width.get(), height.get(), 0, pixelFormat,
-                    GL11.GL_UNSIGNED_BYTE, pixels);
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelFormat, width, height, 0, pixelFormat, GL11.GL_UNSIGNED_BYTE,
+                    pixels);
             return texture;
         } catch (IOException e) {
             throw new RuntimeException("Cannot load texture " + name, e);

@@ -29,6 +29,9 @@ import im.bci.jnuit.lwjgl.LwjglNuitControls;
 import im.bci.jnuit.lwjgl.LwjglNuitDisplay;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.lwjgl.LwjglNuitRenderer;
+import im.bci.jnuit.lwjgl.assets.AssetsLoader;
+import im.bci.jnuit.lwjgl.assets.GarbageCollectedAssets;
+import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.lwjgl.assets.VirtualFileSystem;
 import im.bci.jnuit.lwjgl.audio.OpenALNuitAudio;
 import im.bci.jnuit.widgets.Root;
@@ -84,10 +87,12 @@ public abstract class AbstractSample {
             LwjglNuitFont font = new LwjglNuitFont(new Font("Arial", Font.BOLD, 32), true, new char[0], new HashMap<Character, BufferedImage>());
             NuitTranslator translator = new NuitTranslator();
             final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font, window);
-            OpenALNuitAudio audio = new OpenALNuitAudio(createVFS());
+            final VirtualFileSystem vfs = createVFS();
+            GarbageCollectedAssets assets = new GarbageCollectedAssets(new AssetsLoader(vfs));
+            OpenALNuitAudio audio = new OpenALNuitAudio(vfs);
 			NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(window), new LwjglNuitControls(window), translator, font, renderer, audio);
             Root root = new Root(toolkit);
-            setup(toolkit, root);
+            setup(toolkit, assets, root);
             while (!GLFW.glfwWindowShouldClose(window)) {
                 toolkit.update(root);
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -95,6 +100,7 @@ public abstract class AbstractSample {
                 GLFW.glfwSwapBuffers(window);
                 GLFW.glfwPollEvents();
             }
+            assets.clearAll();
             GLFW.glfwDestroyWindow(window);
             GLFW.glfwTerminate();
             audio.close();
@@ -108,7 +114,7 @@ public abstract class AbstractSample {
         JOptionPane.showMessageDialog(null, defaultMessage + "\n" + e.getMessage() + (e.getCause() != null ? "\nCause: " + e.getCause().getMessage() : ""), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    protected abstract void setup(NuitToolkit toolkit, Root root);
+    protected abstract void setup(NuitToolkit toolkit, IAssets assets, Root root);
 
     private VirtualFileSystem createVFS() throws URISyntaxException {
         for (File file = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI()); null != file; file = file.getParentFile()) {

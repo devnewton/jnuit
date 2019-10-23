@@ -24,6 +24,7 @@
 package im.bci.jnuit.samples;
 
 import im.bci.jnuit.NuitToolkit;
+import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.AudioConfigurator;
 import im.bci.jnuit.widgets.Root;
 
@@ -34,7 +35,7 @@ import im.bci.jnuit.widgets.Root;
 public class AudioConfiguratorSample extends AbstractSample {
 
     @Override
-    protected void setup(NuitToolkit toolkit, Root root) {
+    protected void setup(NuitToolkit toolkit, IAssets assets, Root root) {
         toolkit.getAudio().playMusic("Rest_Outro.ogg", true);
         AudioConfigurator audioConf = new AudioConfigurator(toolkit) {
 

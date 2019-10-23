@@ -25,6 +25,7 @@ package im.bci.jnuit.samples;
 
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.background.ColoredBackground;
+import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Container;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.Root;
@@ -36,7 +37,7 @@ import im.bci.jnuit.widgets.Root;
 public class ContainerLayoutSample extends AbstractSample {
 
     @Override
-    protected void setup(NuitToolkit toolkit, Root root) {
+    protected void setup(NuitToolkit toolkit, IAssets assets, Root root) {
         Container container = new Container();
 
         Label red = new Label(toolkit, "red");

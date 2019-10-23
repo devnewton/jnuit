@@ -24,6 +24,9 @@
 package im.bci.jnuit.samples;
 
 import im.bci.jnuit.NuitToolkit;
+import im.bci.jnuit.animation.PlayMode;
+import im.bci.jnuit.background.TexturedBackground;
+import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.Root;
 
@@ -34,8 +37,9 @@ import im.bci.jnuit.widgets.Root;
 public class HelloWorld extends AbstractSample {
 
     @Override
-    protected void setup(NuitToolkit toolkit, Root root) {
+    protected void setup(NuitToolkit toolkit, IAssets assets, Root root) {
         Label hello = new Label(toolkit, "Hello world!");
+        hello.setBackground(new TexturedBackground(assets.getAnimations("menu.png").getFirst().start(PlayMode.LOOP)));
         root.show(hello);        
     }
     

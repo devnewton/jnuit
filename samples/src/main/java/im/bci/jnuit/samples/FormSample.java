@@ -25,6 +25,7 @@ package im.bci.jnuit.samples;
 
 import im.bci.jnuit.NuitToolkit;
 import im.bci.jnuit.background.ColoredBackground;
+import im.bci.jnuit.lwjgl.assets.IAssets;
 import im.bci.jnuit.widgets.Button;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.Root;
@@ -40,7 +41,7 @@ import java.util.Arrays;
 public class FormSample extends AbstractSample {
     
     @Override
-    protected void setup(NuitToolkit toolkit, Root root) {
+    protected void setup(NuitToolkit toolkit, IAssets assets, Root root) {
         Table table = new Table(toolkit);
         table.setBackground(new ColoredBackground(0, 0, 0, 1));
         table.defaults().expand().fill();

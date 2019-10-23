@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWImage;
 
@@ -92,6 +93,10 @@ public class IconLoader {
     }
 
     private static ByteBuffer readImageAsByteBuffer(BufferedImage image) {
-        return ByteBuffer.wrap(getRGBAPixels(image));
+        byte[] pixels = getRGBAPixels(image);
+        ByteBuffer buffer = BufferUtils.createByteBuffer(pixels.length);
+        buffer.put(pixels);
+        buffer.flip();
+        return buffer;
     }
 }
