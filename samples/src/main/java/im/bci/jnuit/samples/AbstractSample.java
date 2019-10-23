@@ -87,7 +87,7 @@ public abstract class AbstractSample {
             LwjglNuitFont font = new LwjglNuitFont(new Font("Arial", Font.BOLD, 32), true, new char[0], new HashMap<Character, BufferedImage>());
             NuitTranslator translator = new NuitTranslator();
             final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font, window);
-            final VirtualFileSystem vfs = createVFS();
+            final VirtualFileSystem vfs = new VirtualFileSystem();
             GarbageCollectedAssets assets = new GarbageCollectedAssets(new AssetsLoader(vfs));
             OpenALNuitAudio audio = new OpenALNuitAudio(vfs);
 			NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(window), new LwjglNuitControls(window), translator, font, renderer, audio);
@@ -115,16 +115,5 @@ public abstract class AbstractSample {
     }
 
     protected abstract void setup(NuitToolkit toolkit, IAssets assets, Root root);
-
-    private VirtualFileSystem createVFS() throws URISyntaxException {
-        for (File file = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI()); null != file; file = file.getParentFile()) {
-            File dataDir = new File(file, "data");
-            if (dataDir.exists()) {
-                return new VirtualFileSystem(dataDir);
-            }
-        }
-        throw new RuntimeException("Cannot find data dir");
-
-    }
 
 }

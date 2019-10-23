@@ -28,7 +28,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 /**
@@ -54,19 +53,9 @@ public class VirtualFileSystem {
         if(f.exists()) {
             return  new FileInputStream(f);
         }
-        throw new FileNotFoundException();
-    }
-
-    RandomAccessFile openRandomAccess(String name) throws IOException {
-        for (File dir : directories) {
-            File f = new File(dir, name).getCanonicalFile();
-            if (f.exists()) {
-                return new RandomAccessFile(f, "r");
-            }
-        }
-        File f = new File(name);
-        if(f.exists()) {
-            return new RandomAccessFile(f, "r");
+        InputStream ris = this.getClass().getClassLoader().getResourceAsStream(name);
+        if(null != ris) {
+            return ris;
         }
         throw new FileNotFoundException();
     }

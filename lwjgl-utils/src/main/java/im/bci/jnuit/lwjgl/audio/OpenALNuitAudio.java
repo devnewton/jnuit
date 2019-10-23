@@ -90,10 +90,6 @@ public class OpenALNuitAudio implements NuitAudio {
         protected abstract void doRun() throws Exception;
     }
 
-    public OpenALNuitAudio() {
-        this(new VirtualFileSystem());
-    }
-
     public OpenALNuitAudio(VirtualFileSystem virtualFileSystem) {
         this.poll = new AbstractOpenALTask() {
 
