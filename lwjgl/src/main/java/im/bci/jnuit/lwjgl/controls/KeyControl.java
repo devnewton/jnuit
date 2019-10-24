@@ -31,15 +31,17 @@ public class KeyControl implements Control {
 
     private final int key;
     private final long glfwWindow;
+    private final String name;
     
-    public KeyControl(long glfwWindow, int key) {
+    public KeyControl(long glfwWindow, int key, String name) {
         this.key = key;
         this.glfwWindow = glfwWindow;
+        this.name = name;
     }
 
     @Override
     public String getName() {
-		return GLFW.glfwGetKeyName(key, GLFW.glfwGetKeyScancode(key));
+		return name;
     }
 
     @Override

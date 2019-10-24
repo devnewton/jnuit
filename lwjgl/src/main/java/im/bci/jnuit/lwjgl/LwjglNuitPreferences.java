@@ -42,12 +42,15 @@ public class LwjglNuitPreferences implements NuitPreferences {
 
     private final Properties store = new Properties();
     private final String appName;
-    private final NuitControls controls;
+    private NuitControls controls;
 
-    public LwjglNuitPreferences(NuitControls controls, String appName) {
-        this.controls = controls;
+    public LwjglNuitPreferences(String appName) {
         this.appName = appName;
         load();
+    }
+    
+    public void setControls(NuitControls controls) {
+        this.controls = controls;
     }
 
     private void load() {

@@ -120,7 +120,9 @@ public class LwjglNuitControls implements NuitControls {
             if (name.startsWith("GLFW_KEY_")) {
                 try {
                     int key = field.getInt(null);
-                    possibleControls.add(new KeyControl(glfwWindow, key));
+                    if (GLFW.GLFW_KEY_UNKNOWN != key) {
+                        possibleControls.add(new KeyControl(glfwWindow, key, name.replace("GLFW_KEY_", "")));
+                    }
                 } catch (Exception e) {
                     Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
                 }
@@ -135,7 +137,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuUpControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_UP);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_UP, "UP");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
@@ -153,7 +155,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuDownControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_DOWN);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_DOWN, "DOWN");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
@@ -171,7 +173,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuLeftControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_LEFT);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_LEFT, "LEFT");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
@@ -189,7 +191,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuRightControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_RIGHT);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_RIGHT, "RIGHT");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
@@ -207,7 +209,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuOkControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ENTER);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ENTER, "ENTER");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
@@ -225,7 +227,7 @@ public class LwjglNuitControls implements NuitControls {
     @Override
     public Control[] getDefaultMenuCancelControls() {
         Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ESCAPE);
+        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ESCAPE, "ESCAPE");
         controls[1] = NullControl.INSTANCE;
         for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
             if (GLFW.glfwJoystickIsGamepad(pad)) {
