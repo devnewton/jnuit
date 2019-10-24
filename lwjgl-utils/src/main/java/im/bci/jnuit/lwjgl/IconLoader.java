@@ -23,19 +23,17 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWImage;
+import org.lwjgl.stb.STBImage;
 
 public class IconLoader {
 
@@ -48,55 +46,21 @@ public class IconLoader {
     }
 
     private static GLFWImage.Buffer loadIcon(InputStream is) throws IOException {
-        BufferedImage image = ImageIO.read(is);
-    	GLFWImage.Buffer imageBuffer = GLFWImage.malloc(3);
-    	imageBuffer.put(loadIconInstance(image, 128));
-    	imageBuffer.put(loadIconInstance(image, 32));
-    	imageBuffer.put(loadIconInstance(image, 16));
-        return imageBuffer;
+        GLFWImage.Buffer images = GLFWImage.create(1);
+        IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
+        IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
+        IntBuffer bppBuffer = BufferUtils.createIntBuffer(1);
+        byte[] bytes = is.readAllBytes();
+        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+        buffer.put(bytes).flip();
+        ByteBuffer pixels = STBImage.stbi_load_from_memory(buffer, widthBuffer, heightBuffer, bppBuffer, 0);
+        int width = widthBuffer.get();
+        int height = heightBuffer.get();
+        GLFWImage image = GLFWImage.create();
+        image.set(width, height, pixels);
+        images.put(image);
+        images.flip();
+        return images;
     }
 
-    private static BufferedImage scale(BufferedImage source, int width, int height) {
-        BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = buf.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(source, 0, 0, width, height, null);
-        g.dispose();
-        return buf;
-    }
-
-    private static GLFWImage loadIconInstance(BufferedImage image, int dimension) {
-    	GLFWImage glfwImage = GLFWImage.malloc();
-    	glfwImage.set(dimension, dimension, readImageAsByteBuffer(scale(image, dimension, dimension)));
-        return glfwImage;
-    }
-
-    private static byte[] getRGBAPixels(BufferedImage image) {
-        int w = image.getWidth();
-        int h = image.getHeight();
-        byte[] pixels = new byte[w * h * 4];
-        int pixelIndex = 0;
-        for (int y = 0; y < h; ++y) {
-            for (int x = 0; x < w; ++x) {
-                int rgba = image.getRGB(x, y);
-                byte a = (byte) ((rgba >> 24) & 0xff);
-                byte r = (byte) ((rgba >> 16) & 0xff);
-                byte g = (byte) ((rgba >> 8) & 0xff);
-                byte b = (byte) (rgba & 0xff);
-                pixels[pixelIndex++] = r;
-                pixels[pixelIndex++] = g;
-                pixels[pixelIndex++] = b;
-                pixels[pixelIndex++] = a;
-            }
-        }
-        return pixels;
-    }
-
-    private static ByteBuffer readImageAsByteBuffer(BufferedImage image) {
-        byte[] pixels = getRGBAPixels(image);
-        ByteBuffer buffer = BufferUtils.createByteBuffer(pixels.length);
-        buffer.put(pixels);
-        buffer.flip();
-        return buffer;
-    }
 }

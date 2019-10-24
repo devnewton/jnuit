@@ -37,48 +37,52 @@ import org.lwjgl.glfw.GLFWVidMode;
  */
 public class LwjglNuitDisplay implements NuitDisplay {
 
-	private long glfwWindow;
+    private long glfwWindow;
 
-	public LwjglNuitDisplay(long glfwWindow) {
-		this.glfwWindow = glfwWindow;
-	}
+    public LwjglNuitDisplay(long glfwWindow) {
+        this.glfwWindow = glfwWindow;
+    }
 
-	@Override
-	public List<VideoResolution> listResolutions() {
-		TreeSet<VideoResolution> resolutions = new TreeSet<VideoResolution>();
+    @Override
+    public List<VideoResolution> listResolutions() {
+        TreeSet<VideoResolution> resolutions = new TreeSet<VideoResolution>();
 
-		for (GLFWVidMode m : GLFW.glfwGetVideoModes(getCurrentMonitor())) {
-			resolutions.add(new VideoResolution(m.width(), m.height()));
-		}
-		return new ArrayList<VideoResolution>(resolutions);
-	}
-	
-	private long getCurrentMonitor() {
-		if(0 != glfwWindow) {
-			return GLFW.glfwGetWindowMonitor(glfwWindow);
-		} else {
-			return GLFW.glfwGetPrimaryMonitor();
-		}
-	}
+        for (GLFWVidMode m : GLFW.glfwGetVideoModes(getCurrentMonitor())) {
+            resolutions.add(new VideoResolution(m.width(), m.height()));
+        }
+        return new ArrayList<VideoResolution>(resolutions);
+    }
 
-	@Override
-	public void changeResolution(VideoResolution chosenResolution, boolean fullscreen) {
-		GLFW.glfwSetWindowMonitor(glfwWindow, fullscreen ? getCurrentMonitor() : 0, 0, 0, chosenResolution.getWidth(), chosenResolution.getHeight(), GLFW.GLFW_DONT_CARE);
-	}
+    private long getCurrentMonitor() {
+        long monitor = 0;
+        if (0 != glfwWindow) {
+            monitor = GLFW.glfwGetWindowMonitor(glfwWindow);
+        }
+        if (0 == monitor) {
+            monitor = GLFW.glfwGetPrimaryMonitor();
+        }
+        return monitor;
+    }
 
-	@Override
-	public VideoResolution getResolution() {
-		GLFWVidMode m = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-		return new VideoResolution(m.width(), m.height());
-	}
+    @Override
+    public void changeResolution(VideoResolution chosenResolution, boolean fullscreen) {
+        GLFW.glfwSetWindowMonitor(glfwWindow, fullscreen ? getCurrentMonitor() : 0, 0, 0, chosenResolution.getWidth(),
+                chosenResolution.getHeight(), GLFW.GLFW_DONT_CARE);
+    }
 
-	@Override
-	public boolean isFullscreen() {
-		return 0 != GLFW.glfwGetWindowMonitor(glfwWindow);
-	}
+    @Override
+    public VideoResolution getResolution() {
+        GLFWVidMode m = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        return new VideoResolution(m.width(), m.height());
+    }
 
-	@Override
-	public boolean canChangeResolution() {
-		return true;
-	}
+    @Override
+    public boolean isFullscreen() {
+        return 0 != GLFW.glfwGetWindowMonitor(glfwWindow);
+    }
+
+    @Override
+    public boolean canChangeResolution() {
+        return true;
+    }
 }

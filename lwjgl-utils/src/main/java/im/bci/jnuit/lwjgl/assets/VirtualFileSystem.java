@@ -23,8 +23,6 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,26 +34,22 @@ import java.util.Arrays;
  */
 public class VirtualFileSystem {
 
-    private final File[] directories;
+    private String[] resourcePaths;
 
-    public VirtualFileSystem(File... dirs) {
-        directories = Arrays.copyOf(dirs, dirs.length);
+    public VirtualFileSystem(String... resourcePaths) {
+        this.resourcePaths = Arrays.copyOf(resourcePaths, resourcePaths.length);
+    }
+    
+    public void setResourcePaths(String... resourcePaths) {
+        this.resourcePaths = Arrays.copyOf(resourcePaths, resourcePaths.length);
     }
 
     public InputStream open(String name) throws IOException {
-        for (File dir : directories) {
-            File f = new File(dir, name).getCanonicalFile();
-            if (f.exists()) {
-                return new FileInputStream(f);
+        for (String resourcePath : resourcePaths) {
+            InputStream ris = this.getClass().getClassLoader().getResourceAsStream(resourcePath + "/" + name);
+            if (null != ris) {
+                return ris;
             }
-        }
-        File f = new File(name);
-        if(f.exists()) {
-            return  new FileInputStream(f);
-        }
-        InputStream ris = this.getClass().getClassLoader().getResourceAsStream(name);
-        if(null != ris) {
-            return ris;
         }
         throw new FileNotFoundException();
     }
