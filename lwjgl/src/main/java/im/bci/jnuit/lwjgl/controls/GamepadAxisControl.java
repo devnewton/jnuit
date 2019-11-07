@@ -12,7 +12,7 @@ public class GamepadAxisControl extends AbstractGamepadControl implements Contro
     public GamepadAxisControl(int pad, int axis, String name, boolean positive) {
         super(pad, name);
         this.axis = axis;
-        this.scale = positive ? 1.0f : -1.0f;
+        this.scale = positive ? -1.0f : 1.0f;//GLFW seems to use reverted values...
     }
 
     @Override
