@@ -20,8 +20,8 @@ public class GamepadButtonControl extends AbstractGamepadControl implements Cont
 
     @Override
     public float getValue() {
-        GLFW.glfwGetGamepadState(pad, state);
-        return GLFW.GLFW_PRESS == state.buttons(button) ? 1f : 0f;
+        GLFW.glfwGetGamepadState(pad, states[pad]);
+        return GLFW.GLFW_PRESS == states[pad].buttons(button) ? 1f : 0f;
     }
 
     @Override

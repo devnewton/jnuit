@@ -9,10 +9,16 @@ public class GamepadAxisControl extends AbstractGamepadControl implements Contro
     private final int axis;
     private final float scale;
     
-    public GamepadAxisControl(int pad, int axis, String name, boolean positive) {
+    public static final float SCALE_UP=-1.0f;
+    public static final float SCALE_DOWN=1.0f;
+    public static final float SCALE_LEFT=-1.0f;
+    public static final float SCALE_RIGHT=1.0f;
+    public static final float SCALE_OTHER=-1.0f;
+    
+    public GamepadAxisControl(int pad, int axis, String name, float scale) {
         super(pad, name);
         this.axis = axis;
-        this.scale = positive ? -1.0f : 1.0f;//GLFW seems to use reverted values...
+        this.scale = scale;
     }
 
     @Override
@@ -22,8 +28,8 @@ public class GamepadAxisControl extends AbstractGamepadControl implements Contro
 
     @Override
     public float getValue() {
-        GLFW.glfwGetGamepadState(pad, state);
-        return Math.max(0.0f, state.axes(axis) * scale);
+        GLFW.glfwGetGamepadState(pad, states[pad]);
+        return Math.max(0.0f, states[pad].axes(axis) * scale);
     }
 
     @Override

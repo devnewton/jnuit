@@ -9,7 +9,13 @@ public abstract class AbstractGamepadControl implements Control {
 
     protected final int pad;
     private final String name;
-    protected static GLFWGamepadState state = GLFWGamepadState.create();
+    protected static GLFWGamepadState[] states;
+    static {
+    	states = new GLFWGamepadState[GLFW.GLFW_JOYSTICK_LAST+1];
+    	for(int i=0; i<states.length; ++i) {
+    		states[i] = GLFWGamepadState.create();
+    	}
+    }
 
     public AbstractGamepadControl(int pad, String name) {
         this.pad = pad;
