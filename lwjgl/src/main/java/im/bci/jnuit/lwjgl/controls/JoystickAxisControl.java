@@ -35,11 +35,17 @@ public class JoystickAxisControl implements Control {
     private final int pad;
     private final int axis;
     private final float scale;
+    
+    public static final float SCALE_UP=-1.0f;
+    public static final float SCALE_DOWN=1.0f;
+    public static final float SCALE_LEFT=-1.0f;
+    public static final float SCALE_RIGHT=1.0f;
+    public static final float SCALE_OTHER=-1.0f;
 
-    public JoystickAxisControl(int pad, int axis, boolean positive) {
+    public JoystickAxisControl(int pad, int axis, float scale) {
         this.pad = pad;
         this.axis = axis;
-        this.scale = positive ? -1.0f : 1.0f;//GLFW seems to use reverted values...
+        this.scale = scale;
     }
 
     @Override

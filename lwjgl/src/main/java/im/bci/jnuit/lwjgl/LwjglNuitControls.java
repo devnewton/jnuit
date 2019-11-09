@@ -105,8 +105,8 @@ public class LwjglNuitControls implements NuitControls {
 				FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
 				for (int a = 0; axes.hasRemaining(); ++a) {
 					axes.get();
-					possibleControls.add(new JoystickAxisControl(pad, a, true));
-					possibleControls.add(new JoystickAxisControl(pad, a, false));
+					possibleControls.add(new JoystickAxisControl(pad, a, JoystickAxisControl.SCALE_LEFT));
+					possibleControls.add(new JoystickAxisControl(pad, a, JoystickAxisControl.SCALE_RIGHT));
 				}
 				ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
 				for (int b = 0; buttons.hasRemaining(); ++b) {
@@ -144,7 +144,7 @@ public class LwjglNuitControls implements NuitControls {
 				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲",
 						GamepadAxisControl.SCALE_UP);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
-				controls[1] = new JoystickAxisControl(pad, 1, true);
+				controls[1] = new JoystickAxisControl(pad, 1, JoystickAxisControl.SCALE_UP);
 			}
 		}
 		return controls;
@@ -160,7 +160,7 @@ public class LwjglNuitControls implements NuitControls {
 				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼",
 						GamepadAxisControl.SCALE_DOWN);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
-				controls[1] = new JoystickAxisControl(pad, 1, false);
+				controls[1] = new JoystickAxisControl(pad, 1, JoystickAxisControl.SCALE_DOWN);
 			}
 		}
 		return controls;
@@ -176,7 +176,7 @@ public class LwjglNuitControls implements NuitControls {
 				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀",
 						GamepadAxisControl.SCALE_LEFT);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
-				controls[1] = new JoystickAxisControl(pad, 0, false);
+				controls[1] = new JoystickAxisControl(pad, 0, JoystickAxisControl.SCALE_LEFT);
 			}
 		}
 		return controls;
@@ -192,7 +192,7 @@ public class LwjglNuitControls implements NuitControls {
 				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶",
 						GamepadAxisControl.SCALE_RIGHT);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
-				controls[1] = new JoystickAxisControl(pad, 0, true);
+				controls[1] = new JoystickAxisControl(pad, 0, JoystickAxisControl.SCALE_RIGHT);
 			}
 		}
 		return controls;
