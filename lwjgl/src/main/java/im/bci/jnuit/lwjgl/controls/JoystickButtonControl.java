@@ -32,64 +32,65 @@ import org.lwjgl.glfw.GLFW;
 
 public class JoystickButtonControl implements Control {
 
-    private final int pad;
-    private final int button;
+	private final int pad;
+	private final int button;
 
-    public JoystickButtonControl(int pad, int button) {
-        this.pad = pad;
-        this.button = button;
-    }
+	public JoystickButtonControl(int pad, int button) {
+		this.pad = pad;
+		this.button = button;
+	}
 
-    @Override
-    public String getName() {
-        return "Button " + button;
-    }
+	@Override
+	public String getName() {
+		return "Button " + button;
+	}
 
-    @Override
-    public float getDeadZone() {
-        return 0.1f;
-    }
+	@Override
+	public float getDeadZone() {
+		return 0.1f;
+	}
 
-    @Override
-    public float getValue() {
-    	ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
-    	if(null == buttons) {
-    		return 0f;
-    	}
-    	byte[] buttonsValues = buttons.array();
-    	if(button < buttonsValues.length) {
-    		return buttonsValues[button] == GLFW.GLFW_PRESS ? 1.0f : 0.0f;
-    	} else {
-    		return 0f;
-    	}
-    }
+	@Override
+	public float getValue() {
+		if (!GLFW.glfwJoystickPresent(pad)) {
+			return 0f;
+		}
+		ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+		for (int b = 0; buttons.hasRemaining(); ++b) {
+			float state = buttons.get();
+			if (b == button) {
+				return state == GLFW.GLFW_PRESS ? 1.0f : 0.0f;
+			}
+		}
+		return 0f;
+	}
 
-    @Override
-    public String getControllerName() {
-    	return GLFW.glfwGetJoystickName(pad);
-    }
+	@Override
+	public String getControllerName() {
+		return GLFW.glfwGetJoystickName(pad);
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.pad);
-        hash = 37 * hash + this.button;
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 37 * hash + Objects.hashCode(this.pad);
+		hash = 37 * hash + this.button;
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final JoystickButtonControl other = (JoystickButtonControl) obj;
-        if (!Objects.equals(this.pad, other.pad)) {
-            return false;
-        }
-        return this.button == other.button;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final JoystickButtonControl other = (JoystickButtonControl) obj;
+		if (!Objects.equals(this.pad, other.pad)) {
+			return false;
+		}
+		return this.button == other.button;
+	}
 
 }

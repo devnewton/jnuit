@@ -50,209 +50,195 @@ import org.lwjgl.glfw.GLFW;
  */
 public class LwjglNuitControls implements NuitControls {
 
-    private final long glfwWindow;
+	private final long glfwWindow;
 
-    public LwjglNuitControls(long glfwWindow) {
-        this.glfwWindow = glfwWindow;
-    }
+	public LwjglNuitControls(long glfwWindow) {
+		this.glfwWindow = glfwWindow;
+	}
 
-    @Override
-    public Control[] getPossibleControls() {
-        List<Control> possibleControls = new ArrayList<Control>();
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad <= GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀", GamepadAxisControl.SCALE_LEFT));
-                possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶", GamepadAxisControl.SCALE_RIGHT));
-                possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼", GamepadAxisControl.SCALE_DOWN));
-                possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲", GamepadAxisControl.SCALE_UP));
+	@Override
+	public Control[] getPossibleControls() {
+		List<Control> possibleControls = new ArrayList<Control>();
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad <= GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀",
+						GamepadAxisControl.SCALE_LEFT));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶",
+						GamepadAxisControl.SCALE_RIGHT));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼",
+						GamepadAxisControl.SCALE_DOWN));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲",
+						GamepadAxisControl.SCALE_UP));
 
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ◀", GamepadAxisControl.SCALE_LEFT));
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ▶", GamepadAxisControl.SCALE_RIGHT));
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▼", GamepadAxisControl.SCALE_DOWN));
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▲", GamepadAxisControl.SCALE_UP));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ◀",
+						GamepadAxisControl.SCALE_LEFT));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ▶",
+						GamepadAxisControl.SCALE_RIGHT));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▼",
+						GamepadAxisControl.SCALE_DOWN));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▲",
+						GamepadAxisControl.SCALE_UP));
 
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_TRIGGER, "Left trigger", GamepadAxisControl.SCALE_OTHER));
-                possibleControls
-                        .add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER, "Right trigger", GamepadAxisControl.SCALE_OTHER));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_TRIGGER, "Left trigger",
+						GamepadAxisControl.SCALE_OTHER));
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER, "Right trigger",
+						GamepadAxisControl.SCALE_OTHER));
 
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_LEFT, "DPAD ◀"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_RIGHT, "DPAD ▶"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_DOWN, "DPAD ▼"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_UP, "DPAD ▲"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_LEFT, "DPAD ◀"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_RIGHT, "DPAD ▶"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_DOWN, "DPAD ▼"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_UP, "DPAD ▲"));
 
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_A, "A"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_B, "B"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_X, "X"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_Y, "Y"));
-                possibleControls
-                        .add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_LEFT_BUMPER, "Left bumper"));
-                possibleControls
-                        .add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER, "Right bumper"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_BACK, "Back"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_GUIDE, "Guide"));
-                possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_START, "Start"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_A, "A"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_B, "B"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_X, "X"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_Y, "Y"));
+				possibleControls
+						.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_LEFT_BUMPER, "Left bumper"));
+				possibleControls
+						.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER, "Right bumper"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_BACK, "Back"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_GUIDE, "Guide"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_START, "Start"));
 
-            } else {
-                FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-                if (null != axes) {
-                    int nbAxis = axes.array().length;
-                    for (int a = 0; a < nbAxis; ++a) {
-                        possibleControls.add(new JoystickAxisControl(pad, a, true));
-                        possibleControls.add(new JoystickAxisControl(pad, a, false));
-                    }
-                }
-                ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
-                if (null != buttons) {
-                    int nbButtons = buttons.array().length;
-                    for (int b = 0; b < nbButtons; ++b) {
-                        possibleControls.add(new JoystickButtonControl(pad, b));
-                    }
-                }
-            }
-        }
-        for (Field field : GLFW.class.getFields()) {
-            String name = field.getName();
-            if (name.startsWith("GLFW_KEY_")) {
-                try {
-                    int key = field.getInt(null);
-                    if (GLFW.GLFW_KEY_UNKNOWN != key) {
-                        possibleControls.add(new KeyControl(glfwWindow, key, name.replace("GLFW_KEY_", "")));
-                    }
-                } catch (Exception e) {
-                    Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
-                }
-            }
-        }
-        for (int b = GLFW.GLFW_MOUSE_BUTTON_1; b <= GLFW.GLFW_MOUSE_BUTTON_LAST; ++b) {
-            possibleControls.add(new MouseButtonControl(glfwWindow, b));
-        }
-        return possibleControls.toArray(new Control[possibleControls.size()]);
-    }
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
+				for (int a = 0; axes.hasRemaining(); ++a) {
+					axes.get();
+					possibleControls.add(new JoystickAxisControl(pad, a, true));
+					possibleControls.add(new JoystickAxisControl(pad, a, false));
+				}
+				ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
+				for (int b = 0; buttons.hasRemaining(); ++b) {
+					buttons.get();
+					possibleControls.add(new JoystickButtonControl(pad, b));
+				}
+			}
+		}
+		for (Field field : GLFW.class.getFields()) {
+			String name = field.getName();
+			if (name.startsWith("GLFW_KEY_")) {
+				try {
+					int key = field.getInt(null);
+					if (GLFW.GLFW_KEY_UNKNOWN != key) {
+						possibleControls.add(new KeyControl(glfwWindow, key, name.replace("GLFW_KEY_", "")));
+					}
+				} catch (Exception e) {
+					Logger.getLogger(ControlsConfigurator.class.getName()).log(Level.SEVERE, "error retrieving key", e);
+				}
+			}
+		}
+		for (int b = GLFW.GLFW_MOUSE_BUTTON_1; b <= GLFW.GLFW_MOUSE_BUTTON_LAST; ++b) {
+			possibleControls.add(new MouseButtonControl(glfwWindow, b));
+		}
+		return possibleControls.toArray(new Control[possibleControls.size()]);
+	}
 
-    @Override
-    public Control[] getDefaultMenuUpControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_UP, "UP");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲", GamepadAxisControl.SCALE_UP);
-            } else {
-                FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-                if (null != axes && axes.array().length >= 2) {
-                    controls[1] = new JoystickAxisControl(pad, 1, true);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuUpControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_UP, "UP");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲",
+						GamepadAxisControl.SCALE_UP);
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickAxisControl(pad, 1, true);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuDownControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_DOWN, "DOWN");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼", GamepadAxisControl.SCALE_DOWN);
-            } else {
-                FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-                if (null != axes && axes.array().length >= 2) {
-                    controls[1] = new JoystickAxisControl(pad, 1, false);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuDownControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_DOWN, "DOWN");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼",
+						GamepadAxisControl.SCALE_DOWN);
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickAxisControl(pad, 1, false);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuLeftControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_LEFT, "LEFT");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀", GamepadAxisControl.SCALE_LEFT);
-            } else {
-                FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-                if (null != axes && axes.array().length >= 1) {
-                    controls[1] = new JoystickAxisControl(pad, 0, false);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuLeftControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_LEFT, "LEFT");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀",
+						GamepadAxisControl.SCALE_LEFT);
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickAxisControl(pad, 0, false);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuRightControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_RIGHT, "RIGHT");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶", GamepadAxisControl.SCALE_RIGHT);
-            } else {
-                FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-                if (null != axes && axes.array().length >= 1) {
-                    controls[1] = new JoystickAxisControl(pad, 0, true);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuRightControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_RIGHT, "RIGHT");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶",
+						GamepadAxisControl.SCALE_RIGHT);
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickAxisControl(pad, 0, true);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuOkControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ENTER, "ENTER");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_A, "A");
-            } else {
-                ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
-                if (null != buttons && buttons.array().length >= 1) {
-                    controls[1] = new JoystickButtonControl(pad, 0);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuOkControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ENTER, "ENTER");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_A, "A");
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickButtonControl(pad, 0);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public Control[] getDefaultMenuCancelControls() {
-        Control[] controls = new Control[2];
-        controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ESCAPE, "ESCAPE");
-        controls[1] = NullControl.INSTANCE;
-        for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
-            if (GLFW.glfwJoystickIsGamepad(pad)) {
-                controls[1] = new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_B, "B");
-            } else {
-                ByteBuffer buttons = GLFW.glfwGetJoystickButtons(pad);
-                if (null != buttons && buttons.array().length >= 2) {
-                    controls[1] = new JoystickButtonControl(pad, 1);
-                }
-            }
-        }
-        return controls;
-    }
+	@Override
+	public Control[] getDefaultMenuCancelControls() {
+		Control[] controls = new Control[2];
+		controls[0] = new KeyControl(glfwWindow, GLFW.GLFW_KEY_ESCAPE, "ESCAPE");
+		controls[1] = NullControl.INSTANCE;
+		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
+			if (GLFW.glfwJoystickIsGamepad(pad)) {
+				controls[1] = new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_B, "B");
+			} else if (GLFW.glfwJoystickPresent(pad)) {
+				controls[1] = new JoystickButtonControl(pad, 1);
+			}
+		}
+		return controls;
+	}
 
-    @Override
-    public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
-        double[] xpos = new double[1];
-        double[] ypos = new double[1];
-        GLFW.glfwGetCursorPos(glfwWindow, xpos, ypos);
-        int[] width = new int[1];
-        int[] height = new int[1];
-        GLFW.glfwGetFramebufferSize(glfwWindow, width, height);
-        pointer.setX((float) (xpos[0] * (double) virtualResolutionWidth / (double) width[0]));
-        pointer.setY((float) (ypos[0] * (double) virtualResolutionHeight / (double) height[0]));
-        pointer.setDown(GLFW.glfwGetMouseButton(glfwWindow, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS);
-    }
+	@Override
+	public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
+		double[] xpos = new double[1];
+		double[] ypos = new double[1];
+		GLFW.glfwGetCursorPos(glfwWindow, xpos, ypos);
+		int[] width = new int[1];
+		int[] height = new int[1];
+		GLFW.glfwGetFramebufferSize(glfwWindow, width, height);
+		pointer.setX((float) (xpos[0] * (double) virtualResolutionWidth / (double) width[0]));
+		pointer.setY((float) (ypos[0] * (double) virtualResolutionHeight / (double) height[0]));
+		pointer.setDown(GLFW.glfwGetMouseButton(glfwWindow, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS);
+	}
 
 }

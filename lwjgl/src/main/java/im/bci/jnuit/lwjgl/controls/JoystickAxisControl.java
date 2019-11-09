@@ -54,16 +54,17 @@ public class JoystickAxisControl implements Control {
 
     @Override
     public float getValue() {
+    	if(!GLFW.glfwJoystickPresent(pad)) {
+    		return 0f;
+    	}
     	FloatBuffer axes = GLFW.glfwGetJoystickAxes(pad);
-    	if(null == axes) {
-    		return 0.0f;
+    	for(int a=0; axes.hasRemaining(); ++a) {
+    		float state = axes.get();
+    		if(a == axis) {
+    			return Math.max(0.0f, state * scale);
+    		}
     	}
-    	float[] axesValues = GLFW.glfwGetJoystickAxes(pad).array();
-    	if(axis < axesValues.length) {
-            return Math.max(0.0f, axesValues[axis] * scale);
-    	}else {
-    		return 0.0f;
-    	}
+    	return 0f;
     }
 
     @Override
