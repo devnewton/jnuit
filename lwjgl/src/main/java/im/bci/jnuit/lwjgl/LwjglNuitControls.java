@@ -61,22 +61,22 @@ public class LwjglNuitControls implements NuitControls {
 		List<Control> possibleControls = new ArrayList<Control>();
 		for (int pad = GLFW.GLFW_JOYSTICK_1; pad <= GLFW.GLFW_JOYSTICK_LAST; ++pad) {
 			if (GLFW.glfwJoystickIsGamepad(pad)) {
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "L-STICK left",
 						GamepadAxisControl.SCALE_LEFT));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "L-STICK right",
 						GamepadAxisControl.SCALE_RIGHT));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "L-STICK down",
 						GamepadAxisControl.SCALE_DOWN));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "L-STICK up",
 						GamepadAxisControl.SCALE_UP));
 
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ◀",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "R-STICK left",
 						GamepadAxisControl.SCALE_LEFT));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "Right stick ▶",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_X, "R-STICK right",
 						GamepadAxisControl.SCALE_RIGHT));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▼",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "R-STICK down",
 						GamepadAxisControl.SCALE_DOWN));
-				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "Right stick ▲",
+				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_Y, "R-STICK up",
 						GamepadAxisControl.SCALE_UP));
 
 				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_TRIGGER, "Left trigger",
@@ -84,10 +84,10 @@ public class LwjglNuitControls implements NuitControls {
 				possibleControls.add(new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER, "Right trigger",
 						GamepadAxisControl.SCALE_OTHER));
 
-				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_LEFT, "DPAD ◀"));
-				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_RIGHT, "DPAD ▶"));
-				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_DOWN, "DPAD ▼"));
-				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_UP, "DPAD ▲"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_LEFT, "D-PAD left"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_RIGHT, "D-PAD right"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_DOWN, "D-PAD down"));
+				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_DPAD_UP, "D-PAD up"));
 
 				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_A, "A"));
 				possibleControls.add(new GamepadButtonControl(pad, GLFW.GLFW_GAMEPAD_BUTTON_B, "B"));
@@ -141,7 +141,7 @@ public class LwjglNuitControls implements NuitControls {
 		controls[1] = NullControl.INSTANCE;
 		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
 			if (GLFW.glfwJoystickIsGamepad(pad)) {
-				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▲",
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "L-STICK up",
 						GamepadAxisControl.SCALE_UP);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
 				controls[1] = new JoystickAxisControl(pad, 1, JoystickAxisControl.SCALE_UP);
@@ -157,7 +157,7 @@ public class LwjglNuitControls implements NuitControls {
 		controls[1] = NullControl.INSTANCE;
 		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
 			if (GLFW.glfwJoystickIsGamepad(pad)) {
-				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "Left stick ▼",
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_Y, "L-STICK down",
 						GamepadAxisControl.SCALE_DOWN);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
 				controls[1] = new JoystickAxisControl(pad, 1, JoystickAxisControl.SCALE_DOWN);
@@ -173,7 +173,7 @@ public class LwjglNuitControls implements NuitControls {
 		controls[1] = NullControl.INSTANCE;
 		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
 			if (GLFW.glfwJoystickIsGamepad(pad)) {
-				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ◀",
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "L-STICK left",
 						GamepadAxisControl.SCALE_LEFT);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
 				controls[1] = new JoystickAxisControl(pad, 0, JoystickAxisControl.SCALE_LEFT);
@@ -189,7 +189,7 @@ public class LwjglNuitControls implements NuitControls {
 		controls[1] = NullControl.INSTANCE;
 		for (int pad = GLFW.GLFW_JOYSTICK_1; pad < GLFW.GLFW_JOYSTICK_LAST; ++pad) {
 			if (GLFW.glfwJoystickIsGamepad(pad)) {
-				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "Left stick ▶",
+				controls[1] = new GamepadAxisControl(pad, GLFW.GLFW_GAMEPAD_AXIS_LEFT_X, "L-STICK right",
 						GamepadAxisControl.SCALE_RIGHT);
 			} else if (GLFW.glfwJoystickPresent(pad)) {
 				controls[1] = new JoystickAxisControl(pad, 0, JoystickAxisControl.SCALE_RIGHT);

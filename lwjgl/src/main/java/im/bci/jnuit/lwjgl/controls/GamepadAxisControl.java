@@ -13,7 +13,7 @@ public class GamepadAxisControl extends AbstractGamepadControl implements Contro
     public static final float SCALE_DOWN=1.0f;
     public static final float SCALE_LEFT=-1.0f;
     public static final float SCALE_RIGHT=1.0f;
-    public static final float SCALE_OTHER=-1.0f;
+    public static final float SCALE_OTHER=1.0f;
     
     public GamepadAxisControl(int pad, int axis, String name, float scale) {
         super(pad, name);
