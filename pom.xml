@@ -60,7 +60,7 @@
         <module>core</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
-        <module>samples</module>
+        <module>lwjgl-samples</module>
         <module>teavm</module>
         <module>tablelayout</module>
     </modules>

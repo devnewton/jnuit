@@ -24,9 +24,9 @@
         <version>0.14-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>jnuit-samples</artifactId>
+    <artifactId>jnuit-lwjgl-samples</artifactId>
     <packaging>jar</packaging>
-    <name>jnuit-samples</name>
+    <name>jnuit-lwjgl-samples</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -57,7 +57,7 @@
                                     <mainClass>im.bci.jnuit.samples.HelloWorld</mainClass>
                                 </transformer>
                             </transformers>
-                            <finalName>jnuit-samples-helloworld</finalName>
+                            <finalName>jnuit-lwjgl-samples-helloworld</finalName>
                         </configuration>
                     </execution>
                 </executions>
