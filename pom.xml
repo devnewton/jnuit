@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The MIT License (MIT)
-
-Copyright (c) 2014 devnewton <devnewton@bci.im>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- The MIT License (MIT) Copyright (c) 2014 devnewton <devnewton@bci.im> 
+    Permission is hereby granted, free of charge, to any person obtaining a copy 
+    of this software and associated documentation files (the "Software"), to 
+    deal in the Software without restriction, including without limitation the 
+    rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+    sell copies of the Software, and to permit persons to whom the Software is 
+    furnished to do so, subject to the following conditions: The above copyright 
+    notice and this permission notice shall be included in all copies or substantial 
+    portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY 
+    OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+    DEALINGS IN THE SOFTWARE. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>im.bci</groupId>
     <parent>
@@ -56,24 +52,27 @@ THE SOFTWARE. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <lwjgl.version>3.2.3</lwjgl.version>
-        <maven.javadoc.skip>true</maven.javadoc.skip><!-- TODO see why openjdk 11 and maven mess with javadoc -->
+        <teavm.version>0.6.1</teavm.version>
+        <maven.javadoc.skip>true</maven.javadoc.skip><!-- TODO see why openjdk 
+            11 and maven mess with javadoc -->
     </properties>
     <modules>
         <module>core</module>
         <module>lwjgl</module>
         <module>lwjgl-utils</module>
         <module>samples</module>
+        <module>teavm</module>
         <module>tablelayout</module>
     </modules>
     <dependencyManagement>
         <dependencies>
-        	<dependency>
-				<groupId>org.lwjgl</groupId>
-				<artifactId>lwjgl-bom</artifactId>
-				<version>${lwjgl.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
+            <dependency>
+                <groupId>org.lwjgl</groupId>
+                <artifactId>lwjgl-bom</artifactId>
+                <version>${lwjgl.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>jnuit-core</artifactId>
@@ -98,7 +97,7 @@ THE SOFTWARE. -->
                 <groupId>im.bci</groupId>
                 <artifactId>tablelayout</artifactId>
                 <version>${project.version}</version>
-            </dependency>      
+            </dependency>
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
@@ -124,25 +123,32 @@ THE SOFTWARE. -->
                 <artifactId>pythagoras</artifactId>
                 <version>1.3.2</version>
             </dependency>
+            <!-- teavm -->
+            <dependency>
+                <groupId>org.teavm</groupId>
+                <artifactId>teavm-jso-apis</artifactId>
+                <version>${teavm.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
         <pluginManagement>
-            <plugins>           
+            <plugins>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.1</version>
                     <configuration>
-                        <!--<compilerArgument>-Xlint:unchecked</compilerArgument>-->
+                        <!--<compilerArgument>-Xlint:unchecked</compilerArgument> -->
                         <source>11</source>
                         <target>11</target>
                     </configuration>
-                </plugin>            
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.2.1</version>
-                    <!-- build a -sources.jar always, rather than only on deploy -->
+                    <!-- build a -sources.jar always, rather than only on 
+                        deploy -->
                     <executions>
                         <execution>
                             <id>attach-sources</id>
