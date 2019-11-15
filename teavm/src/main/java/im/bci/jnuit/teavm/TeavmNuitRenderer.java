@@ -56,7 +56,6 @@ import im.bci.jnuit.widgets.Widget;
 
 import org.teavm.jso.canvas.CanvasImageSource;
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
-import org.teavm.jso.dom.html.HTMLCanvasElement;
 
 /**
  *
@@ -195,9 +194,9 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     }
 
-    public TeavmNuitRenderer(NuitTranslator translator, HTMLCanvasElement canvas) {
+    public TeavmNuitRenderer(NuitTranslator translator, CanvasRenderingContext2D ctx) {
         this.translator = translator;
-        ctx = canvas.getContext("2d").cast();
+        this.ctx = ctx;
         this.font = new TeavmNuitFont(ctx);
 
     }

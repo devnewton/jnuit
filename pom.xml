@@ -62,6 +62,8 @@
         <module>lwjgl-utils</module>
         <module>lwjgl-samples</module>
         <module>teavm</module>
+        <module>teavm-utils</module>
+        <module>teavm-samples</module>
         <module>tablelayout</module>
     </modules>
     <dependencyManagement>
@@ -91,6 +93,16 @@
             <dependency>
                 <groupId>im.bci</groupId>
                 <artifactId>jnuit-lwjgl-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
+                <artifactId>jnuit-teavm</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>im.bci</groupId>
+                <artifactId>jnuit-teavm-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -158,6 +170,11 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.teavm</groupId>
+                    <artifactId>teavm-maven-plugin</artifactId>
+                    <version>${teavm.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

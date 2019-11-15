@@ -1,5 +1,6 @@
 package im.bci.jnuit.teavm.controls;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,26 +9,30 @@ import org.teavm.jso.browser.Window;
 import org.teavm.jso.dom.events.MouseEvent;
 
 public class Mouse {
-    private Map<Short, MouseButtonControl> controls = new HashMap<Short, MouseButtonControl>();
+    private MouseButtonControl[] controls = new MouseButtonControl[3];
     private int clientX;
     private int clientY;
 
     public Mouse() {
-        controls.put((short) MouseEvent.LEFT_BUTTON, new MouseButtonControl((short) MouseEvent.LEFT_BUTTON));
-        controls.put((short) MouseEvent.MIDDLE_BUTTON, new MouseButtonControl((short) MouseEvent.MIDDLE_BUTTON));
-        controls.put((short) MouseEvent.RIGHT_BUTTON, new MouseButtonControl((short) MouseEvent.RIGHT_BUTTON));
-
+        controls = new MouseButtonControl[] { new MouseButtonControl((short) 0), new MouseButtonControl((short) 1),
+                new MouseButtonControl((short) 2) };
         Window window = Window.current();
         window.listenMouseDown((MouseEvent e) -> {
-            MouseButtonControl control = controls.get(e.getButton());
-            if (null != control) {
-                control.setPressed(true);
+            final short button = e.getButton();
+            if (button < controls.length) {
+                MouseButtonControl control = controls[button];
+                if (null != control) {
+                    control.setPressed(true);
+                }
             }
         });
         window.listenMouseUp((MouseEvent e) -> {
-            MouseButtonControl control = controls.get(e.getButton());
-            if (null != control) {
-                control.setPressed(false);
+            final short button = e.getButton();
+            if (button < controls.length) {
+                MouseButtonControl control = controls[button];
+                if (null != control) {
+                    control.setPressed(false);
+                }
             }
         });
         window.addEventListener("mousemove", (MouseEvent e) -> {
@@ -37,7 +42,7 @@ public class Mouse {
     }
 
     public Collection<MouseButtonControl> getPossibleControls() {
-        return controls.values();
+        return Arrays.asList(controls);
     }
 
     public int getClientX() {
@@ -49,7 +54,7 @@ public class Mouse {
     }
 
     public boolean isPressed() {
-        return controls.get(MouseEvent.LEFT_BUTTON).isPressed();
+        return controls[0].isPressed();
     }
 
 }
