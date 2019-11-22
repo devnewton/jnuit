@@ -82,6 +82,7 @@ public class TeavmNuitControls implements NuitControls {
 	public Control[] getDefaultMenuRightControls() {
 		Control[] controls = new Control[2];
 		controls[0] = keyboard.getKeyControl("ArrowRight");
+                controls[1] = NullControl.INSTANCE;
 		return controls;
 	}
 

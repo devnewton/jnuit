@@ -94,6 +94,10 @@
             <groupId>org.teavm</groupId>
             <artifactId>teavm-jso-apis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-classlib</artifactId>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

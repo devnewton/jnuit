@@ -443,7 +443,7 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     }
 
     private static String htmlColor(float r, float g, float b, float a) {
-        return String.format("#%02x%02x%02x%02x", r * 255, g * 255, b * 255, a * 255);
+        return String.format("#%02x%02x%02x%02x", (int)(r * 255), (int)(g * 255), (int)(b * 255), (int)(a * 255));
     }
 
 }

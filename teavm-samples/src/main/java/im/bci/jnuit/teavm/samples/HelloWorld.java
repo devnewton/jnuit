@@ -24,6 +24,7 @@
 package im.bci.jnuit.teavm.samples;
 
 import im.bci.jnuit.NuitToolkit;
+import im.bci.jnuit.background.ColoredBackground;
 import im.bci.jnuit.widgets.Label;
 import im.bci.jnuit.widgets.Root;
 
@@ -36,6 +37,7 @@ public class HelloWorld extends AbstractSample {
     @Override
     protected void setup(NuitToolkit toolkit, Root root) {
         Label hello = new Label(toolkit, "Hello world!");
+        hello.setBackground(new ColoredBackground(0, 0, 0, 1f));
         //hello.setBackground(new TexturedBackground(assets.getAnimations("menu.png").getFirst().start(PlayMode.LOOP)));
         root.show(hello);        
     }

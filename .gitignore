@@ -15,3 +15,5 @@ out
 *.iws
 *.iml
 atlassian-ide-plugin.xml
+/teavm-samples/src/main/webapp/META-INF/context.xml
+/teavm-samples/nb-configuration.xml
