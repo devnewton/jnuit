@@ -29,7 +29,8 @@ import im.bci.jnuit.teavm.TeavmNuitFont;
 import im.bci.jnuit.teavm.TeavmNuitDisplay;
 import im.bci.jnuit.teavm.TeavmNuitRenderer;
 import im.bci.jnuit.teavm.TeavmNuitControls;
-import im.bci.jnuit.teavm.assets.VirtualFileSystem;
+import im.bci.jnuit.teavm.assets.TeavmAssets;
+import im.bci.jnuit.teavm.assets.TeavmVirtualFileSystem;
 import im.bci.jnuit.teavm.audio.TeavmNuitAudio;
 import im.bci.jnuit.widgets.Root;
 
@@ -55,14 +56,13 @@ public abstract class AbstractSample {
         TeavmNuitFont font = new TeavmNuitFont(ctx);
         NuitTranslator translator = new NuitTranslator();
         this.renderer = new TeavmNuitRenderer(translator, ctx);
-        final VirtualFileSystem vfs = new VirtualFileSystem();
-        // GarbageCollectedAssets assets = new GarbageCollectedAssets(new
-        // AssetsLoader(vfs));
+        final TeavmVirtualFileSystem vfs = new TeavmVirtualFileSystem();
+        TeavmAssets assets = new TeavmAssets(vfs);
         TeavmNuitAudio audio = new TeavmNuitAudio(vfs);
         this.toolkit = new NuitToolkit(new TeavmNuitDisplay(canvas), new TeavmNuitControls(), translator, font,
                 renderer, audio);
         this.root = new Root(toolkit);
-        setup(toolkit, root);
+        setup(toolkit, root, assets);
         Window.requestAnimationFrame(this::frame);
     }
 
@@ -72,6 +72,6 @@ public abstract class AbstractSample {
         renderer.render(root);
     }
 
-    protected abstract void setup(NuitToolkit toolkit, Root root);
+    protected abstract void setup(NuitToolkit toolkit, Root root, TeavmAssets assets);
 
 }
