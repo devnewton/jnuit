@@ -90,6 +90,12 @@
             <groupId>im.bci</groupId>
             <artifactId>jnuit-teavm</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-jso-impl</artifactId>
+            <version>0.6.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

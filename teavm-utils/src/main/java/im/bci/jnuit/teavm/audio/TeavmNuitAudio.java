@@ -25,8 +25,7 @@ package im.bci.jnuit.teavm.audio;
 
 import im.bci.jnuit.NuitAudio;
 import im.bci.jnuit.audio.Sound;
-import im.bci.jnuit.teavm.assets.VirtualFileSystem;
-import java.util.logging.Logger;
+import im.bci.jnuit.teavm.assets.TeavmVirtualFileSystem;
 
 /**
  *
@@ -36,9 +35,9 @@ public class TeavmNuitAudio implements NuitAudio {
 
     private float effectsVolume = 1.0f;
     private float musicVolume = 1.0f;
-    private final VirtualFileSystem vfs;
+    private final TeavmVirtualFileSystem vfs;
 
-    public TeavmNuitAudio(VirtualFileSystem virtualFileSystem) {
+    public TeavmNuitAudio(TeavmVirtualFileSystem virtualFileSystem) {
         this.vfs = virtualFileSystem;
     }
 
