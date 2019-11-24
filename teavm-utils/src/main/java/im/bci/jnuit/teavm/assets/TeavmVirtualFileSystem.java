@@ -36,9 +36,24 @@ public class TeavmVirtualFileSystem {
     public TeavmVirtualFileSystem(String... resourcePaths) {
         this.resourcePaths = Arrays.copyOf(resourcePaths, resourcePaths.length);
     }
-    
+
     public void setResourcePaths(String... resourcePaths) {
         this.resourcePaths = Arrays.copyOf(resourcePaths, resourcePaths.length);
+    }
+
+    public String getRealResourcePath(String path) {
+        for (String resourcePath : resourcePaths) {
+            String realPath = resourcePath + "/" + path;
+            if (exists(realPath)) {
+                return realPath;
+            }
+        }
+        return null;
+    }
+
+    private boolean exists(String realPath) {
+        //TODO
+        return true;
     }
 
 }

@@ -25,12 +25,10 @@ package im.bci.jnuit.teavm.assets.animation;
 
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.teavm.assets.TeavmAssets;
-import java.util.logging.Level;
 import org.teavm.jso.JSIndexer;
 import org.teavm.jso.JSObject;
 import org.teavm.jso.JSProperty;
 import org.teavm.jso.ajax.XMLHttpRequest;
-import org.teavm.jso.core.JSArray;
 import org.teavm.jso.json.JSON;
 
 /**

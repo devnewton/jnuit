@@ -56,7 +56,7 @@ public abstract class AbstractSample {
         TeavmNuitFont font = new TeavmNuitFont(ctx);
         NuitTranslator translator = new NuitTranslator();
         this.renderer = new TeavmNuitRenderer(translator, ctx);
-        final TeavmVirtualFileSystem vfs = new TeavmVirtualFileSystem();
+        final TeavmVirtualFileSystem vfs = new TeavmVirtualFileSystem("data");
         TeavmAssets assets = new TeavmAssets(vfs);
         TeavmNuitAudio audio = new TeavmNuitAudio(vfs);
         this.toolkit = new NuitToolkit(new TeavmNuitDisplay(canvas), new TeavmNuitControls(), translator, font,
@@ -68,8 +68,10 @@ public abstract class AbstractSample {
 
     public void frame(double timestamp) {
         toolkit.update(root);
+        ctx.setTransform((double)canvas.getWidth() / (double)toolkit.getVirtualResolutionWidth(), 0, 0, (double)canvas.getHeight() / (double)toolkit.getVirtualResolutionHeight(), 0, 0);
         ctx.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         renderer.render(root);
+        Window.requestAnimationFrame(this::frame);
     }
 
     protected abstract void setup(NuitToolkit toolkit, Root root, TeavmAssets assets);
