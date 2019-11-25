@@ -58,7 +58,7 @@ public abstract class AbstractSample {
         this.renderer = new TeavmNuitRenderer(translator, ctx);
         final TeavmVirtualFileSystem vfs = new TeavmVirtualFileSystem("data");
         TeavmAssets assets = new TeavmAssets(vfs);
-        TeavmNuitAudio audio = new TeavmNuitAudio(vfs);
+        TeavmNuitAudio audio = new TeavmNuitAudio(assets);
         this.toolkit = new NuitToolkit(new TeavmNuitDisplay(canvas), new TeavmNuitControls(), translator, font,
                 renderer, audio);
         this.root = new Root(toolkit);

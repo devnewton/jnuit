@@ -25,7 +25,10 @@ package im.bci.jnuit.teavm.audio;
 
 import im.bci.jnuit.NuitAudio;
 import im.bci.jnuit.audio.Sound;
-import im.bci.jnuit.teavm.assets.TeavmVirtualFileSystem;
+import im.bci.jnuit.teavm.assets.TeavmAssets;
+import java.util.ArrayList;
+import java.util.List;
+import org.teavm.jso.dom.html.HTMLAudioElement;
 
 /**
  *
@@ -35,10 +38,12 @@ public class TeavmNuitAudio implements NuitAudio {
 
     private float effectsVolume = 1.0f;
     private float musicVolume = 1.0f;
-    private final TeavmVirtualFileSystem vfs;
+    private final TeavmAssets assets;
+    private HTMLAudioElement music;
+    private final List<TeavmSound> sounds = new ArrayList<>();
 
-    public TeavmNuitAudio(TeavmVirtualFileSystem virtualFileSystem) {
-        this.vfs = virtualFileSystem;
+    public TeavmNuitAudio(TeavmAssets assets) {
+        this.assets = assets;
     }
 
     @Override
@@ -54,19 +59,23 @@ public class TeavmNuitAudio implements NuitAudio {
     @Override
     public void setEffectsVolume(float v) {
         this.effectsVolume = v;
+        for(TeavmSound s : sounds) {
+            s.audio.setVolume(effectsVolume);
+        }
     }
 
     @Override
     public void setMusicVolume(float v) {
+        if (null != this.music) {
+            this.music.setVolume(musicVolume);
+        }
         this.musicVolume = v;
     }
 
-    public void close() {
-
-    }
-
     public void clearAll() {
-
+        this.music = null;
+        this.sounds.clear();
+        this.assets.clearAudios();
     }
 
     @Override
@@ -76,35 +85,52 @@ public class TeavmNuitAudio implements NuitAudio {
 
     class TeavmSound implements Sound {
 
+        private final HTMLAudioElement audio;
+
+        private TeavmSound(HTMLAudioElement audio) {
+            this.audio = audio;
+        }
+
         @Override
         public void play() {
-            // TODO Auto-generated method stub
+            audio.play();
 
         }
 
         @Override
         public void stop() {
-            // TODO Auto-generated method stub
-
+            audio.pause();
         }
 
     }
 
     @Override
     public Sound getSound(final String name) {
-        return new TeavmSound();
+        HTMLAudioElement audio = this.assets.getAudio(name);
+        audio.setVolume(effectsVolume);
+        TeavmSound sound = new TeavmSound(audio);
+        sounds.add(sound);
+        return sound;
 
     }
 
     @Override
     public void playMusic(final String name, final boolean loop) {
         if (musicVolume > 0.0f) {
-
+            this.music = this.assets.getAudio(name);
+            if (null != this.music) {
+                this.music.setVolume(musicVolume);
+                this.music.setLoop(loop);
+                this.music.play();
+            }
         }
     }
 
     @Override
     public void stopMusic() {
-
+        if (null != this.music) {
+            this.music.pause();
+            this.music = null;
+        }
     }
 }
