@@ -230,8 +230,8 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
     public void visit(Widget widget, ColoredBackground background) {
         ctx.setFillStyle(
                 htmlColor(background.getRed(), background.getGreen(), background.getBlue(), background.getAlpha()));
-        ctx.fillRect(widget.getX(), widget.getY(), widget.getX() + widget.getWidth(),
-                widget.getY() + widget.getHeight());
+        ctx.fillRect(widget.getX(), widget.getY(), widget.getWidth(),
+                widget.getHeight());
         ctx.setFillStyle("#000");
         /*
          * GL11.glDisable(GL11.GL_TEXTURE_2D); GL11.glColor4f(background.getRed(),
@@ -325,7 +325,7 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         public void visit(Widget focused, ColoredRectangleFocusCursor cursor) {
             ctx.setStrokeStyle(htmlColor(cursor.getRed(), cursor.getGreen(), cursor.getBlue(), cursor.getAlpha()));
             ctx.setLineWidth(2.0);
-            ctx.rect(focused.getX(), focused.getY(), focused.getWidth(), focused.getHeight());
+            ctx.strokeRect(focused.getX(), focused.getY(), focused.getWidth(), focused.getHeight());
             ctx.setStrokeStyle("#000");
             ctx.setLineWidth(1.0);
             /*
@@ -382,10 +382,13 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
         }
         ctx.setFont(font.getCss());
         ctx.setTextBaseline("middle");
+        ctx.setTextAlign("center");
         ctx.setFillStyle(htmlColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()));
         ctx.fillText(text, x, y);
+        ctx.setFont("10px sans-serif");
         ctx.setFillStyle("#000");
         ctx.setTextBaseline("alphabetic");
+        ctx.setTextAlign("start");
         /*
          * GL11.glColor4f(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
          * font.drawString(text, align); GL11.glColor3f(1f, 1f, 1f);

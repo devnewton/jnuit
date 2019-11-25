@@ -20,7 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-*/
+ */
 package im.bci.jnuit.teavm;
 
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
@@ -50,12 +50,18 @@ public class TeavmNuitFont implements NuitFont {
 
     @Override
     public int getHeight(String str) {
-        return ctx.measureText("█").getWidth() * 2;// very approximate
+        ctx.setFont(css);
+        int height = ctx.measureText("█").getWidth() * 2; // very approximate
+        ctx.setFont("10px sans-serif");
+        return height;
     }
 
     @Override
     public int getWidth(String str) {
-        return ctx.measureText(str).getWidth();
+        ctx.setFont(css);
+        int width =  ctx.measureText(str).getWidth();
+        ctx.setFont("10px sans-serif");
+        return width;
     }
 
 }
