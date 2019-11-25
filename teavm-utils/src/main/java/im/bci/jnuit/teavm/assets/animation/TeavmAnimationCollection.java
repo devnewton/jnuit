@@ -31,8 +31,8 @@ import java.util.Map;
 
 public class TeavmAnimationCollection implements IAnimationCollection {
 
-    final LinkedHashMap<String/*animation name*/, TeavmAnimation> animations = new LinkedHashMap<String/*animation name*/, TeavmAnimation>();
-    private final Map<String, TeavmAnimationImage> images = new HashMap<String,TeavmAnimationImage>();
+    final LinkedHashMap<String/*animation name*/, TeavmAnimation> animations = new LinkedHashMap<>();
+    private final Map<String, TeavmAnimationImage> images = new HashMap<>();
     private boolean ready;
 
     public boolean isReady() {

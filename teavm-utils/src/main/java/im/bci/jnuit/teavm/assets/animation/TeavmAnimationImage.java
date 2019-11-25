@@ -24,7 +24,6 @@
 package im.bci.jnuit.teavm.assets.animation;
 
 import im.bci.jnuit.animation.IAnimationImage;
-import org.teavm.jso.browser.Window;
 import org.teavm.jso.dom.html.HTMLImageElement;
 
 /**
@@ -35,9 +34,8 @@ public class TeavmAnimationImage implements IAnimationImage {
 
     private final HTMLImageElement image;
 
-    public TeavmAnimationImage(String imageSrc) {
-        this.image = Window.current().getDocument().createElement("img").cast();
-        this.image.setSrc(imageSrc);
+    public TeavmAnimationImage(HTMLImageElement image) {
+        this.image = image;
     }
 
     @Override
