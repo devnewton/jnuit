@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2019 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,31 +21,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.teavm.assets.animation;
+package im.bci.jnuit.teavm;
 
-import im.bci.jnuit.animation.IAnimation;
-import im.bci.jnuit.animation.IAnimationCollection;
+import org.teavm.jso.JSIndexer;
+import org.teavm.jso.JSObject;
 
 /**
  *
  * @author devnewton
  */
-public class NotReadyTeavmAnimationCollection implements IAnimationCollection {
+public interface JsonMap  extends JSObject {
 
-    final TeavmAnimationCollection animationCollection;
-
-    public NotReadyTeavmAnimationCollection(TeavmAnimationCollection animationCollection) {
-        this.animationCollection = animationCollection;
-    }
-
-    @Override
-    public IAnimation getAnimationByName(String name) {
-        return new NotReadyTeavmAnimation(animationCollection, name);
-    }
-
-    @Override
-    public IAnimation getFirst() {
-        return new NotReadyTeavmAnimation(animationCollection, null);
-    }
-
+    @JSIndexer
+    JSObject get(String propertyName);
+    
 }

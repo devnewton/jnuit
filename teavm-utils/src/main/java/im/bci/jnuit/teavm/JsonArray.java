@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2013 devnewton <devnewton@bci.im>
+ Copyright (c) 2019 devnewton <devnewton@bci.im>
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +21,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.teavm.assets.animation;
+package im.bci.jnuit.teavm;
 
-import im.bci.jnuit.animation.IAnimation;
-import im.bci.jnuit.animation.IPlay;
-import im.bci.jnuit.animation.PlayMode;
+import org.teavm.jso.JSIndexer;
+import org.teavm.jso.JSObject;
+import org.teavm.jso.JSProperty;
 
 /**
  *
  * @author devnewton
  */
-public class NotReadyTeavmAnimation implements IAnimation {
+public interface JsonArray  extends JSObject {
 
-    final TeavmAnimationCollection animationCollection;
-    private final String name;
+    @JSIndexer
+    JSObject get(int index);
 
-    public NotReadyTeavmAnimation(TeavmAnimationCollection animationCollection, String name) {
-        this.animationCollection = animationCollection;
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public IPlay start(PlayMode mode) {
-        if (animationCollection.isReady()) {
-            return animationCollection.getAnimationByName(name).start(mode);
-        } else {
-            return new NotReadyPlay(animationCollection, name, mode);
-        }
-    }
-
-    @Override
-    public void stop(IPlay play) {
-        play.stop();
-    }
+    @JSProperty
+    int getLength();
+    
 }

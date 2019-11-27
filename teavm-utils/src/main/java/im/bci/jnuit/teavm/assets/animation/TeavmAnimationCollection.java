@@ -25,23 +25,11 @@ package im.bci.jnuit.teavm.assets.animation;
 
 import im.bci.jnuit.animation.IAnimationCollection;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class TeavmAnimationCollection implements IAnimationCollection {
 
     final LinkedHashMap<String/*animation name*/, TeavmAnimation> animations = new LinkedHashMap<>();
-    private final Map<String, TeavmAnimationImage> images = new HashMap<>();
-    private boolean ready;
-
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
 
     public void addAnimation(TeavmAnimation animation) {
         animations.put(animation.getName(), animation);
@@ -60,9 +48,5 @@ public class TeavmAnimationCollection implements IAnimationCollection {
         } else {
             throw new RuntimeException("Unknown animation " + name);
         }
-    }
-
-    public Map<String, TeavmAnimationImage> getImages() {
-        return images;
     }
 }

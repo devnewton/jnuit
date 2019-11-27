@@ -48,7 +48,7 @@ public class AudioConfiguratorSample extends AbstractSample {
             }
             
         };
-        audioConf.setBackground(new TexturedBackground(assets.getAnimations("menu.png").getFirst().start(PlayMode.LOOP)));
+        audioConf.setBackground(new TexturedBackground(assets.getAnimations("blue_colorizer.json").getFirst().start(PlayMode.LOOP)));
         root.show(audioConf);  
     }
     

@@ -23,12 +23,13 @@
  */
 package im.bci.jnuit.teavm.assets.animation;
 
+import im.bci.jnuit.teavm.JsonMap;
+import im.bci.jnuit.teavm.JsonArray;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.teavm.assets.TeavmAssets;
-import org.teavm.jso.JSIndexer;
 import org.teavm.jso.JSObject;
-import org.teavm.jso.JSProperty;
-import org.teavm.jso.ajax.XMLHttpRequest;
+import org.teavm.jso.core.JSNumber;
+import org.teavm.jso.core.JSString;
 import org.teavm.jso.json.JSON;
 
 /**
@@ -50,55 +51,46 @@ public class TeavmAnimationLoader {
         final TeavmAnimation animation = new TeavmAnimation(filename);
         animation.addFrame(new TeavmAnimationImage(assets.getImage(filename)), 1000000);
         animations.addAnimation(animation);
-        animations.setReady(true);
         return animations;
     }
 
-    public interface JsonMap {
 
-        @JSIndexer
-        JSObject get(String propertyName);
-    }
-
-    public interface JsonArray {
-
-        @JSIndexer
-        JSObject get(int index);
-        
-        @JSProperty
-        int getLength();
-    }
 
     public static IAnimationCollection loadNanim(final TeavmAssets assets, final String filename) {
-        final TeavmAnimationCollection nanim = new TeavmAnimationCollection();
-        XMLHttpRequest xhr = XMLHttpRequest.create();
-        xhr.onComplete(() -> {
-            String path;
-            final int lastIndexOfSlash = filename.lastIndexOf("/");
-            if (lastIndexOfSlash < 0) {
-                path = "";
-            } else {
-                path = filename.substring(0, filename.lastIndexOf("/") + 1);
-            }
-            JsonMap json = JSON.parse(xhr.getResponseText()).cast();
-            JsonArray jsonAnimations = json.get("animations").cast();
-            for (int a = 0, na = jsonAnimations.getLength(); a < na; ++a) {
-                JsonMap jsonAnimation = jsonAnimations.get(a).cast();
-                TeavmAnimation animation = new TeavmAnimation(jsonAnimation.get("name").cast());
-                JsonArray jsonFrames = jsonAnimation.get("frames").cast();
-                for (int f = 0, nf = jsonFrames.getLength(); f < nf; ++f) {
-                    JsonMap jsonFrame = jsonFrames.get(f).cast();
-                    final String imageFilename = jsonFrame.get("image").cast();
-                    TeavmAnimationImage image = new TeavmAnimationImage(assets.getImage(path + imageFilename));
-                    animation.addFrame(image, jsonFrame.get("duration").cast(), jsonFrame.get("u1").cast(), jsonFrame.get("v1").cast(), jsonFrame.get("u2").cast(), jsonFrame.get("v2").cast());
+        try {
+                String path;
+                final int lastIndexOfSlash = filename.lastIndexOf("/");
+                if (lastIndexOfSlash < 0) {
+                    path = "";
+                } else {
+                    path = filename.substring(0, filename.lastIndexOf("/") + 1);
                 }
-                nanim.addAnimation(animation);
-            }
-            nanim.setReady(true);
-
-        });
-        xhr.open("GET", filename);
-        xhr.send();
-        return new NotReadyTeavmAnimationCollection(nanim);
+                final String text = assets.getText(filename);
+                final JsonMap json = JSON.parse(text).cast();
+                final JsonArray jsonAnimations = json.get("animations").cast();
+                final TeavmAnimationCollection nanim = new TeavmAnimationCollection();
+                for (int a = 0, na = jsonAnimations.getLength(); a < na; ++a) {
+                    final JsonMap jsonAnimation = jsonAnimations.get(a).cast();
+                    final JSString animationName = jsonAnimation.get("name").cast();
+                    TeavmAnimation animation = new TeavmAnimation(animationName.stringValue());
+                    final JsonArray jsonFrames = jsonAnimation.get("frames").cast();
+                    for (int f = 0, nf = jsonFrames.getLength(); f < nf; ++f) {
+                        final JsonMap jsonFrame = jsonFrames.get(f).cast();
+                        final JSString jsImageFilename = jsonFrame.get("image").cast();
+                        final String imageFilename = jsImageFilename.stringValue();
+                        TeavmAnimationImage image = new TeavmAnimationImage(assets.getImage(path + imageFilename));
+                        JSNumber duration = jsonFrame.get("duration").cast();
+                        JSNumber u1 = jsonFrame.get("u1").cast();
+                        JSNumber v1 = jsonFrame.get("v1").cast();
+                        JSNumber u2 = jsonFrame.get("u2").cast();
+                        JSNumber v2 = jsonFrame.get("v2").cast();                        
+                        animation.addFrame(image, duration.intValue(), u1.floatValue(), v1.floatValue(), u2.floatValue(), v2.floatValue());
+                    }
+                    nanim.addAnimation(animation);
+                }
+                return nanim;
+        } catch (Exception ex) {
+            throw new RuntimeException("Cannot load animation " + filename, ex);
+        }
     }
 }
