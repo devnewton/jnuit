@@ -68,8 +68,9 @@ public abstract class AbstractSample {
 
     public void frame(double timestamp) {
         toolkit.update(root);
+        root.update((float) (timestamp / 1000000f));
         ctx.setTransform((double)canvas.getWidth() / (double)toolkit.getVirtualResolutionWidth(), 0, 0, (double)canvas.getHeight() / (double)toolkit.getVirtualResolutionHeight(), 0, 0);
-        ctx.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        ctx.clearRect(0, 0, toolkit.getVirtualResolutionWidth(), toolkit.getVirtualResolutionHeight());
         renderer.render(root);
         Window.requestAnimationFrame(this::frame);
     }

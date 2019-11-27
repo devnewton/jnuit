@@ -56,6 +56,7 @@ import im.bci.jnuit.widgets.Widget;
 
 import org.teavm.jso.canvas.CanvasImageSource;
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
+import org.teavm.jso.dom.html.HTMLImageElement;
 
 /**
  *
@@ -258,7 +259,15 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
             if(background.isMirrorY()) {
                 height = -height;
             }
-            ctx.drawImage((CanvasImageSource) frame.getImage().getId(), widget.getX(), widget.getY(), width, height);
+            CanvasImageSource imageSource = (CanvasImageSource) frame.getImage().getId();
+            HTMLImageElement img = imageSource.cast();
+            final int imageWidth = img.getWidth();
+            final int imageHeight = img.getHeight();
+            final float u1 = frame.getU1();
+            final float v1 = frame.getV1();
+            final float u2 = frame.getU2();
+            final float v2 = frame.getV2();
+            ctx.drawImage(imageSource, u1 * imageWidth, v1 * imageHeight, (u2 - u1) * imageWidth, (v2 - v1) * imageHeight, widget.getX(), widget.getY(), width, height);
             /*GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer) frame.getImage().getId());
             float x1 = widget.getX();
             float x2 = widget.getX() + widget.getWidth();
