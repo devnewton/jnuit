@@ -21,7 +21,7 @@
     <parent>
         <groupId>im.bci</groupId>
         <artifactId>jnuit</artifactId>
-        <version>0.14-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>jnuit-teavm</artifactId>
