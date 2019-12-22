@@ -43,74 +43,84 @@ public class TeavmNuitControls implements NuitControls {
     private Keyboard keyboard = new Keyboard();
     private Mouse mouse = new Mouse();
 
-	public TeavmNuitControls() {
-	}
+    public TeavmNuitControls() {
+    }
 
-	@Override
-	public Control[] getPossibleControls() {
-		List<Control> possibleControls = new ArrayList<Control>();
-		possibleControls.addAll(keyboard.getPossibleControls());
-		possibleControls.addAll(mouse.getPossibleControls());
-		return possibleControls.toArray(new Control[possibleControls.size()]);
-	}
+    public Keyboard getKeyboard() {
+        return keyboard;
+    }
 
-	@Override
-	public Control[] getDefaultMenuUpControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("ArrowUp");
-		controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    public Mouse getMouse() {
+        return mouse;
+    }
+    
+    
 
-	@Override
-	public Control[] getDefaultMenuDownControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("ArrowDown");
-		controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    @Override
+    public Control[] getPossibleControls() {
+        List<Control> possibleControls = new ArrayList<Control>();
+        possibleControls.addAll(keyboard.getPossibleControls());
+        possibleControls.addAll(mouse.getPossibleControls());
+        return possibleControls.toArray(new Control[possibleControls.size()]);
+    }
 
-	@Override
-	public Control[] getDefaultMenuLeftControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("ArrowLeft");
-		controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    @Override
+    public Control[] getDefaultMenuUpControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("ArrowUp");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
 
-	@Override
-	public Control[] getDefaultMenuRightControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("ArrowRight");
-                controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    @Override
+    public Control[] getDefaultMenuDownControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("ArrowDown");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
 
-	@Override
-	public Control[] getDefaultMenuOkControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("Enter");
-		controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    @Override
+    public Control[] getDefaultMenuLeftControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("ArrowLeft");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
 
-	@Override
-	public Control[] getDefaultMenuCancelControls() {
-		Control[] controls = new Control[2];
-		controls[0] = keyboard.getKeyControl("Escape");
-		controls[1] = NullControl.INSTANCE;
-		return controls;
-	}
+    @Override
+    public Control[] getDefaultMenuRightControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("ArrowRight");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
 
-	@Override
-	public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
-		double xpos = mouse.getClientX();
-		double ypos = mouse.getClientY();
-		int width = Window.current().getInnerWidth();
-		int height = Window.current().getInnerHeight();
-		pointer.setX((float) (xpos * (double) virtualResolutionWidth / (double) width));
-		pointer.setY((float) (ypos * (double) virtualResolutionHeight / (double) height));
-		pointer.setDown(mouse.isPressed());
-	}
+    @Override
+    public Control[] getDefaultMenuOkControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("Enter");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
+
+    @Override
+    public Control[] getDefaultMenuCancelControls() {
+        Control[] controls = new Control[2];
+        controls[0] = keyboard.getKeyControl("Escape");
+        controls[1] = NullControl.INSTANCE;
+        return controls;
+    }
+
+    @Override
+    public void pollPointer(float virtualResolutionWidth, float virtualResolutionHeight, Pointer pointer) {
+        double xpos = mouse.getClientX();
+        double ypos = mouse.getClientY();
+        int width = Window.current().getInnerWidth();
+        int height = Window.current().getInnerHeight();
+        pointer.setX((float) (xpos * (double) virtualResolutionWidth / (double) width));
+        pointer.setY((float) (ypos * (double) virtualResolutionHeight / (double) height));
+        pointer.setDown(mouse.isPressed());
+    }
 
 }
