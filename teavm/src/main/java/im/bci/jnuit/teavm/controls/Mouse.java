@@ -2,8 +2,6 @@ package im.bci.jnuit.teavm.controls;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.teavm.jso.browser.Window;
 import org.teavm.jso.dom.events.MouseEvent;
