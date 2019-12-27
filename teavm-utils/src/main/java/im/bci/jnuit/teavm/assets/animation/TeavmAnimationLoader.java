@@ -27,7 +27,6 @@ import im.bci.jnuit.teavm.JsonMap;
 import im.bci.jnuit.teavm.JsonArray;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.teavm.assets.TeavmAssets;
-import org.teavm.jso.JSObject;
 import org.teavm.jso.core.JSNumber;
 import org.teavm.jso.core.JSString;
 import org.teavm.jso.json.JSON;
