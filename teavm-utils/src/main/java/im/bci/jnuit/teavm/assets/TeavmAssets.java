@@ -20,7 +20,10 @@ public class TeavmAssets {
     public TeavmAssets(TeavmVirtualFileSystem vfs) {
         this.vfs = vfs;
     }
-    
+
+    public TeavmVirtualFileSystem getVfs() {
+        return vfs;
+    }
 
     public String getText(String filename) {
         try {

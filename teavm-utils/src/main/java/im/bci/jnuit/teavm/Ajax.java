@@ -53,4 +53,27 @@ public class Ajax {
         });
         xhr.send();
     }
+    
+    @Async
+    public static native boolean exists(String url);
+    private static void exists(String url, AsyncCallback<Boolean> callback) {
+        XMLHttpRequest xhr = XMLHttpRequest.create();
+        xhr.open("head", url);
+        xhr.setOnReadyStateChange(() -> {
+            if (xhr.getReadyState() != XMLHttpRequest.DONE) {
+                return;
+            }
+            switch(xhr.getStatus()) {
+                case 200:
+                    callback.complete(true);
+                    break;
+                case 404:
+                    callback.complete(false);
+                default:
+                    callback.error(new IOException("HTTP status: " + 
+                        xhr.getStatus() + " " + xhr.getStatusText()));
+            }
+        });
+        xhr.send();
+    }
 }

@@ -23,6 +23,7 @@
  */
 package im.bci.jnuit.teavm.assets;
 
+import im.bci.jnuit.teavm.Ajax;
 import java.util.Arrays;
 
 /**
@@ -51,9 +52,8 @@ public class TeavmVirtualFileSystem {
         return null;
     }
 
-    private boolean exists(String realPath) {
-        //TODO
-        return true;
+    public boolean exists(String realPath) {
+        return Ajax.exists(realPath);
     }
 
 }
