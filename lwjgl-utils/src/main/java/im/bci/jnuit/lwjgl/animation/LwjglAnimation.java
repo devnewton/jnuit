@@ -26,16 +26,14 @@ package im.bci.jnuit.lwjgl.animation;
 import im.bci.jnuit.animation.IPlay;
 import im.bci.jnuit.animation.PlayMode;
 import im.bci.jnuit.animation.IAnimation;
-import im.bci.jnuit.lwjgl.animation.NanimParser.Frame;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  *
  * @author devnewton
  */
-public class Nanimation implements IAnimation {
+public class LwjglAnimation implements IAnimation {
 
     public class Play implements IPlay {
 
@@ -46,11 +44,11 @@ public class Nanimation implements IAnimation {
 
         @Override
         public String getName() {
-            return Nanimation.this.name;
+            return LwjglAnimation.this.name;
         }
 
         @Override
-        public NanimationFrame getCurrentFrame() {
+        public LwjglAnimationFrame getCurrentFrame() {
             return frames.get(currentFrameIndex);
         }
 
@@ -117,38 +115,16 @@ public class Nanimation implements IAnimation {
 
         STARTED, STOPPED
     }
-    private final ArrayList<NanimationFrame> frames = new ArrayList<NanimationFrame>();
+    private final ArrayList<LwjglAnimationFrame> frames = new ArrayList<LwjglAnimationFrame>();
     private long totalDuration;// milliseconds
     private final String name;
 
-    public Nanimation(String name) {
+    public LwjglAnimation(String name) {
         this.name = name;
     }
 
-    public Nanimation(im.bci.jnuit.lwjgl.animation.NanimParser.Animation nanimation,
-            Map<String, NanimationImage> images) {
-        name = nanimation.getName();
-        frames.ensureCapacity(nanimation.getFramesCount());
-        for (Frame nframe : nanimation.getFramesList()) {
-            NanimationFrame frame = addFrame(
-                    images.get(nframe.getImageName()), nframe.getDuration());
-            frame.u1 = nframe.getU1();
-            frame.v1 = nframe.getV1();
-            frame.u2 = nframe.getU2();
-            frame.v2 = nframe.getV2();
-        }
-    }
-
-    private NanimationFrame addFrame(NanimationImage image, long duration) {
-        final NanimationFrame frame = new NanimationFrame(image, duration);
-        frames.add(frame);
-        totalDuration += duration;
-        frame.endTime = totalDuration;
-        return frame;
-    }
-
-    public void addFrame(NanimationImage image, int duration, float u1, float v1, float u2, float v2) {
-        final NanimationFrame frame = new NanimationFrame(image, duration);
+    public void addFrame(LwjglAnimationImage image, int duration, float u1, float v1, float u2, float v2) {
+        final LwjglAnimationFrame frame = new LwjglAnimationFrame(image, duration);
         frames.add(frame);
         totalDuration += duration;
         frame.endTime = totalDuration;

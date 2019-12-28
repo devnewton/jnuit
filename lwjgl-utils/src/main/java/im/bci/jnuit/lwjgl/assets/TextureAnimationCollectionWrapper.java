@@ -23,6 +23,7 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.animation.ITexture;
 import im.bci.jnuit.animation.IAnimation;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.animation.IAnimationFrame;

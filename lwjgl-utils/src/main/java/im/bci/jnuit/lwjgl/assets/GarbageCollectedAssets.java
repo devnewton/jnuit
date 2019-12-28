@@ -23,9 +23,10 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.animation.ITexture;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
-import im.bci.jnuit.lwjgl.animation.NanimationCollection;
+import im.bci.jnuit.lwjgl.animation.LwjglAnimationCollection;
 import java.lang.ref.ReferenceQueue;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,9 +41,9 @@ public class GarbageCollectedAssets implements IAssets {
 
     private final AssetsLoader assets;
     private final HashMap<String/* name */, TextureWeakReference> textures = new HashMap<String/* name */, TextureWeakReference>();
-    private final ReferenceQueue<Texture> texturesReferenceQueue = new ReferenceQueue<Texture>();
+    private final ReferenceQueue<LwjglTexture> texturesReferenceQueue = new ReferenceQueue<LwjglTexture>();
     private final HashMap<String/* name */, AnimationCollectionWeakReference> animations = new HashMap<String/* name */, AnimationCollectionWeakReference>();
-    private final ReferenceQueue<NanimationCollection> animationsReferenceQueue = new ReferenceQueue<NanimationCollection>();
+    private final ReferenceQueue<LwjglAnimationCollection> animationsReferenceQueue = new ReferenceQueue<LwjglAnimationCollection>();
     private final HashMap<String/* name */, TrueTypeFontWeakReference> fonts = new HashMap<String/* name */, TrueTypeFontWeakReference>();
     private final ReferenceQueue<LwjglNuitFont> fontsReferenceQueue = new ReferenceQueue<LwjglNuitFont>();
     private static final Logger logger = Logger.getLogger(GarbageCollectedAssets.class.getName());
@@ -58,9 +59,6 @@ public class GarbageCollectedAssets implements IAssets {
         }
         textures.clear();
 
-        for (AnimationCollectionWeakReference ref : animations.values()) {
-            ref.delete();
-        }
         animations.clear();
 
         for (TrueTypeFontWeakReference ref : fonts.values()) {
@@ -76,11 +74,6 @@ public class GarbageCollectedAssets implements IAssets {
         while ((tex = (TextureWeakReference) texturesReferenceQueue.poll()) != null) {
             tex.delete();
         }
-
-        AnimationCollectionWeakReference ani;
-        while ((ani = (AnimationCollectionWeakReference) animationsReferenceQueue.poll()) != null) {
-            ani.delete();
-        }
     }
 
     @Override
@@ -90,14 +83,14 @@ public class GarbageCollectedAssets implements IAssets {
         } else {
             AnimationCollectionWeakReference animRef = animations.get(name);
             if (null != animRef) {
-                NanimationCollection anim = animRef.get();
+                LwjglAnimationCollection anim = animRef.get();
                 if (null != anim) {
                     return anim;
                 } else {
                     animations.remove(name);
                 }
             }
-            NanimationCollection anim = assets.loadAnimations(name);
+            LwjglAnimationCollection anim = assets.loadAnimations(name);
             putAnim(name, anim);
             return anim;
         }
@@ -123,14 +116,14 @@ public class GarbageCollectedAssets implements IAssets {
     public ITexture getTexture(String name) {
         TextureWeakReference textureRef = textures.get(name);
         if (textureRef != null) {
-            Texture texture = textureRef.get();
+            LwjglTexture texture = textureRef.get();
             if (texture != null) {
                 return texture;
             } else {
                 textures.remove(name);
             }
         }
-        Texture texture = assets.loadTexture(name);
+        LwjglTexture texture = assets.loadTexture(name);
         putTexture(name, texture);
         return texture;
 
@@ -143,9 +136,9 @@ public class GarbageCollectedAssets implements IAssets {
     }
 
     @Override
-    public Texture grabScreenToTexture() {
+    public LwjglTexture grabScreenToTexture() {
         final String name = "!screenCapture_" + new Date().getTime();
-        Texture texture = assets.grabScreenToTexture();
+        LwjglTexture texture = assets.grabScreenToTexture();
         putTexture(name, texture);
         return texture;
     }
@@ -155,11 +148,11 @@ public class GarbageCollectedAssets implements IAssets {
         assets.setIcon(glfwWindow, name);
     }
 
-    private void putAnim(String name, NanimationCollection anim) {
+    private void putAnim(String name, LwjglAnimationCollection anim) {
         animations.put(name, new AnimationCollectionWeakReference(name, anim, animationsReferenceQueue));
     }
 
-    private void putTexture(String name, Texture texture) {
+    private void putTexture(String name, LwjglTexture texture) {
         textures.put(name, new TextureWeakReference(name, texture, texturesReferenceQueue));
     }
 
@@ -180,7 +173,6 @@ public class GarbageCollectedAssets implements IAssets {
             if (null != animation.get()) {
                 logger.log(Level.WARNING, "Force still referenced animation ''{0}'' unload.", name);
             }
-            animation.delete();
             animations.remove(name);
         }
     }

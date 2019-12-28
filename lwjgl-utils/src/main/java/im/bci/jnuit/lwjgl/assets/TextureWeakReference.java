@@ -36,13 +36,13 @@ import org.lwjgl.opengl.GL11;
  *
  * @author devnewton
  */
-public class TextureWeakReference extends WeakReference<Texture> {
+public class TextureWeakReference extends WeakReference<LwjglTexture> {
 
     Integer textureId;
     String name;
     private static final Logger logger = Logger.getLogger(TextureWeakReference.class.getName());
 
-    TextureWeakReference(String name, Texture texture, ReferenceQueue<Texture> queue) {
+    TextureWeakReference(String name, LwjglTexture texture, ReferenceQueue<LwjglTexture> queue) {
         super(texture, queue);
         textureId = texture.getId();
         this.name = name;

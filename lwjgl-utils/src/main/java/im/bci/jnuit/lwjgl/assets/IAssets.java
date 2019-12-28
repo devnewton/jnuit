@@ -24,6 +24,7 @@
 
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.animation.ITexture;
 import im.bci.jnuit.NuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
 

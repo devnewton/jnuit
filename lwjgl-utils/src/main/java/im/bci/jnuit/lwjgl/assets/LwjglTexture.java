@@ -23,18 +23,44 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.animation.ITexture;
+import org.lwjgl.opengl.GL11;
+
 /**
  *
  * @author devnewton
  */
-public interface ITexture {
+public class LwjglTexture implements ITexture {
 
-    int getHeight();
+    private final int id;
+    private final int width, height;
+    private final boolean alpha;
 
-    int getId();
+    LwjglTexture(int width, int height, boolean alpha) {
+        id = GL11.glGenTextures();
+        this.width = width;
+        this.height = height;
+        this.alpha = alpha;
+    }
 
-    int getWidth();
+    @Override
+    public int getId() {
+        return id;
+    }
 
-    boolean hasAlpha();
-    
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public boolean hasAlpha() {
+        return alpha;
+    }
 }

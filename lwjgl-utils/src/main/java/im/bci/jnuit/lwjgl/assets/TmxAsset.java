@@ -23,6 +23,7 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.animation.ITexture;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.tmxloader.TmxFrame;
 import im.bci.tmxloader.TmxLayer;

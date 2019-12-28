@@ -24,7 +24,7 @@
 package im.bci.jnuit.lwjgl.animation;
 
 import im.bci.jnuit.animation.IAnimationImage;
-import im.bci.jnuit.lwjgl.assets.Texture;
+import im.bci.jnuit.lwjgl.assets.LwjglTexture;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -34,32 +34,21 @@ import org.lwjgl.opengl.GL11;
  *
  * @author devnewton
  */
-public class NanimationImage implements IAnimationImage {
+public class LwjglAnimationImage implements IAnimationImage {
 
-    private final int id;
-    private final boolean alpha;
+    private final LwjglTexture texture;
 
-    public NanimationImage(boolean alpha) {
-        ByteBuffer temp = ByteBuffer.allocateDirect(4);
-        temp.order(ByteOrder.nativeOrder());
-        IntBuffer intBuffer = temp.asIntBuffer();
-        GL11.glGenTextures(intBuffer);
-        id = intBuffer.get(0);
-        this.alpha = alpha;
-    }
-
-    public NanimationImage(Texture texture) {
-        this.id = texture.getId();
-        this.alpha = texture.hasAlpha();
+    public LwjglAnimationImage(LwjglTexture texture) {
+        this.texture = texture;
     }
 
     @Override
     public Object getId() {
-        return id;
+        return texture.getId();
     }
 
     @Override
     public boolean hasAlpha() {
-        return alpha;
+        return texture.hasAlpha();
     }
 }

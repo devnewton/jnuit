@@ -21,56 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package im.bci.jnuit.lwjgl.animation;
-
-import im.bci.jnuit.animation.IAnimationFrame;
+package im.bci.jnuit.animation;
 
 /**
  *
  * @author devnewton
  */
-public class NanimationFrame implements IAnimationFrame {
+public interface ITexture {
 
-    private final NanimationImage image;
-    private final long duration;//milliseconds
-    long endTime;//milliseconds
-    float u1 = 0;
-    float v1 = 0;
-    float u2 = 1;
-    float v2 = 1;
+    int getHeight();
 
-    public NanimationFrame(NanimationImage image, long duration) {
-        this.image = image;
-        this.duration = duration;
-    }
+    int getId();
 
-    @Override
-    public long getDuration() {
-        return duration;
-    }
+    int getWidth();
 
-    @Override
-    public NanimationImage getImage() {
-        return image;
-    }
-
-    @Override
-    public float getU1() {
-        return u1;
-    }
-
-    @Override
-    public float getV1() {
-        return v1;
-    }
-
-    @Override
-    public float getU2() {
-        return u2;
-    }
-
-    @Override
-    public float getV2() {
-        return v2;
-    }
+    boolean hasAlpha();
+    
 }
