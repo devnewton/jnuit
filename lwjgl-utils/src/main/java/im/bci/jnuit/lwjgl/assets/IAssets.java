@@ -41,6 +41,8 @@ public interface IAssets {
     void forceAnimationUnload(String name);
 
     IAnimationCollection getAnimations(String name);
+    
+    IAnimationCollection getAnimationFromSubTexture(String name, float u1, float v1, float u2, float v2);
 
     NuitFont getFont(String name);
 

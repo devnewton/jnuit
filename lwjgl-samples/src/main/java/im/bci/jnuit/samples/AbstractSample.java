@@ -88,7 +88,7 @@ public abstract class AbstractSample {
             NuitTranslator translator = new NuitTranslator();
             final LwjglNuitRenderer renderer = new LwjglNuitRenderer(translator, font, window);
             final VirtualFileSystem vfs = new VirtualFileSystem();
-            GarbageCollectedAssets assets = new GarbageCollectedAssets(new AssetsLoader(vfs));
+            GarbageCollectedAssets assets = new GarbageCollectedAssets(vfs);
             OpenALNuitAudio audio = new OpenALNuitAudio(vfs);
 			NuitToolkit toolkit = new NuitToolkit(new LwjglNuitDisplay(window), new LwjglNuitControls(window), translator, font, renderer, audio);
             Root root = new Root(toolkit);

@@ -23,15 +23,24 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import im.bci.jnuit.animation.ITexture;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
 import im.bci.jnuit.animation.IAnimationCollection;
+import im.bci.jnuit.lwjgl.animation.LwjglAnimation;
 import im.bci.jnuit.lwjgl.animation.LwjglAnimationCollection;
+import im.bci.jnuit.lwjgl.animation.LwjglAnimationImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.ReferenceQueue;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.lwjgl.opengl.GL11;
 
 /**
  *
@@ -39,17 +48,19 @@ import java.util.logging.Logger;
  */
 public class GarbageCollectedAssets implements IAssets {
 
-    private final AssetsLoader assets;
+    private final AssetsLoader assetsLoader;
     private final HashMap<String/* name */, TextureWeakReference> textures = new HashMap<String/* name */, TextureWeakReference>();
     private final ReferenceQueue<LwjglTexture> texturesReferenceQueue = new ReferenceQueue<LwjglTexture>();
     private final HashMap<String/* name */, AnimationCollectionWeakReference> animations = new HashMap<String/* name */, AnimationCollectionWeakReference>();
-    private final ReferenceQueue<LwjglAnimationCollection> animationsReferenceQueue = new ReferenceQueue<LwjglAnimationCollection>();
+    private final ReferenceQueue<IAnimationCollection> animationsReferenceQueue = new ReferenceQueue<>();
     private final HashMap<String/* name */, TrueTypeFontWeakReference> fonts = new HashMap<String/* name */, TrueTypeFontWeakReference>();
     private final ReferenceQueue<LwjglNuitFont> fontsReferenceQueue = new ReferenceQueue<LwjglNuitFont>();
-    private static final Logger logger = Logger.getLogger(GarbageCollectedAssets.class.getName());
+    private LwjglTextureQuality quality = LwjglTextureQuality.DEFAULT;
 
-    public GarbageCollectedAssets(AssetsLoader assets) {
-        this.assets = assets;
+    private static final Logger LOGGER = Logger.getLogger(GarbageCollectedAssets.class.getName());
+
+    public GarbageCollectedAssets(VirtualFileSystem vfs) {
+        this.assetsLoader = new AssetsLoader(vfs);
     }
 
     @Override
@@ -79,21 +90,45 @@ public class GarbageCollectedAssets implements IAssets {
     @Override
     public IAnimationCollection getAnimations(String name) {
         if (name.endsWith("png") || name.endsWith("jpg")) {
-            return new TextureAnimationCollectionWrapper(this, name, 0, 0, 1, 1);
+            return getAnimationFromSubTexture(name, 0f, 0f, 1f, 1f);
         } else {
-            AnimationCollectionWeakReference animRef = animations.get(name);
-            if (null != animRef) {
-                LwjglAnimationCollection anim = animRef.get();
-                if (null != anim) {
-                    return anim;
-                } else {
-                    animations.remove(name);
-                }
-            }
-            LwjglAnimationCollection anim = assets.loadAnimations(name);
-            putAnim(name, anim);
-            return anim;
+            return getAnimationsFromJson(name);
         }
+    }
+
+    private IAnimationCollection getAnimationsFromJson(String name) {
+        AnimationCollectionWeakReference animRef = animations.get(name);
+        if (null != animRef) {
+            IAnimationCollection anim = animRef.get();
+            if (null != anim) {
+                return anim;
+            } else {
+                animations.remove(name);
+            }
+        }
+        IAnimationCollection anim = loadAnimations(name);
+        putAnim(name, anim);
+        return anim;
+    }
+
+    @Override
+    public IAnimationCollection getAnimationFromSubTexture(String name, float u1, float v1, float u2, float v2) {
+                AnimationCollectionWeakReference animRef = animations.get(name);
+        if (null != animRef) {
+            IAnimationCollection anim = animRef.get();
+            if (null != anim) {
+                return anim;
+            } else {
+                animations.remove(name);
+            }
+        }
+        LwjglAnimationCollection animationCollection = new LwjglAnimationCollection();
+        LwjglAnimation animation = new LwjglAnimation("default");
+        LwjglAnimationImage image = new LwjglAnimationImage((LwjglTexture) getTexture(name));
+        animation.addFrame(image, 24 * 60 * 60 * 1000, u1, v1, u2, v2);
+        animationCollection.addAnimation(animation);
+        putAnim(name, animationCollection);
+        return animationCollection;
     }
 
     @Override
@@ -107,7 +142,7 @@ public class GarbageCollectedAssets implements IAssets {
                 fonts.remove(name);
             }
         }
-        LwjglNuitFont font = assets.loadFont(name);
+        LwjglNuitFont font = assetsLoader.loadFont(name);
         putFont(name, font);
         return font;
     }
@@ -123,10 +158,15 @@ public class GarbageCollectedAssets implements IAssets {
                 textures.remove(name);
             }
         }
-        LwjglTexture texture = assets.loadTexture(name);
+        LwjglTexture texture = assetsLoader.loadTexture(name);
         putTexture(name, texture);
         return texture;
 
+    }
+
+    private void setupGLTextureQualityParams() {
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, quality.toGLTextureFilter());
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, quality.toGLTextureFilter());
     }
 
     @Override
@@ -138,17 +178,17 @@ public class GarbageCollectedAssets implements IAssets {
     @Override
     public LwjglTexture grabScreenToTexture() {
         final String name = "!screenCapture_" + new Date().getTime();
-        LwjglTexture texture = assets.grabScreenToTexture();
+        LwjglTexture texture = assetsLoader.grabScreenToTexture();
         putTexture(name, texture);
         return texture;
     }
 
     @Override
     public void setIcon(long glfwWindow, String name) {
-        assets.setIcon(glfwWindow, name);
+        assetsLoader.setIcon(glfwWindow, name);
     }
 
-    private void putAnim(String name, LwjglAnimationCollection anim) {
+    private void putAnim(String name, IAnimationCollection anim) {
         animations.put(name, new AnimationCollectionWeakReference(name, anim, animationsReferenceQueue));
     }
 
@@ -162,7 +202,7 @@ public class GarbageCollectedAssets implements IAssets {
 
     @Override
     public String getText(String name) {
-        return assets.loadText(name);
+        return assetsLoader.loadText(name);
     }
 
     @Override
@@ -171,10 +211,63 @@ public class GarbageCollectedAssets implements IAssets {
         AnimationCollectionWeakReference animation = animations.get(name);
         if (null != animation) {
             if (null != animation.get()) {
-                logger.log(Level.WARNING, "Force still referenced animation ''{0}'' unload.", name);
+                LOGGER.log(Level.WARNING, "Force still referenced animation ''{0}'' unload.", name);
             }
             animations.remove(name);
         }
+    }
+
+    public void setQuality(LwjglTextureQuality newQuality) {
+        if (newQuality != quality) {
+            quality = newQuality;
+            updateQuality();
+        }
+    }
+
+    private void updateQuality() {
+        for (TextureWeakReference ref : textures.values()) {
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, ref.textureId);
+            setupGLTextureQualityParams();
+        }
+    }
+
+    private LwjglAnimationCollection loadAnimations(String name) {
+        if (name.endsWith(".json")) {
+            return loadJsonNanim(name);
+        } else {
+            throw new RuntimeException("Unknow animation format for " + name);
+        }
+    }
+
+    private LwjglAnimationCollection loadJsonNanim(String name) {
+        LwjglAnimationCollection nanim = new LwjglAnimationCollection();
+        try ( InputStream is = assetsLoader.getVfs().open(name);  InputStreamReader reader = new InputStreamReader(is)) {
+            String nanimParentDir;
+            final int lastIndexOfSlash = name.lastIndexOf("/");
+            if (lastIndexOfSlash < 0) {
+                nanimParentDir = "";
+            } else {
+                nanimParentDir = name.substring(0, name.lastIndexOf("/") + 1);
+            }
+            JsonObject json = new Gson().fromJson(reader, JsonObject.class);
+            for (JsonElement jsonAnimationElement : json.getAsJsonArray("animations")) {
+                JsonObject jsonAnimation = jsonAnimationElement.getAsJsonObject();
+                LwjglAnimation animation = new LwjglAnimation(jsonAnimation.get("name").getAsString());
+                for (JsonElement jsonFrameElement : jsonAnimation.getAsJsonArray("frames")) {
+                    JsonObject jsonFrame = jsonFrameElement.getAsJsonObject();
+                    final String imageFilename = nanimParentDir + jsonFrame.get("image").getAsString();
+                    LwjglTexture texture = (LwjglTexture) getTexture(imageFilename);
+                    LwjglAnimationImage image = new LwjglAnimationImage(texture);
+                    animation.addFrame(image, jsonFrame.get("duration").getAsInt(), jsonFrame.get("u1").getAsFloat(),
+                            jsonFrame.get("v1").getAsFloat(), jsonFrame.get("u2").getAsFloat(),
+                            jsonFrame.get("v2").getAsFloat());
+                }
+                nanim.addAnimation(animation);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load animation " + name, e);
+        }
+        return nanim;
     }
 
 }

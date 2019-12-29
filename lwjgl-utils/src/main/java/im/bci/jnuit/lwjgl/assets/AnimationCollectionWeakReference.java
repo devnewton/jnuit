@@ -23,7 +23,7 @@ THE SOFTWARE.
  */
 package im.bci.jnuit.lwjgl.assets;
 
-import im.bci.jnuit.lwjgl.animation.LwjglAnimationCollection;
+import im.bci.jnuit.animation.IAnimationCollection;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 
@@ -31,8 +31,8 @@ import java.lang.ref.WeakReference;
  *
  * @author devnewton
  */
-public class AnimationCollectionWeakReference extends WeakReference<LwjglAnimationCollection> {
-     AnimationCollectionWeakReference(String name, LwjglAnimationCollection animations, ReferenceQueue<LwjglAnimationCollection> queue) {
+public class AnimationCollectionWeakReference extends WeakReference<IAnimationCollection> {
+     AnimationCollectionWeakReference(String name, IAnimationCollection animations, ReferenceQueue<IAnimationCollection> queue) {
         super(animations, queue);
     }
 }

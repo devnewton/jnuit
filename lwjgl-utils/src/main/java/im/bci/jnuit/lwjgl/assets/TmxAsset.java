@@ -70,7 +70,7 @@ public class TmxAsset {
         final float v1 = frame.getY1() / height;
         final float u2 = frame.getX2() / width;
         final float v2 = frame.getY2() / height;
-        return new TextureAnimationCollectionWrapper(assets, textureName, u1, v1, u2, v2);
+        return assets.getAnimationFromSubTexture(textureName, u1, v1, u2, v2);
     }
 
     public List<TmxLayer> getLayers() {

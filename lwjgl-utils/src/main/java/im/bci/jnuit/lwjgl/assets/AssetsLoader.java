@@ -43,7 +43,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPInputStream;
 import java.util.Scanner;
 
 import org.lwjgl.BufferUtils;
@@ -57,10 +56,14 @@ import org.lwjgl.stb.STBImage;
 public class AssetsLoader {
 
     private VirtualFileSystem vfs;
-    private static final Logger logger = Logger.getLogger(AssetsLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AssetsLoader.class.getName());
 
     public AssetsLoader(VirtualFileSystem vfs) {
         this.vfs = vfs;
+    }
+
+    public VirtualFileSystem getVfs() {
+        return vfs;
     }
 
     public void setVfs(VirtualFileSystem vfs) {
@@ -68,8 +71,8 @@ public class AssetsLoader {
     }
 
     public LwjglTexture loadTexture(String name) {
-        logger.log(Level.FINE, "Load texture {0}", name);
-        try (InputStream is = vfs.open(name)) {
+        LOGGER.log(Level.FINE, "Load texture {0}", name);
+        try ( InputStream is = vfs.open(name)) {
             IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
             IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
             IntBuffer bppBuffer = BufferUtils.createIntBuffer(1);
@@ -93,14 +96,6 @@ public class AssetsLoader {
         }
     }
 
-    public LwjglAnimationCollection loadAnimations(String name) {
-        if (name.endsWith(".json")) {
-            return loadJsonNanim(name);
-        } else {
-            throw new RuntimeException("Unknow animation format for " + name);
-        }
-    }
-
     public LwjglTexture grabScreenToTexture() {
         int maxSize = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
         int[] viewport = new int[4];
@@ -113,17 +108,17 @@ public class AssetsLoader {
     }
 
     public String loadText(String name) {
-        try (InputStream is = vfs.open(name); Scanner s = new Scanner(is, "UTF-8")) {
+        try ( InputStream is = vfs.open(name);  Scanner s = new Scanner(is, "UTF-8")) {
             s.useDelimiter("\\Z");
             return s.next();
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
             throw new RuntimeException("Cannot load text file: " + name, ex);
         }
     }
 
     public LwjglNuitFont loadFont(String params) {
-        logger.log(Level.FINE, "Load font {0}", params);
+        LOGGER.log(Level.FINE, "Load font {0}", params);
         String fontName = "";
         int fontSize = 24;
         int fontStyle = Font.PLAIN;
@@ -144,7 +139,7 @@ public class AssetsLoader {
             }
         }
         Font f;
-        try (InputStream is = vfs.open(fontName)) {
+        try ( InputStream is = vfs.open(fontName)) {
             f = Font.createFont(Font.TRUETYPE_FONT, is);
             f = f.deriveFont(fontStyle, fontSize);
         } catch (Exception e) {
@@ -155,39 +150,8 @@ public class AssetsLoader {
         return font;
     }
 
-    private LwjglAnimationCollection loadJsonNanim(String name) {
-        LwjglAnimationCollection nanim = new LwjglAnimationCollection();
-        try (InputStream is = vfs.open(name); InputStreamReader reader = new InputStreamReader(is)) {
-            String nanimParentDir;
-            final int lastIndexOfSlash = name.lastIndexOf("/");
-            if (lastIndexOfSlash < 0) {
-                nanimParentDir = "";
-            } else {
-                nanimParentDir = name.substring(0, name.lastIndexOf("/") + 1);
-            }
-            JsonObject json = new Gson().fromJson(reader, JsonObject.class);
-            for (JsonElement jsonAnimationElement : json.getAsJsonArray("animations")) {
-                JsonObject jsonAnimation = jsonAnimationElement.getAsJsonObject();
-                LwjglAnimation animation = new LwjglAnimation(jsonAnimation.get("name").getAsString());
-                for (JsonElement jsonFrameElement : jsonAnimation.getAsJsonArray("frames")) {
-                    JsonObject jsonFrame = jsonFrameElement.getAsJsonObject();
-                    final String imageFilename = nanimParentDir + jsonFrame.get("image").getAsString();
-                    LwjglTexture texture = this.loadTexture(imageFilename);
-                    LwjglAnimationImage image = new LwjglAnimationImage(texture);
-                    animation.addFrame(image, jsonFrame.get("duration").getAsInt(), jsonFrame.get("u1").getAsFloat(),
-                            jsonFrame.get("v1").getAsFloat(), jsonFrame.get("u2").getAsFloat(),
-                            jsonFrame.get("v2").getAsFloat());
-                }
-                nanim.addAnimation(animation);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot load animation " + name, e);
-        }
-        return nanim;
-    }
-
     public void setIcon(long glfwWindow, String name) {
-        try (InputStream is = vfs.open(name)) {
+        try ( InputStream is = vfs.open(name)) {
             IconLoader.setIcon(glfwWindow, is);
         } catch (Exception ex) {
             Logger.getLogger(AssetsLoader.class.getName()).log(Level.SEVERE, null, ex);
