@@ -29,6 +29,7 @@ import im.bci.jnuit.teavm.TeavmNuitFont;
 import im.bci.jnuit.teavm.TeavmNuitDisplay;
 import im.bci.jnuit.teavm.TeavmNuitRenderer;
 import im.bci.jnuit.teavm.TeavmNuitControls;
+import im.bci.jnuit.teavm.TeavmSync;
 import im.bci.jnuit.teavm.assets.TeavmAssets;
 import im.bci.jnuit.teavm.assets.TeavmVirtualFileSystem;
 import im.bci.jnuit.teavm.audio.TeavmNuitAudio;
@@ -49,6 +50,7 @@ public abstract class AbstractSample {
     private Root root;
     private CanvasRenderingContext2D ctx;
     private HTMLCanvasElement canvas;
+    private TeavmSync sync = new TeavmSync();
 
     public void launch(String[] args) {
         this.canvas = (HTMLCanvasElement) Window.current().getDocument().getElementById("sample-canvas");
@@ -69,9 +71,10 @@ public abstract class AbstractSample {
     public void frame(double timestamp) {
         toolkit.update(root);
         root.update((float) (timestamp / 1000000f));
-        ctx.setTransform((double)canvas.getWidth() / (double)toolkit.getVirtualResolutionWidth(), 0, 0, (double)canvas.getHeight() / (double)toolkit.getVirtualResolutionHeight(), 0, 0);
+        ctx.setTransform((double) canvas.getWidth() / (double) toolkit.getVirtualResolutionWidth(), 0, 0, (double) canvas.getHeight() / (double) toolkit.getVirtualResolutionHeight(), 0, 0);
         ctx.clearRect(0, 0, toolkit.getVirtualResolutionWidth(), toolkit.getVirtualResolutionHeight());
         renderer.render(root);
+        sync.sync(60);
         Window.requestAnimationFrame(this::frame);
     }
 

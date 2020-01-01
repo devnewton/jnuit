@@ -120,7 +120,6 @@ public class TeavmSync {
 				}
 			});
 			
-			timerAccuracyThread.setName("LWJGL3 Timer");
 			timerAccuracyThread.setDaemon(true);
 			timerAccuracyThread.start();
 		}

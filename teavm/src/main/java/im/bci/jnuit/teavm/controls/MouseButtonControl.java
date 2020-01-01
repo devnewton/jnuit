@@ -44,7 +44,7 @@ public class MouseButtonControl implements Control {
 
     @Override
     public String getName() {
-        return "Button " + button;
+        return "Button " + String.valueOf(button);
     }
 
     @Override
