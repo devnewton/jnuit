@@ -52,7 +52,7 @@ public class TeavmVirtualFileSystem {
         return null;
     }
 
-    public boolean exists(String realPath) {
+    private boolean exists(String realPath) {
         return Ajax.exists(realPath);
     }
 
