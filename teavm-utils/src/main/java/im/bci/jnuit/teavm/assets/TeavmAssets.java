@@ -77,7 +77,7 @@ public class TeavmAssets {
         audios.clear();
     }
 
-//    public IAnimationCollection getAnimationFromSubTexture(String name, float u1, float v1, float u2, float v2) {
+    public IAnimationCollection getAnimationFromSubTexture(String name, float u1, float v1, float u2, float v2) {
         final String animationCollectionName = name + "#sub(" + u1 + "," + v1 + "," + u2 + "," + v2 + ")";
         TeavmAnimationCollection animationCollection = (TeavmAnimationCollection) animations.get(animationCollectionName);
         if (null != animationCollection) {
