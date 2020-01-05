@@ -35,6 +35,7 @@ import im.bci.jnuit.border.NullBorder;
 import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
 import im.bci.jnuit.focus.FocusCursor;
 import im.bci.jnuit.focus.NullFocusCursor;
+import im.bci.jnuit.teavm.assets.animation.TeavmAnimationFrame;
 import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
@@ -249,7 +250,7 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
     @Override
     public void visit(Widget widget, TexturedBackground background) {
-        IAnimationFrame frame = background.getPlay().getCurrentFrame();
+        TeavmAnimationFrame frame = (TeavmAnimationFrame) background.getPlay().getCurrentFrame();
         if (null != frame) {
             float width = widget.getWidth();
             if(background.isMirrorX()) {
@@ -259,7 +260,7 @@ public class TeavmNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
             if(background.isMirrorY()) {
                 height = -height;
             }
-            CanvasImageSource imageSource = (CanvasImageSource) frame.getImage().getId();
+            CanvasImageSource imageSource = frame.getCanvasImageSource();
             HTMLImageElement img = imageSource.cast();
             final int imageWidth = img.getWidth();
             final int imageHeight = img.getHeight();

@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.lwjgl.LwjglTexture;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;

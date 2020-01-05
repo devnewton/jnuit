@@ -21,12 +21,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  */
-package im.bci.jnuit.teavm.assets.animation;
+package im.bci.jnuit.teavm.assets;
 
 import im.bci.jnuit.teavm.JsonMap;
 import im.bci.jnuit.teavm.JsonArray;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.teavm.assets.TeavmAssets;
+import im.bci.jnuit.teavm.assets.animation.TeavmAnimation;
+import im.bci.jnuit.teavm.assets.animation.TeavmAnimationCollection;
+import im.bci.jnuit.teavm.assets.animation.TeavmAnimationImage;
 import org.teavm.jso.core.JSNumber;
 import org.teavm.jso.core.JSString;
 import org.teavm.jso.json.JSON;
@@ -48,7 +51,7 @@ public class TeavmAnimationLoader {
     public static IAnimationCollection loadImage(TeavmAssets assets, String filename) {
         TeavmAnimationCollection animations = new TeavmAnimationCollection();
         final TeavmAnimation animation = new TeavmAnimation(filename);
-        animation.addFrame(new TeavmAnimationImage(assets.getImage(filename)), 1000000);
+        animation.addFrame(new TeavmAnimationImage(assets.getTexture(filename)), 1000000);
         animations.addAnimation(animation);
         return animations;
     }
@@ -77,7 +80,7 @@ public class TeavmAnimationLoader {
                         final JsonMap jsonFrame = jsonFrames.get(f).cast();
                         final JSString jsImageFilename = jsonFrame.get("image").cast();
                         final String imageFilename = jsImageFilename.stringValue();
-                        TeavmAnimationImage image = new TeavmAnimationImage(assets.getImage(path + imageFilename));
+                        TeavmAnimationImage image = new TeavmAnimationImage(assets.getTexture(path + imageFilename));
                         JSNumber duration = jsonFrame.get("duration").cast();
                         JSNumber u1 = jsonFrame.get("u1").cast();
                         JSNumber v1 = jsonFrame.get("v1").cast();

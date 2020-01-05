@@ -1,11 +1,11 @@
 package im.bci.jnuit.teavm.assets;
 
+import im.bci.jnuit.teavm.TeavmTexture;
 import im.bci.jnuit.animation.IAnimationCollection;
 import im.bci.jnuit.teavm.Ajax;
 import im.bci.jnuit.teavm.assets.animation.TeavmAnimation;
 import im.bci.jnuit.teavm.assets.animation.TeavmAnimationCollection;
 import im.bci.jnuit.teavm.assets.animation.TeavmAnimationImage;
-import im.bci.jnuit.teavm.assets.animation.TeavmAnimationLoader;
 import java.io.IOException;
 import java.util.HashMap;
 import org.teavm.jso.browser.Window;
@@ -16,7 +16,7 @@ public class TeavmAssets {
 
     private final TeavmVirtualFileSystem vfs;
     private final HashMap<String, IAnimationCollection> animations = new HashMap<>();
-    private final HashMap<String, HTMLImageElement> images = new HashMap<>();
+    private final HashMap<String, TeavmTexture> images = new HashMap<>();
     private final HashMap<String, HTMLAudioElement> audios = new HashMap<>();
     private final Window current = Window.current();
 
@@ -47,14 +47,14 @@ public class TeavmAssets {
         return audio;
     }
 
-    public HTMLImageElement getImage(String filename) {
-        HTMLImageElement image = images.get(filename);
-        if (null == image) {
-            image = current.getDocument().createElement("img").cast();
+    public TeavmTexture getTexture(String filename) {
+        TeavmTexture texture = images.get(filename);
+        if (null == texture) {
+            HTMLImageElement image = current.getDocument().createElement("img").cast();
             image.setSrc(vfs.getRealResourcePath(filename));
-            images.put(filename, image);
+            images.put(filename, texture);
         }
-        return image;
+        return texture;
     }
 
     public IAnimationCollection getAnimations(String filename) {
@@ -83,7 +83,7 @@ public class TeavmAssets {
         if (null != animationCollection) {
             animationCollection = new TeavmAnimationCollection();
             TeavmAnimation animation = new TeavmAnimation("default");
-            animation.addFrame(new TeavmAnimationImage(getImage(name)), 24 * 60 * 60 * 1000, u1, v1, u2, v2);
+            animation.addFrame(new TeavmAnimationImage(getTexture(name)), 24 * 60 * 60 * 1000, u1, v1, u2, v2);
             animationCollection.addAnimation(animation);
             animations.put(animationCollectionName, animationCollection);            
         }

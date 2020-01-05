@@ -24,7 +24,7 @@
 package im.bci.jnuit.teavm.assets.animation;
 
 import im.bci.jnuit.animation.IAnimationImage;
-import org.teavm.jso.dom.html.HTMLImageElement;
+import im.bci.jnuit.teavm.TeavmTexture;
 
 /**
  *
@@ -32,19 +32,14 @@ import org.teavm.jso.dom.html.HTMLImageElement;
  */
 public class TeavmAnimationImage implements IAnimationImage {
 
-    private final HTMLImageElement image;
+    private final TeavmTexture texture;
 
-    public TeavmAnimationImage(HTMLImageElement image) {
-        this.image = image;
+    public TeavmAnimationImage(TeavmTexture texture) {
+        this.texture = texture;
     }
 
-    @Override
-    public Object getId() {
-        return image;
+    public TeavmTexture getTexture() {
+        return texture;
     }
 
-    @Override
-    public boolean hasAlpha() {
-        return true;
-    }
 }

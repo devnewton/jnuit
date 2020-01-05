@@ -24,6 +24,7 @@
 package im.bci.jnuit.teavm.assets.animation;
 
 import im.bci.jnuit.animation.IAnimationFrame;
+import org.teavm.jso.canvas.CanvasImageSource;
 
 /**
  *
@@ -85,5 +86,9 @@ public class TeavmAnimationFrame implements IAnimationFrame {
     @Override
     public float getV2() {
         return v2;
+    }
+
+    public CanvasImageSource getCanvasImageSource() {
+        return image.getTexture().getImage();
     }
 }

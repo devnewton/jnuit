@@ -27,10 +27,6 @@ package im.bci.jnuit.animation;
  *
  * @author devnewton
  */
-public interface IAnimationImage {
-
-    Object getId();
-
-    boolean hasAlpha();
+public interface IAnimationImage {;
     
 }

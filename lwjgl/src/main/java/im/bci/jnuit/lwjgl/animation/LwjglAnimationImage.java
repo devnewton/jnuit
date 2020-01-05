@@ -24,11 +24,7 @@
 package im.bci.jnuit.lwjgl.animation;
 
 import im.bci.jnuit.animation.IAnimationImage;
-import im.bci.jnuit.lwjgl.assets.LwjglTexture;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import org.lwjgl.opengl.GL11;
+import im.bci.jnuit.lwjgl.LwjglTexture;
 
 /**
  *
@@ -42,12 +38,10 @@ public class LwjglAnimationImage implements IAnimationImage {
         this.texture = texture;
     }
 
-    @Override
-    public Object getId() {
+    public int getId() {
         return texture.getId();
     }
 
-    @Override
     public boolean hasAlpha() {
         return texture.hasAlpha();
     }

@@ -25,7 +25,6 @@ package im.bci.jnuit.lwjgl;
 
 import im.bci.jnuit.NuitRenderer;
 import im.bci.jnuit.NuitTranslator;
-import im.bci.jnuit.animation.IAnimationFrame;
 import im.bci.jnuit.background.Background;
 import im.bci.jnuit.background.ColoredBackground;
 import im.bci.jnuit.background.NullBackground;
@@ -35,6 +34,7 @@ import im.bci.jnuit.border.NullBorder;
 import im.bci.jnuit.focus.ColoredRectangleFocusCursor;
 import im.bci.jnuit.focus.FocusCursor;
 import im.bci.jnuit.focus.NullFocusCursor;
+import im.bci.jnuit.lwjgl.animation.LwjglAnimationFrame;
 import im.bci.jnuit.text.TextColor;
 import im.bci.jnuit.visitors.BackgroundVisitor;
 import im.bci.jnuit.visitors.BorderVisitor;
@@ -238,7 +238,7 @@ public class LwjglNuitRenderer implements WidgetVisitor, BackgroundVisitor, Nuit
 
 	@Override
 	public void visit(Widget widget, TexturedBackground background) {
-		IAnimationFrame frame = background.getPlay().getCurrentFrame();
+		LwjglAnimationFrame frame = (LwjglAnimationFrame)background.getPlay().getCurrentFrame();
 		if (null != frame) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, (Integer) frame.getImage().getId());
 			float x1 = widget.getX();

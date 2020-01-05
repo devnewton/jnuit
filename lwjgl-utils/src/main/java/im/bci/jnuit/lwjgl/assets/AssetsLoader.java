@@ -23,20 +23,14 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import im.bci.jnuit.lwjgl.LwjglTexture;
 import im.bci.jnuit.lwjgl.IconLoader;
 import im.bci.jnuit.lwjgl.LwjglHelper;
 import im.bci.jnuit.lwjgl.LwjglNuitFont;
-import im.bci.jnuit.lwjgl.animation.LwjglAnimationCollection;
-import im.bci.jnuit.lwjgl.animation.LwjglAnimation;
-import im.bci.jnuit.lwjgl.animation.LwjglAnimationImage;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.HashMap;

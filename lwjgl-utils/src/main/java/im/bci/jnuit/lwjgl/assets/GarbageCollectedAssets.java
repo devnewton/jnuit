@@ -23,6 +23,7 @@
  */
 package im.bci.jnuit.lwjgl.assets;
 
+import im.bci.jnuit.lwjgl.LwjglTexture;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

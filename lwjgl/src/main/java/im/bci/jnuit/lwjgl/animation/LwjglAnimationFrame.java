@@ -21,46 +21,60 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package im.bci.jnuit.lwjgl.assets;
+package im.bci.jnuit.lwjgl.animation;
 
-import im.bci.jnuit.animation.ITexture;
-import org.lwjgl.opengl.GL11;
+import im.bci.jnuit.animation.IAnimationFrame;
 
 /**
  *
  * @author devnewton
  */
-public class LwjglTexture implements ITexture {
+public class LwjglAnimationFrame implements IAnimationFrame {
 
-    private final int id;
-    private final int width, height;
-    private final boolean alpha;
+    private final LwjglAnimationImage image;
+    private final long duration;//milliseconds
+    long endTime;//milliseconds
+    float u1 = 0;
+    float v1 = 0;
+    float u2 = 1;
+    float v2 = 1;
 
-    LwjglTexture(int width, int height, boolean alpha) {
-        id = GL11.glGenTextures();
-        this.width = width;
-        this.height = height;
-        this.alpha = alpha;
+    public LwjglAnimationFrame(LwjglAnimationImage image, long duration) {
+        this.image = image;
+        this.duration = duration;
     }
 
     @Override
-    public int getId() {
-        return id;
+    public long getDuration() {
+        return duration;
     }
 
     @Override
-    public int getHeight() {
-        return height;
+    public LwjglAnimationImage getImage() {
+        return image;
     }
-
-
-    @Override
-    public int getWidth() {
-        return width;
+    
+    public int getTextureId() {
+        return image.getId();
     }
 
     @Override
-    public boolean hasAlpha() {
-        return alpha;
+    public float getU1() {
+        return u1;
+    }
+
+    @Override
+    public float getV1() {
+        return v1;
+    }
+
+    @Override
+    public float getU2() {
+        return u2;
+    }
+
+    @Override
+    public float getV2() {
+        return v2;
     }
 }
