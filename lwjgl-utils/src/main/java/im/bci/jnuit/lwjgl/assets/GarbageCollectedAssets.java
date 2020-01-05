@@ -113,13 +113,15 @@ public class GarbageCollectedAssets implements IAssets {
 
     @Override
     public IAnimationCollection getAnimationFromSubTexture(String name, float u1, float v1, float u2, float v2) {
-                AnimationCollectionWeakReference animRef = animations.get(name);
+        final String animationCollectionName = name + "#sub(" + u1 + "," + v1 + "," + u2 + "," + v2 + ")";
+
+        AnimationCollectionWeakReference animRef = animations.get(animationCollectionName);
         if (null != animRef) {
             IAnimationCollection anim = animRef.get();
             if (null != anim) {
                 return anim;
             } else {
-                animations.remove(name);
+                animations.remove(animationCollectionName);
             }
         }
         LwjglAnimationCollection animationCollection = new LwjglAnimationCollection();
@@ -127,7 +129,7 @@ public class GarbageCollectedAssets implements IAssets {
         LwjglAnimationImage image = new LwjglAnimationImage((LwjglTexture) getTexture(name));
         animation.addFrame(image, 24 * 60 * 60 * 1000, u1, v1, u2, v2);
         animationCollection.addAnimation(animation);
-        putAnim(name, animationCollection);
+        putAnim(animationCollectionName, animationCollection);
         return animationCollection;
     }
 
