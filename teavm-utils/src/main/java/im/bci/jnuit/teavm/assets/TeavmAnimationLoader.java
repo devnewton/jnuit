@@ -56,43 +56,37 @@ public class TeavmAnimationLoader {
         return animations;
     }
 
-
-
     public static IAnimationCollection loadNanim(final TeavmAssets assets, final String filename) {
-        try {
-                String path;
-                final int lastIndexOfSlash = filename.lastIndexOf("/");
-                if (lastIndexOfSlash < 0) {
-                    path = "";
-                } else {
-                    path = filename.substring(0, filename.lastIndexOf("/") + 1);
-                }
-                final String text = assets.getText(filename);
-                final JsonMap json = JSON.parse(text).cast();
-                final JsonArray jsonAnimations = json.get("animations").cast();
-                final TeavmAnimationCollection nanim = new TeavmAnimationCollection();
-                for (int a = 0, na = jsonAnimations.getLength(); a < na; ++a) {
-                    final JsonMap jsonAnimation = jsonAnimations.get(a).cast();
-                    final JSString animationName = jsonAnimation.get("name").cast();
-                    TeavmAnimation animation = new TeavmAnimation(animationName.stringValue());
-                    final JsonArray jsonFrames = jsonAnimation.get("frames").cast();
-                    for (int f = 0, nf = jsonFrames.getLength(); f < nf; ++f) {
-                        final JsonMap jsonFrame = jsonFrames.get(f).cast();
-                        final JSString jsImageFilename = jsonFrame.get("image").cast();
-                        final String imageFilename = jsImageFilename.stringValue();
-                        TeavmAnimationImage image = new TeavmAnimationImage(assets.getTexture(path + imageFilename));
-                        JSNumber duration = jsonFrame.get("duration").cast();
-                        JSNumber u1 = jsonFrame.get("u1").cast();
-                        JSNumber v1 = jsonFrame.get("v1").cast();
-                        JSNumber u2 = jsonFrame.get("u2").cast();
-                        JSNumber v2 = jsonFrame.get("v2").cast();                        
-                        animation.addFrame(image, duration.intValue(), u1.floatValue(), v1.floatValue(), u2.floatValue(), v2.floatValue());
-                    }
-                    nanim.addAnimation(animation);
-                }
-                return nanim;
-        } catch (Exception ex) {
-            throw new RuntimeException("Cannot load animation " + filename, ex);
+        String path;
+        final int lastIndexOfSlash = filename.lastIndexOf("/");
+        if (lastIndexOfSlash < 0) {
+            path = "";
+        } else {
+            path = filename.substring(0, filename.lastIndexOf("/") + 1);
         }
+        final String text = assets.getText(filename);
+        final JsonMap json = JSON.parse(text).cast();
+        final JsonArray jsonAnimations = json.get("animations").cast();
+        final TeavmAnimationCollection nanim = new TeavmAnimationCollection();
+        for (int a = 0, na = jsonAnimations.getLength(); a < na; ++a) {
+            final JsonMap jsonAnimation = jsonAnimations.get(a).cast();
+            final JSString animationName = jsonAnimation.get("name").cast();
+            TeavmAnimation animation = new TeavmAnimation(animationName.stringValue());
+            final JsonArray jsonFrames = jsonAnimation.get("frames").cast();
+            for (int f = 0, nf = jsonFrames.getLength(); f < nf; ++f) {
+                final JsonMap jsonFrame = jsonFrames.get(f).cast();
+                final JSString jsImageFilename = jsonFrame.get("image").cast();
+                final String imageFilename = jsImageFilename.stringValue();
+                TeavmAnimationImage image = new TeavmAnimationImage(assets.getTexture(path + imageFilename));
+                JSNumber duration = jsonFrame.get("duration").cast();
+                JSNumber u1 = jsonFrame.get("u1").cast();
+                JSNumber v1 = jsonFrame.get("v1").cast();
+                JSNumber u2 = jsonFrame.get("u2").cast();
+                JSNumber v2 = jsonFrame.get("v2").cast();
+                animation.addFrame(image, duration.intValue(), u1.floatValue(), v1.floatValue(), u2.floatValue(), v2.floatValue());
+            }
+            nanim.addAnimation(animation);
+        }
+        return nanim;
     }
 }
